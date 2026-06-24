@@ -2,3 +2,6 @@
 .env
 
 .DS_Store
+
+# Large derived files (re-derivable from Supabase via index/build script)
+index/transcripts/*.txt

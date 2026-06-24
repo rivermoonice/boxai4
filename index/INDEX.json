@@ -1,0 +1,94 @@
+{
+  "module": "hermes",
+  "scope_query": "title ILIKE '%hermes%' OR (summary_verdict IS NOT NULL AND summary_verdict ILIKE '%hermes%')",
+  "total_videos": 103,
+  "with_transcript": 57,
+  "with_summary": 57,
+  "with_both": 57,
+  "date_range": {
+    "earliest": "2026-03-30",
+    "latest": "2026-06-23"
+  },
+  "top_tags": [
+    [
+      "openclaw",
+      65
+    ],
+    [
+      "boxmining ai",
+      57
+    ],
+    [
+      "ai model",
+      57
+    ],
+    [
+      "vibe coding",
+      57
+    ],
+    [
+      "AI tools",
+      57
+    ],
+    [
+      "latest AI models",
+      57
+    ],
+    [
+      "AI coding",
+      57
+    ],
+    [
+      "AI for beginners",
+      57
+    ],
+    [
+      "Claude AI",
+      57
+    ],
+    [
+      "Grok AI",
+      57
+    ],
+    [
+      "Cursor AI",
+      57
+    ],
+    [
+      "AI models 2026",
+      57
+    ],
+    [
+      "best AI tools",
+      57
+    ],
+    [
+      "AI experiments",
+      57
+    ],
+    [
+      "AI crypto",
+      57
+    ],
+    [
+      "prompt engineering",
+      57
+    ],
+    [
+      "no code AI",
+      57
+    ],
+    [
+      "AI workflow",
+      57
+    ],
+    [
+      "BoxminingAI",
+      57
+    ],
+    [
+      "vibe code",
+      57
+    ]
+  ]
+}
