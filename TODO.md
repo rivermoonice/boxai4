@@ -22,15 +22,15 @@ Build a flat snapshot of source videos so every later step has ground truth.
 
 Make lesson drafting "fill in the blanks," not free-form writing.
 
-- [ ] Draft `templates/lesson.md` — 12 sections, placeholders, inline guidance.
-- [ ] Draft `templates/lesson-skeleton.md` — short LLM output form (title, audience, source videos, segments, objectives, pitfalls).
-- [ ] Inject voice constants from `Specs/ChannelIdentity.md` (signature phrases for flavour; **override audience assumptions** — true beginners, not builders).
+- [x] Draft `templates/lesson.md` — 12 sections, placeholders, inline guidance.
+- [x] Draft `templates/lesson-skeleton.md` — short LLM output form (title, audience, source videos, segments, objectives, pitfalls).
+- [x] Inject voice constants from `Specs/ChannelIdentity.md` (signature phrases for flavour; **override audience assumptions** — true beginners, not builders).
 
 ## Layer 2 — Cluster (LLM, per module)
 
 Propose lesson structure with sourced videos. User reviews every skeleton before any drafting.
 
-- [ ] Module 1: **Hermes agent** — pull all `hermes agent*` tagged videos; propose 6–10 lessons.
+- [x] Module 1: **Hermes agent** — 9 lessons proposed (L01–L09), 2 evidence-light (L07, L08). 27 backlog videos need a decision.
 - [ ] Module 2: **AI model comparison** — pull `model-tier-list`, `ai-models`, comparison/review videos; propose 4–6 lessons.
 - [ ] Module 3: **New AI projects** — scope with user; propose 4–6 lessons.
 
@@ -47,15 +47,18 @@ Turn one approved skeleton into a full lesson. One lesson in flight at a time.
 
 No half-finished lessons reach the repo.
 
-- [ ] Write `scripts/check-lesson.py` — assert each of the 12 spec sections is present.
-- [ ] Enforce rules: SEO title formula, action-verb objectives, word count ≥ 1,800, freshness date, FAQ, quiz.
-- [ ] Wire into pre-commit or CI.
+- [x] Write `scripts/check-lesson.py` — asserts every required section is present.
+- [x] Enforce rules: action-verb objectives, word count ≥ 1,800, freshness date, 4–6 quiz questions, 5–8 pitfalls, ≥ 3 FAQ.
+- [x] Smoke test lesson passes the gate — `lessons/hermes/L00-smoke-test.md`.
+- [ ] Wire into pre-commit or CI (recommended: GitHub Action).
 
 ---
 
 ## Now
 
-- **Layer 1 is done for Hermes.** Next is **Layer 1.5**: draft `templates/lesson.md` (12-section scaffold) and `templates/lesson-skeleton.md` (short LLM output form). Once those exist, run **Layer 2 for Hermes** to propose lesson structure for review.
-- **Open questions for the user** (in `docs/layer-1-log.md`):
-  1. Older Hermes videos have no transcripts — skip, link as "see also", or re-run pipeline?
-  2. Layer 1 for the other two modules — confirm scope and we're good to run.
+- **Layer 1, 1.5, 2, and 4 are done for the Hermes module.** All 9 lesson skeletons are in `lessons/hermes/_skeletons/` for review. Layer 3 drafting is blocked on user approval of the skeletons.
+- **Open questions for the user** (in `docs/layer-2-log.md`):
+  1. Course order L01→L09 — confirm or reorder.
+  2. 27 backlog videos — accept as supporting material, or add an L10?
+  3. L07 and L08 are evidence-light — ship with caveats, re-run transcripts, or cut to v2?
+  4. Source-video picks — are the right primaries selected?
