@@ -56,9 +56,6 @@ No half-finished lessons reach the repo.
 
 ## Now
 
-- **Layer 1, 1.5, 2, and 4 are done for the Hermes module.** All 9 lesson skeletons are in `lessons/hermes/_skeletons/` for review. Layer 3 drafting is blocked on user approval of the skeletons.
-- **Open questions for the user** (in `docs/layer-2-log.md`):
-  1. Course order L01→L09 — confirm or reorder.
-  2. 27 backlog videos — accept as supporting material, or add an L10?
-  3. L07 and L08 are evidence-light — ship with caveats, re-run transcripts, or cut to v2?
-  4. Source-video picks — are the right primaries selected?
+- **Layer 1, 1.5, 2, and 4 are done for the Hermes module.** User approved the 9 skeletons ("looks good, do everything").
+- **Drafting L01–L09 in order.** L01 first (smallest, sets voice). L07 and L08 are evidence-light and will lean on `Specs/ChannelIdentity.md` for body content.
+- **Layer 1 for the other two modules** runs in parallel with the drafting. AI model comparison first (bounded scope), then New AI projects.

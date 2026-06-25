@@ -53,6 +53,7 @@ ACTION_VERBS = {
     "understand", "apply", "test", "verify", "debug", "fix", "tune",
     "optimize", "monitor", "measure", "estimate", "calculate", "list",
     "summarize", "summarise", "differentiate", "evaluate", "assess",
+    "confirm", "verify", "validate",
 }
 
 
