@@ -14,9 +14,9 @@ Working backlog for the Boxmining AI Academy course. Four layers, each must fini
 
 Build a flat snapshot of source videos so every later step has ground truth.
 
-- [x] **Hermes module** — done. 103 videos scoped (title OR summary_verdict contains "hermes"), 57 transcripts exported. See `docs/layer-1-log.md` for what was learned. Index lives in `index/`.
-- [ ] **AI model comparison module** — same flow. Watch for tag-bundle pollution (see log).
-- [ ] **New AI projects module** — same flow. Scope needs user input (Hermes projects? Claude Code? Both?).
+- [x] **Hermes module** — done. 103 videos scoped, 57 transcripts. See `docs/layer-1-log.md`.
+- [x] **AI model comparison module** — done. 134 videos scoped, 102 transcripts. See `docs/layer-1-log-ai-models.md`.
+- [ ] **New AI projects module** — next. Scope needs user input (Hermes projects? Claude Code? Both?).
 
 ## Layer 1.5 — Lesson template
 
@@ -30,8 +30,8 @@ Make lesson drafting "fill in the blanks," not free-form writing.
 
 Propose lesson structure with sourced videos. User reviews every skeleton before any drafting.
 
-- [x] Module 1: **Hermes agent** — 9 lessons proposed (L01–L09), 2 evidence-light (L07, L08). 27 backlog videos need a decision.
-- [ ] Module 2: **AI model comparison** — pull `model-tier-list`, `ai-models`, comparison/review videos; propose 4–6 lessons.
+- [x] Module 1: **Hermes agent** — 9 lessons proposed, drafted, passed the gate.
+- [x] Module 2: **AI model comparison** — 5 lessons proposed (L01–L05), awaiting user review before Layer 3 drafting.
 - [ ] Module 3: **New AI projects** — scope with user; propose 4–6 lessons.
 
 ## Layer 3 — Draft loop
@@ -56,6 +56,6 @@ No half-finished lessons reach the repo.
 
 ## Now
 
-- **Layer 1, 1.5, 2, and 4 are done for the Hermes module.** User approved the 9 skeletons ("looks good, do everything").
-- **Drafting L01–L09 in order.** L01 first (smallest, sets voice). L07 and L08 are evidence-light and will lean on `Specs/ChannelIdentity.md` for body content.
-- **Layer 1 for the other two modules** runs in parallel with the drafting. AI model comparison first (bounded scope), then New AI projects.
+- **Hermes module: 9/9 lessons drafted, all pass the gate. Pushed to origin.**
+- **AI model comparison module: Layer 1 (index) and Layer 2 (5 skeletons) done.** Awaiting user approval before Layer 3 drafting.
+- **New AI projects module: not started.** Scope needs user input.

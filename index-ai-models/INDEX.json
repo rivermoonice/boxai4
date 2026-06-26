@@ -1,0 +1,93 @@
+{
+  "module": "ai-model-comparison",
+  "scope_query": "title contains model/comparison/review/tier-list terms AND summary_verdict mentions model/tier/benchmark/comparison AND not primarily Hermes/OpenClaw/MCP/Kanban",
+  "total_videos": 134,
+  "with_transcript": 102,
+  "with_summary": 104,
+  "date_range": {
+    "earliest": "2026-02-14",
+    "latest": "2026-06-23"
+  },
+  "top_tags": [
+    [
+      "openclaw",
+      89
+    ],
+    [
+      "boxmining ai",
+      73
+    ],
+    [
+      "ai model",
+      73
+    ],
+    [
+      "vibe coding",
+      73
+    ],
+    [
+      "AI tools",
+      73
+    ],
+    [
+      "latest AI models",
+      73
+    ],
+    [
+      "AI coding",
+      73
+    ],
+    [
+      "AI for beginners",
+      73
+    ],
+    [
+      "Claude AI",
+      73
+    ],
+    [
+      "Grok AI",
+      73
+    ],
+    [
+      "Cursor AI",
+      73
+    ],
+    [
+      "AI models 2026",
+      73
+    ],
+    [
+      "best AI tools",
+      73
+    ],
+    [
+      "AI experiments",
+      73
+    ],
+    [
+      "AI crypto",
+      73
+    ],
+    [
+      "prompt engineering",
+      73
+    ],
+    [
+      "no code AI",
+      73
+    ],
+    [
+      "AI workflow",
+      73
+    ],
+    [
+      "BoxminingAI",
+      73
+    ],
+    [
+      "vibe code",
+      73
+    ]
+  ]
+}
