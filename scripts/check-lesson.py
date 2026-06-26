@@ -57,6 +57,9 @@ ACTION_VERBS = {
     "remove", "delete", "uninstall", "update", "switch", "set",
     "practice", "recognise", "recognize", "describe", "name",
     "generate", "produce", "classify", "distinguish", "articulate",
+    "define", "explain", "position", "locate", "identify",
+    "match", "plan", "decide", "recommend", "map", "compare",
+    "apply", "design", "draft", "implement",
 }
 
 
