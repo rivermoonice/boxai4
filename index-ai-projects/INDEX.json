@@ -1,0 +1,73 @@
+{
+  "module": "ai-projects",
+  "scope_query": "title matches project/build/setup/workflow/cron/kanban/swarm/coding-harness/directory/business terms; not pure tier-list/benchmark/comparison",
+  "total_videos": 96,
+  "with_transcript": 58,
+  "with_summary": 59,
+  "date_range": {
+    "earliest": "2026-02-14",
+    "latest": "2026-06-22"
+  },
+  "top_tags": [
+    [
+      "openclaw",
+      44
+    ],
+    [
+      "boxmining ai",
+      32
+    ],
+    [
+      "ai model",
+      32
+    ],
+    [
+      "vibe coding",
+      32
+    ],
+    [
+      "AI tools",
+      32
+    ],
+    [
+      "latest AI models",
+      32
+    ],
+    [
+      "AI coding",
+      32
+    ],
+    [
+      "AI for beginners",
+      32
+    ],
+    [
+      "Claude AI",
+      32
+    ],
+    [
+      "Grok AI",
+      32
+    ],
+    [
+      "Cursor AI",
+      32
+    ],
+    [
+      "AI models 2026",
+      32
+    ],
+    [
+      "best AI tools",
+      32
+    ],
+    [
+      "AI experiments",
+      32
+    ],
+    [
+      "AI crypto",
+      32
+    ]
+  ]
+}

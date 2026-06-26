@@ -16,7 +16,7 @@ Build a flat snapshot of source videos so every later step has ground truth.
 
 - [x] **Hermes module** — done. 103 videos scoped, 57 transcripts. See `docs/layer-1-log.md`.
 - [x] **AI model comparison module** — done. 134 videos scoped, 102 transcripts. See `docs/layer-1-log-ai-models.md`.
-- [ ] **New AI projects module** — next. Scope needs user input (Hermes projects? Claude Code? Both?).
+- [x] **New AI projects module** — done. 96 videos scoped, 58 transcripts. See `docs/layer-1-log-ai-projects.md`.
 
 ## Layer 1.5 — Lesson template
 
@@ -31,8 +31,8 @@ Make lesson drafting "fill in the blanks," not free-form writing.
 Propose lesson structure with sourced videos. User reviews every skeleton before any drafting.
 
 - [x] Module 1: **Hermes agent** — 9 lessons proposed, drafted, passed the gate.
-- [x] Module 2: **AI model comparison** — 5 lessons proposed (L01–L05), awaiting user review before Layer 3 drafting.
-- [ ] Module 3: **New AI projects** — scope with user; propose 4–6 lessons.
+- [x] Module 2: **AI model comparison** — 5 lessons proposed, drafted, passed the gate.
+- [x] Module 3: **New AI projects** — 5 lessons proposed (L01–L05), awaiting user review before Layer 3 drafting.
 
 ## Layer 3 — Draft loop
 
@@ -56,6 +56,6 @@ No half-finished lessons reach the repo.
 
 ## Now
 
-- **Hermes module: 9/9 lessons drafted, all pass the gate. Pushed to origin.**
-- **AI model comparison module: Layer 1 (index) and Layer 2 (5 skeletons) done.** Awaiting user approval before Layer 3 drafting.
-- **New AI projects module: not started.** Scope needs user input.
+- **All three modules: Layer 1 (index) and Layer 2 (skeletons) done.** Lessons drafted and pushed for modules 1 and 2. Module 3 awaits user approval of skeletons before Layer 3 drafting.
+- **Course coverage**: 9 lessons (Hermes) + 5 lessons (AI model comparison) = 14 drafted and pushed. + 5 skeletons ready for New AI projects.
+- **Open work**: Layer 3 for module 3 (5 lessons), then full course review.
