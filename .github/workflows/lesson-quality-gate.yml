@@ -1,0 +1,77 @@
+name: Lesson Quality Gate
+
+# Runs the 12-section spec gate against any lesson file that changed in a PR.
+# PRs that fail this check should not be merged.
+#
+# To run locally before pushing:
+#   python3 scripts/check-lesson.py lessons/
+
+on:
+  pull_request:
+    paths:
+      - 'lessons/**'
+      - 'scripts/check-lesson.py'
+      - '.github/workflows/lesson-quality-gate.yml'
+  push:
+    branches:
+      - main
+    paths:
+      - 'lessons/**'
+      - 'scripts/check-lesson.py'
+      - '.github/workflows/lesson-quality-gate.yml'
+
+jobs:
+  gate:
+    name: Quality Gate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Determine lesson files to check
+        id: discover
+        shell: bash
+        run: |
+          # On push to main: check every committed lesson file.
+          # On PR: check only files changed in the PR.
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            # Get the list of changed files
+            FILES=$(git diff --name-only origin/${{ github.base_ref }}...HEAD -- 'lessons/*.md' 'lessons/**/*.md' | grep -E '\.md$' || true)
+          else
+            # Push to main: check every lesson (except skeletons + smoke test)
+            FILES=$(find lessons -name "*.md" -not -path "*_skeletons*" -not -name "L00-*" | sort)
+          fi
+
+          if [ -z "$FILES" ]; then
+            echo "files=" >> "$GITHUB_OUTPUT"
+            echo "No lesson files to check."
+            exit 0
+          fi
+
+          echo "files<<EOF" >> "$GITHUB_OUTPUT"
+          echo "$FILES" >> "$GITHUB_OUTPUT"
+          echo "EOF" >> "$GITHUB_OUTPUT"
+
+          echo "Files to check:"
+          echo "$FILES"
+
+      - name: Run quality gate
+        if: steps.discover.outputs.files != ''
+        shell: bash
+        run: |
+          FAILED=0
+          for f in ${{ steps.discover.outputs.files }}; do
+            echo "::group::Checking $f"
+            if python3 scripts/check-lesson.py "$f" --no-warn; then
+              echo "✅ $f"
+            else
+              echo "❌ $f"
+              FAILED=1
+            fi
+            echo "::endgroup::"
+          done
+          exit $FAILED

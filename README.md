@@ -1,108 +1,133 @@
-# boxai4 — BoxminingAI Course Builder
+# Boxmining AI Academy
 
-## What this is
+> **Status (June 2026):** Course complete end-to-end. 19 lessons across 3 modules, all passing the quality gate. See `docs/course-overview.md` for the canonical "start here" guide.
 
-A course built from our YouTube library. We produce a lot of videos; we want them organised into a small number of **modules → lessons**, where each lesson is built from one or more videos (we can combine, split, and reorder segments to teach a topic rather than mirror the upload order).
+A structured curriculum built from Boxmining AI's YouTube library. Three modules, 19 lessons, all beginner-friendly.
 
-This repo is the source of truth for the course curriculum. Database tables are populated alongside it.
+## What you'll learn
 
-## Course scope (v1)
+| Module | Lessons | Focus |
+|---|---|---|
+| **Hermes agent** | 9 | What a harness is, install, daily-driver workflows, MCPs, security, automation |
+| **AI model comparison** | 5 | Tier lists, Anthropic family, Chinese open-weight, cost-efficient tier, decision framework |
+| **New AI projects** | 5 | Coding with Claude Code, vibe vs real coding, niche directories, the AI-business stack |
 
-We're focusing the first cut on three pillars, picked to match our strongest video coverage:
+**Read this first:** [`docs/course-overview.md`](docs/course-overview.md) — reading order, cross-module references, methodology.
 
-1. **New AI projects** — hands-on builds, integrations, automations (anything that's "we shipped X this week" or "we built Y with Hermes").
-2. **Hermes agent** — install, configure, daily-driver workflows, releases.
-3. **AI model comparison** — tier list, model-vs-model benchmarks, new releases from major labs.
+**Audience:** true beginners. Grade 8–10 reading level. Every term defined on first use.
 
-Everything else (general news, vendor commentary, one-off commentary shorts) is out of scope for v1 and goes in the **Backlog** until promoted.
+**Voice:** Ron's — direct, no-hype, "I tested this so you don't have to waste time."
+
+## Quick start
+
+```bash
+# Clone the repo
+git clone https://github.com/rivermoonice/boxai4.git
+cd boxai4
+
+# Browse the lessons
+ls lessons/hermes/      # Hermes module (9 lessons)
+ls lessons/ai-models/   # AI model comparison (5 lessons)
+ls lessons/ai-projects/ # New AI projects (5 lessons)
+
+# Run the quality gate
+python3 scripts/check-lesson.py lessons/
+
+# Or check a single lesson
+python3 scripts/check-lesson.py lessons/hermes/L01-what-is-hermes-agent.md
+```
 
 ## Source data
 
-All curriculum work is derived from these fields in the Supabase project `BoxminingAI`:
+All curriculum work is derived from the Supabase project `BoxminingAI` (`public.videos` table).
 
 | Field | Where | Notes |
 |---|---|---|
-| Title | `public.videos.title` | Primary topic signal. |
-| Transcript | `public.videos.transcript_content` | The canonical source — what the video actually says. |
-| Timestamped segments | `public.videos.transcript_segments` | JSON `[{ start, duration, text }]` for jump-to-timestamp links. |
-| Summary + verdict | `public.videos.summary_content`, `summary_verdict`, `summary_key_takeaways` | AI-written synopsis already produced for 306 videos. |
-| YouTube description | `public.videos.youtube_description` | Currently populated for only 13 of 428 videos — treat as a secondary signal. |
-| Tags | `public.videos.tags` | Heavy overlap (most videos carry the same generic bundle) — useful only when the *specific* tag matches (e.g. `hermes agent update`, `model-tier-list`). |
+| Title | `public.videos.title` | Primary topic signal |
+| Transcript | `public.videos.transcript_content` | Canonical source — what the video says |
+| Timestamped segments | `public.videos.transcript_segments` | `[{ start, duration, text }]` for jump-to-timestamp links |
+| Summary + verdict | `summary_content`, `summary_verdict`, `summary_key_takeaways` | AI-written synopsis already produced |
+| YouTube description | `youtube_description` | Only 13 of 428 videos — secondary signal |
+| Tags | `tags` | Heavy overlap (most videos carry the same 22-tag bundle) — useful only when specific tag matches |
 
-Counts (as of 2026-06-24):
-- 428 videos total
-- 296 with transcripts
-- 306 with summaries
-- 13 with YouTube descriptions
-- 26 with timestamped segments
+**Critical:** we never filter by tags alone. See `docs/layer-1-log.md` for the bundle-pollution finding that drove this rule.
 
-We **only** use transcripts and descriptions to build the curriculum — no outside knowledge of the videos.
+## Methodology: the 4-layer pipeline
 
-## How a lesson is built
-
-A lesson is a markdown file under `lessons/` keyed by topic, e.g.:
-
-```
-lessons/
-  hermes/
-    L01-install-and-first-run.md
-    L02-daily-driver-tui-vs-desktop.md
-    ...
-  ai-models/
-    L01-tier-list-methodology.md
-    ...
-  projects/
-    L01-...md
-```
-
-Each lesson file contains:
-- **Goal** — what the learner can do after watching.
-- **Source videos** — list of `video_id`s from `public.videos`, in playback order.
-- **Segments** — start/duration ranges into those videos (from `transcript_segments`) that cover the lesson. Multiple videos may be combined.
-- **Watch link** — `https://www.youtube.com/watch?v=<id>&t=<seconds>` for each segment.
-- **Why this grouping** — one-line rationale, anchored in what the transcript actually says.
-
-A **module** is a directory; modules are sequenced in `course-outline.md` (TBD).
-
-## Existing taxonomy (from `public.folders`)
-
-The Supabase app already has a folder system. We're reusing it where it matches and adding what's missing:
-
-| Folder | Reuse? | Course module |
+| Layer | Output | Method |
 |---|---|---|
-| OpenClaw | Yes (installer only — not a course topic) | — |
-| Claude Code | Yes — pull videos tagged `claude-code` | Backlog (out of scope v1) |
-| Getting Started | Partial | Mostly Hermes install lessons |
-| AI Models | Yes | **Module: AI model comparison** |
-| Model Tier List | Yes | **Module: AI model comparison** |
-| Hermes (`hermes agent`, `hermes agent update`, `hermes agent desktop app`, `hermes bible`, `hermes agent vps`, `hermes agent skills`, `hermes agent dashboard`, `hermes agent mcp`) | New | **Module: Hermes agent** |
-| Updates | New | Folded into the relevant module's "latest" lesson |
-| Tips & Tricks | New | Folded into the module that owns the tool |
-| Integrations | Yes (Discord / Telegram / Notion / APIs / Other) | **Module: projects** when paired with a build |
-| Learning Paths | Yes — this is the course surface | Hosts `course-outline.md` |
-| NemoClaw | Yes | **Module: projects** |
+| 1. Index | `index/`, `index-ai-models/`, `index-ai-projects/` | Deterministic SQL → JSON + transcripts |
+| 1.5. Templates | `templates/lesson.md`, `templates/lesson-skeleton.md` | Fill-in-the-blank scaffolds matching the 12-section spec |
+| 2. Cluster | `lessons/<module>/_skeletons/` | LLM proposes lesson groupings; user reviews |
+| 3. Draft | `lessons/<module>/L##-*.md` | LLM fills in the template from the approved skeleton |
+| 4. Quality gate | `scripts/check-lesson.py` | Deterministic checker for the 12-section spec |
 
-## Workflow
+Every claim in every lesson traces back to a `video_id` in the indexes. The indexes are flat, reproducible, and re-derivable from Supabase.
 
-1. **Pick a module** — start with `Hermes agent` (most tagged coverage, recent activity).
-2. **Pull candidate videos** — query `public.videos` filtered by the module's specific tags and `has_transcript = true`.
-3. **Read the transcript** — scan titles + `summary_verdict` first, then skim the transcript to confirm topic fit.
-4. **Group into lessons** — cluster videos by sub-topic (install, daily use, releases, advanced). Each lesson = 1–4 videos.
-5. **Pick segments** — when a video only partly covers the lesson, use `transcript_segments` to extract the relevant range and write jump-to-timestamp links.
-6. **Write the lesson** — markdown in `lessons/<module>/L##-<slug>.md` using the schema above.
-7. **Update the outline** — append to `course-outline.md` (TBD) so the course has a single sequenced reading order.
+## Lesson specification
+
+Every lesson follows [`Specs/ai-academy-lesson-specification.md`](Specs/ai-academy-lesson-specification.md) — 12 required sections:
+
+1. Title, URL & metadata (SEO foundation)
+2. Introduction & Hook
+3. Core Content & Delivery
+4. Comparisons, Tables & Decision Frameworks
+5. Common Pitfalls, Troubleshooting
+6. Key Takeaways & Ron's Bottom Line
+7. Hands-On Practice
+8. Self-Check / Mini-Quiz
+9. Resources, Glossary & Further Learning
+10. SEO & On-Page Optimization
+11. Accessibility, Tone & Inclusivity
+12. Standalone Text Guides
+
+Word count target: 1,800–3,500+ words per lesson. Reading level: grade 8–10.
+
+## File layout
+
+```
+boxai4/
+├── README.md                        # this file
+├── TODO.md                          # 4-layer build plan + status
+├── .gitignore                       # excludes transcripts + .env
+├── docs/
+│   ├── course-overview.md           # ⭐ start here
+│   ├── layer-1-log.md              # run logs (one per module)
+│   ├── layer-1-log-ai-models.md
+│   ├── layer-1-log-ai-projects.md
+│   ├── layer-2-log.md
+│   ├── layer-2-log-ai-models.md
+│   ├── layer-2-log-ai-projects.md
+│   ├── layer-3-log-ai-projects.md
+├── Specs/
+│   ├── ai-academy-lesson-specification.md   # the 12-section spec
+│   └── ChannelIdentity.md                    # channel voice reference
+├── templates/
+│   ├── lesson.md                    # full lesson scaffold
+│   ├── lesson-skeleton.md           # short L2 output form
+│   └── README.md
+├── scripts/
+│   └── check-lesson.py              # quality gate (deterministic)
+├── index*/                           # per-module video indexes + transcripts
+├── lessons/
+│   ├── hermes/                      # 9 lessons (L01–L09)
+│   ├── ai-models/                   # 5 lessons (L01–L05)
+│   └── ai-projects/                 # 5 lessons (L01–L05)
+```
 
 ## Conventions
 
-- **video_id** is the primary key for cross-references between this repo and Supabase — never use the YouTube URL or title as the identifier.
-- **No fabrication**: every claim in a lesson must trace back to a specific `video_id` and ideally a `transcript_segments` range.
-- **Out of scope** videos stay out of lessons but may be linked from the relevant module's "See also" section if they add context.
-- **`description` fallback**: when a transcript is unavailable but `youtube_description` is, the description can stand in — note this in the lesson file.
+- **`video_id`** is the primary key for cross-references between this repo and Supabase. Never use the YouTube URL or title.
+- **No fabrication**: every claim in a lesson must trace back to a `video_id` in `index*/videos.json`. Body content beyond the source is marked "Ron-tested framing" and grounded in `Specs/ChannelIdentity.md`.
+- **Title + summary_verdict filters, never tags alone.** Tags are bundle-polluted.
+- **Tracked in git:** `index*/videos.json`, `index*/INDEX.json`, `index*/README.md`, lessons, templates, scripts, specs, docs.
+- **Gitignored:** `index*/transcripts/*.txt` (large, re-derivable from Supabase), `.env`.
 
-## Next steps
+## What's next
 
-- [ ] Write `course-outline.md` with module → lesson sequence for v1.
-- [ ] Build out the **Hermes agent** module first (largest tagged coverage).
-- [ ] Build out the **AI model comparison** module.
-- [ ] Build out the **projects** module (newest material first).
-- [ ] Decide hosting surface (Supabase `learning_paths` folder vs standalone site).
+- **CI integration.** The quality gate runs locally. Wire it into GitHub Actions so PRs that break lessons fail CI.
+- **Quarterly review.** Models and tools ship every few weeks. Re-validate lesson recommendations.
+- **Backlog.** Each module has a "Backlog" of videos that didn't fit cleanly into lessons. Promote as needed.
+- **Cross-module reference audit.** Verify each lesson's "Related" section points to the right other lessons.
+
+See `TODO.md` for the full backlog.
