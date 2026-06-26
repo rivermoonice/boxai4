@@ -279,7 +279,7 @@ This lesson IS the capstone. The decision framework:
 You've completed the New AI projects module. 🎉
 
 - **All three modules done**: Hermes (9 lessons), AI model comparison (5 lessons), New AI projects (5 lessons) — 19 lessons drafted and pushed.
-- **Course overview**: cross-module capstone summary is the next obvious step.
+- **Course overview**: see [`docs/course-overview.md`](../../docs/course-overview.md) for the full reading order and cross-module references.
 
 > 💬 Drop your 90-day plan in the Discord. Get an accountability partner.
 

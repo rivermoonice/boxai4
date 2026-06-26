@@ -320,7 +320,7 @@ This lesson IS the decision framework. The table in Step 6 is the spine. Use it.
 
 You've completed the Hermes module. 🎉
 
-- **Other modules** — AI model comparison (in progress) and New AI projects (planned).
+- **Other modules** — AI model comparison (5 lessons) and New AI projects (5 lessons) are both drafted and pushed. Start with [`docs/course-overview.md`](../../docs/course-overview.md) for the full reading order.
 - **Backlog** — 27 release-update and micro-tip videos from the Hermes index. Possible L10: "Hermes Version History."
 - **Community** — drop your decision in the Discord and compare with other learners.
 

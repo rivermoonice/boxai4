@@ -284,7 +284,7 @@ This lesson IS the decision framework. The table below maps workloads to recomme
 
 You've completed the AI model comparison module. 🎉
 
-- **Other modules** — Hermes module (already drafted), New AI projects module (next).
+- **Other modules** — Hermes module (9 lessons) and New AI projects module (5 lessons) are both drafted and pushed. Start with [`docs/course-overview.md`](../../docs/course-overview.md) for the full reading order.
 - **Backlog** — possible L06: "New AI Projects" if you want a sixth lesson.
 - **Cross-reference** — apply this framework alongside the Hermes module's L06 (tiered routing).
 
