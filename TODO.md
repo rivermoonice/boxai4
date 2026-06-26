@@ -56,6 +56,5 @@ No half-finished lessons reach the repo.
 
 ## Now
 
-- **All three modules: Layer 1 (index) and Layer 2 (skeletons) done.** Lessons drafted and pushed for modules 1 and 2. Module 3 awaits user approval of skeletons before Layer 3 drafting.
-- **Course coverage**: 9 lessons (Hermes) + 5 lessons (AI model comparison) = 14 drafted and pushed. + 5 skeletons ready for New AI projects.
-- **Open work**: Layer 3 for module 3 (5 lessons), then full course review.
+- **All three modules complete end-to-end.** 19 lessons drafted and pushed (9 Hermes + 5 AI model comparison + 5 New AI projects). All pass the quality gate.
+- **Remaining work**: full-course overview document, cross-module references, any final cleanup.
