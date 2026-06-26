@@ -53,7 +53,10 @@ ACTION_VERBS = {
     "understand", "apply", "test", "verify", "debug", "fix", "tune",
     "optimize", "monitor", "measure", "estimate", "calculate", "list",
     "summarize", "summarise", "differentiate", "evaluate", "assess",
-    "confirm", "verify", "validate",
+    "confirm", "verify", "validate", "invoke", "trigger", "add",
+    "remove", "delete", "uninstall", "update", "switch", "set",
+    "practice", "recognise", "recognize", "describe", "name",
+    "generate", "produce", "classify", "distinguish", "articulate",
 }
 
 
