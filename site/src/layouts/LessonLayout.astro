@@ -1,0 +1,426 @@
+---
+/**
+ * LessonLayout — the shell for an individual lesson page.
+ *
+ * Renders:
+ *   - Breadcrumbs (Home / Module / Lesson)
+ *   - Lesson header (order, title, summary, metadata)
+ *   - Lesson body (rendered HTML from the content loader)
+ *   - Footer with prev/next navigation
+ *   - Sidebar with reading progress + back-to-module link
+ *
+ * The slot receives the rendered HTML string. Slot expects a
+ * `<Fragment set:html={...} />` from the page that uses this layout.
+ */
+import BaseLayout from './BaseLayout.astro';
+
+interface Props {
+  moduleTitle: string;
+  moduleSlug: string;
+  moduleAccent: string;
+  order: number;
+  title: string;
+  summary: string;
+  description: string;
+  bodyHtml: string;
+  path: string;
+  readingMinutes: number;
+  updatedDate: Date;
+  prev: { title: string; href: string } | null;
+  next: { title: string; href: string } | null;
+}
+
+const {
+  moduleTitle,
+  moduleSlug,
+  moduleAccent,
+  order,
+  title,
+  summary,
+  description,
+  bodyHtml,
+  path,
+  readingMinutes,
+  updatedDate,
+  prev,
+  next,
+} = Astro.props;
+
+const updatedLabel = updatedDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+
+const siteUrl = 'https://boxai4.boxmining.ai';
+const canonical = new URL(path, siteUrl).toString();
+
+// JSON-LD: LearningResource (a sub-type of CreativeWork) for SEO.
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'LearningResource',
+  name: title,
+  headline: title,
+  description,
+  url: canonical,
+  inLanguage: 'en',
+  isAccessibleForFree: true,
+  dateModified: updatedDate.toISOString(),
+  educationalLevel: 'Beginner',
+  learningResourceType: 'Lesson',
+  timeRequired: `PT${readingMinutes}M`,
+  isPartOf: {
+    '@type': 'Course',
+    name: 'Boxmining AI Academy',
+    url: siteUrl,
+  },
+  about: moduleTitle,
+  position: order,
+};
+---
+<BaseLayout title={title} description={description} path={path} jsonLd={jsonLd}>
+  <article class="lesson" style={`--accent: ${moduleAccent}`}>
+    <nav class="lesson__breadcrumbs container" aria-label="Breadcrumb">
+      <ol>
+        <li><a href="/">Home</a></li>
+        <li><a href={`/lessons/${moduleSlug}/`}>{moduleTitle}</a></li>
+        <li aria-current="page">L{String(order).padStart(2, '0')}</li>
+      </ol>
+    </nav>
+
+    <div class="lesson__layout container">
+      <div class="lesson__main">
+        <header class="lesson__header">
+          <p class="lesson__order">Lesson L{String(order).padStart(2, '0')}</p>
+          <h1 class="lesson__title">{title}</h1>
+          {summary && <p class="lesson__summary">{summary}</p>}
+          <dl class="lesson__meta">
+            <div>
+              <dt>Reading time</dt>
+              <dd>{readingMinutes} min</dd>
+            </div>
+            <div>
+              <dt>Last updated</dt>
+              <dd>{updatedLabel}</dd>
+            </div>
+            <div>
+              <dt>Module</dt>
+              <dd><a href={`/lessons/${moduleSlug}/`}>{moduleTitle}</a></dd>
+            </div>
+          </dl>
+        </header>
+
+        <div class="lesson__body prose" set:html={bodyHtml} />
+
+        <nav class="lesson__nav" aria-label="Lesson navigation">
+          {prev ? (
+            <a class="lesson__nav-item lesson__nav-item--prev" href={prev.href}>
+              <span class="lesson__nav-label">Previous</span>
+              <span class="lesson__nav-title">← {prev.title}</span>
+            </a>
+          ) : (
+            <span class="lesson__nav-item lesson__nav-item--placeholder"></span>
+          )}
+          {next ? (
+            <a class="lesson__nav-item lesson__nav-item--next" href={next.href}>
+              <span class="lesson__nav-label">Next</span>
+              <span class="lesson__nav-title">{next.title} →</span>
+            </a>
+          ) : (
+            <span class="lesson__nav-item lesson__nav-item--placeholder"></span>
+          )}
+        </nav>
+      </div>
+
+      <aside class="lesson__aside" aria-label="Lesson tools">
+        <a class="lesson__back" href={`/lessons/${moduleSlug}/`}>← Back to {moduleTitle}</a>
+        <div class="lesson__progress" data-lesson-progress>
+          <p class="lesson__progress-label">Your progress</p>
+          <div class="lesson__progress-bar" aria-hidden="true">
+            <div class="lesson__progress-fill" data-progress-fill></div>
+          </div>
+          <button class="lesson__progress-toggle" type="button" data-progress-toggle>
+            Mark as read
+          </button>
+        </div>
+      </aside>
+    </div>
+  </article>
+</BaseLayout>
+
+<style is:global>
+  .prose {
+    max-width: var(--content-width);
+  }
+  .prose h2 { margin-top: var(--sp-8); }
+  .prose h3 { margin-top: var(--sp-6); }
+  .prose p, .prose ul, .prose ol, .prose blockquote, .prose pre, .prose table {
+    margin-bottom: var(--sp-4);
+  }
+  .prose blockquote {
+    padding: var(--sp-3) var(--sp-5);
+    background: var(--bg-sunk);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+    color: var(--fg-muted);
+  }
+  .prose blockquote p { margin: 0; }
+  .prose table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--fs-sm);
+    overflow-x: auto;
+    display: block;
+  }
+  .prose pre {
+    font-size: var(--fs-sm);
+    line-height: 1.55;
+    padding: var(--sp-4);
+    background: var(--code-bg);
+    color: var(--code-fg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    overflow-x: auto;
+  }
+  .prose hr {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: var(--sp-6) 0;
+  }
+  .prose ul li::marker { color: var(--accent); }
+  .prose ol li::marker { color: var(--fg-muted); font-weight: 600; }
+  .prose strong { color: var(--fg); font-weight: 700; }
+</style>
+
+<style>
+  .lesson { padding-bottom: var(--sp-9); }
+
+  .lesson__breadcrumbs {
+    padding-top: var(--sp-5);
+  }
+  .lesson__breadcrumbs ol {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sp-2);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    font-size: var(--fs-sm);
+    color: var(--fg-subtle);
+  }
+  .lesson__breadcrumbs li {
+    display: inline-flex;
+    align-items: center;
+  }
+  .lesson__breadcrumbs li + li::before {
+    content: '/';
+    margin-right: var(--sp-2);
+    color: var(--border-strong);
+  }
+  .lesson__breadcrumbs a {
+    color: var(--fg-muted);
+    text-decoration: none;
+  }
+  .lesson__breadcrumbs a:hover { color: var(--fg); text-decoration: underline; }
+  .lesson__breadcrumbs li[aria-current="page"] {
+    color: var(--fg);
+    font-weight: 600;
+  }
+
+  .lesson__layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 240px;
+    gap: var(--sp-7);
+    padding-top: var(--sp-6);
+    padding-bottom: var(--sp-7);
+    align-items: start;
+  }
+  @media (max-width: 880px) {
+    .lesson__layout {
+      grid-template-columns: 1fr;
+      gap: var(--sp-6);
+    }
+  }
+
+  .lesson__main { min-width: 0; }
+
+  .lesson__header { margin-bottom: var(--sp-7); }
+  .lesson__order {
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    margin: 0 0 var(--sp-2);
+  }
+  .lesson__title {
+    font-size: clamp(1.875rem, 4vw, 2.5rem);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    margin: 0 0 var(--sp-3);
+  }
+  .lesson__summary {
+    font-size: var(--fs-lg);
+    color: var(--fg-muted);
+    margin: 0 0 var(--sp-5);
+    max-width: 60ch;
+  }
+  .lesson__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sp-5);
+    padding: var(--sp-3) 0;
+    margin: 0;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  .lesson__meta > div { display: flex; flex-direction: column; gap: var(--sp-1); }
+  .lesson__meta dt {
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--fg-subtle);
+    margin: 0;
+  }
+  .lesson__meta dd {
+    font-size: var(--fs-sm);
+    color: var(--fg);
+    margin: 0;
+  }
+  .lesson__meta a { color: var(--fg); text-decoration: none; }
+  .lesson__meta a:hover { text-decoration: underline; }
+
+  .lesson__body { margin-bottom: var(--sp-7); }
+
+  .lesson__nav {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--sp-3);
+    padding-top: var(--sp-5);
+    border-top: 1px solid var(--border);
+  }
+  .lesson__nav-item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-1);
+    padding: var(--sp-4);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    color: var(--fg);
+    transition: border-color 0.15s ease, background 0.15s ease;
+  }
+  .lesson__nav-item--next { text-align: right; align-items: flex-end; }
+  .lesson__nav-item--placeholder { border-color: transparent; }
+  .lesson__nav-item:hover { border-color: var(--border-strong); background: var(--bg-elev); }
+  .lesson__nav-label {
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--fg-subtle);
+  }
+  .lesson__nav-title {
+    font-weight: 600;
+    font-size: var(--fs-sm);
+    color: var(--fg);
+  }
+
+  .lesson__aside {
+    position: sticky;
+    top: calc(var(--nav-height) + var(--sp-4));
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-4);
+  }
+  @media (max-width: 880px) {
+    .lesson__aside { position: static; }
+  }
+  .lesson__back {
+    color: var(--fg-muted);
+    text-decoration: none;
+    font-size: var(--fs-sm);
+    font-weight: 500;
+  }
+  .lesson__back:hover { color: var(--fg); }
+
+  .lesson__progress {
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: var(--sp-4);
+    background: var(--bg-elev);
+  }
+  .lesson__progress-label {
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--fg-subtle);
+    margin: 0 0 var(--sp-2);
+  }
+  .lesson__progress-bar {
+    width: 100%;
+    height: 6px;
+    background: var(--bg-sunk);
+    border-radius: 3px;
+    overflow: hidden;
+    margin-bottom: var(--sp-3);
+  }
+  .lesson__progress-fill {
+    width: 0%;
+    height: 100%;
+    background: var(--accent);
+    transition: width 0.3s ease;
+  }
+  .lesson__progress[data-read="true"] .lesson__progress-fill { width: 100%; }
+  .lesson__progress-toggle {
+    background: transparent;
+    border: 1px solid var(--border-strong);
+    color: var(--fg-muted);
+    padding: var(--sp-2) var(--sp-3);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    font-size: var(--fs-sm);
+    font-weight: 500;
+    width: 100%;
+    transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+  }
+  .lesson__progress-toggle:hover {
+    background: var(--bg-sunk);
+    color: var(--fg);
+    border-color: var(--fg);
+  }
+  .lesson__progress[data-read="true"] .lesson__progress-toggle {
+    background: var(--accent);
+    color: var(--bg);
+    border-color: var(--accent);
+  }
+</style>
+
+<script>
+  // Progress tracking via localStorage. Idempotent.
+  function initProgress() {
+    const blocks = document.querySelectorAll<HTMLElement>('[data-lesson-progress]');
+    blocks.forEach((block) => {
+      const path = location.pathname;
+      const KEY = 'boxai4.progress';
+      let store: Record<string, boolean> = {};
+      try { store = JSON.parse(localStorage.getItem(KEY) || '{}'); } catch (_) {}
+
+      const update = () => {
+        const isRead = !!store[path];
+        block.dataset.read = String(isRead);
+        const btn = block.querySelector<HTMLButtonElement>('[data-progress-toggle]');
+        if (btn) btn.textContent = isRead ? 'Marked as read ✓' : 'Mark as read';
+      };
+
+      update();
+
+      const btn = block.querySelector<HTMLButtonElement>('[data-progress-toggle]');
+      btn?.addEventListener('click', () => {
+        store[path] = !store[path];
+        try { localStorage.setItem(KEY, JSON.stringify(store)); } catch (_) {}
+        update();
+      });
+    });
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initProgress);
+  } else {
+    initProgress();
+  }
+</script>

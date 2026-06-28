@@ -1,0 +1,55 @@
+---
+/**
+ * /lessons/[module]/[slug] — individual lesson page.
+ *
+ * Uses the custom loader (which already renders body to HTML via renderMarkdown).
+ * Computes prev/next navigation from the sorted lesson list.
+ *
+ * Path: /lessons/hermes/L01-what-is-hermes-agent/ → renders that lesson.
+ */
+import LessonLayout from '../../../layouts/LessonLayout.astro';
+import { getCollection } from 'astro:content';
+import { MODULES, moduleMeta, type ModuleName } from '../../../content.config';
+
+export async function getStaticPaths() {
+  const all = await getCollection('lessons');
+  return all.map((entry) => {
+    const module = entry.data.module;
+    const order = entry.data.order;
+    const sorted = all
+      .filter((l) => l.data.module === module)
+      .sort((a, b) => a.data.order - b.data.order);
+    const idx = sorted.findIndex((l) => l.id === entry.id);
+    const prev = idx > 0 ? sorted[idx - 1] : null;
+    const next = idx >= 0 && idx < sorted.length - 1 ? sorted[idx + 1] : null;
+    return {
+      params: { module, slug: entry.data.slug },
+      props: {
+        lesson: entry,
+        prev: prev ? { title: prev.data.title, href: `/lessons/${module}/${prev.data.slug}/` } : null,
+        next: next ? { title: next.data.title, href: `/lessons/${module}/${next.data.slug}/` } : null,
+      },
+    };
+  });
+}
+
+const { lesson, prev, next } = Astro.props;
+const mod = lesson.data.module as ModuleName;
+const meta = moduleMeta[mod];
+const path = `/lessons/${mod}/${lesson.data.slug}/`;
+---
+<LessonLayout
+  moduleTitle={meta.title}
+  moduleSlug={mod}
+  moduleAccent={meta.accent}
+  order={lesson.data.order}
+  title={lesson.data.title}
+  summary={lesson.data.summary}
+  description={lesson.data.description}
+  bodyHtml={lesson.data.bodyHtml}
+  path={path}
+  readingMinutes={lesson.data.readingMinutes}
+  updatedDate={lesson.data.updatedDate}
+  prev={prev}
+  next={next}
+/>

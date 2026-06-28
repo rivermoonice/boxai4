@@ -1,0 +1,105 @@
+---
+/**
+ * /lessons/ — landing page that lists all 19 lessons grouped by module.
+ *
+ * Mirrors the homepage's module-card pattern but with each module's
+ * lesson list inline.
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import LessonCard from '../../components/LessonCard.astro';
+import { getCollection } from 'astro:content';
+import { MODULES, moduleMeta } from '../../content.config';
+
+const all = await getCollection('lessons');
+
+const grouped = MODULES.map((mod) => {
+  const lessons = all
+    .filter((l) => l.data.module === mod)
+    .sort((a, b) => a.data.order - b.data.order);
+  return { key: mod, meta: moduleMeta[mod], lessons };
+}).sort((a, b) => a.meta.order - b.meta.order);
+
+const total = all.length;
+---
+<BaseLayout
+  title="All lessons"
+  description={`All ${total} lessons across the 3 Boxmining AI Academy modules: Hermes agent, AI model comparison, and new AI projects.`}
+  path="/lessons/"
+>
+  <section class="container lessons-index">
+    <header class="lessons-index__header">
+      <p class="lessons-index__eyebrow">All lessons</p>
+      <h1>{total} lessons across 3 modules</h1>
+      <p class="lessons-index__lede">Read in order within a module, or jump to whichever topic fits what you want to learn. Modules are loosely coupled.</p>
+    </header>
+
+    {grouped.map((group) => (
+      <section class="lessons-index__module" style={`--accent: ${group.meta.accent}`}>
+        <header class="lessons-index__module-header">
+          <h2>{group.meta.title}</h2>
+          <p>{group.meta.description}</p>
+        </header>
+        <div class="lessons-index__list">
+          {group.lessons.map((l) => (
+            <LessonCard
+              order={l.data.order}
+              title={l.data.title}
+              summary={l.data.summary}
+              href={`/lessons/${l.data.module}/${l.data.slug}/`}
+              readingMinutes={l.data.readingMinutes}
+              updatedDate={l.data.updatedDate}
+              accent={group.meta.accent}
+            />
+          ))}
+        </div>
+      </section>
+    ))}
+  </section>
+</BaseLayout>
+
+<style>
+  .lessons-index {
+    padding: var(--sp-7) var(--sp-5) var(--sp-9);
+  }
+  .lessons-index__header {
+    margin-bottom: var(--sp-7);
+  }
+  .lessons-index__eyebrow {
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--fg-subtle);
+    margin: 0 0 var(--sp-2);
+  }
+  .lessons-index__header h1 {
+    margin: 0 0 var(--sp-3);
+  }
+  .lessons-index__lede {
+    color: var(--fg-muted);
+    max-width: 60ch;
+    margin: 0;
+  }
+  .lessons-index__module {
+    margin-bottom: var(--sp-8);
+    position: relative;
+  }
+  .lessons-index__module-header {
+    margin-bottom: var(--sp-4);
+    padding-left: var(--sp-4);
+    border-left: 3px solid var(--accent);
+  }
+  .lessons-index__module-header h2 {
+    margin: 0 0 var(--sp-1);
+  }
+  .lessons-index__module-header p {
+    color: var(--fg-muted);
+    font-size: var(--fs-sm);
+    margin: 0;
+  }
+  .lessons-index__list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-3);
+  }
+</style>

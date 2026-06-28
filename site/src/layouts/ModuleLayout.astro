@@ -1,0 +1,79 @@
+---
+/**
+ * ModuleLayout — module landing page shell.
+ * Header has module title, description, and a lesson count.
+ * Slot is the module body (lesson grid).
+ */
+import BaseLayout from './BaseLayout.astro';
+
+interface Props {
+  moduleTitle: string;
+  moduleDescription: string;
+  accent: string;
+  lessonCount: number;
+  path: string;
+}
+
+const { moduleTitle, moduleDescription, accent, lessonCount, path } = Astro.props;
+const description = `${moduleTitle} — ${lessonCount} lessons. ${moduleDescription}`;
+---
+<BaseLayout title={moduleTitle} description={description} path={path}>
+  <section class="module-header" style={`--accent: ${accent}`}>
+    <div class="container">
+      <p class="module-header__eyebrow">Module</p>
+      <h1 class="module-header__title">{moduleTitle}</h1>
+      <p class="module-header__lede">{moduleDescription}</p>
+      <p class="module-header__meta">
+        <span>{lessonCount} lessons</span>
+      </p>
+    </div>
+  </section>
+  <section class="container module-body">
+    <slot />
+  </section>
+</BaseLayout>
+
+<style>
+  .module-header {
+    padding: var(--sp-8) 0 var(--sp-7);
+    border-bottom: 1px solid var(--border);
+    position: relative;
+  }
+  .module-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: var(--accent);
+  }
+  .module-header__eyebrow {
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    margin: 0 0 var(--sp-2);
+  }
+  .module-header__title {
+    font-size: clamp(2rem, 4vw, 2.75rem);
+    margin: 0 0 var(--sp-3);
+    letter-spacing: -0.02em;
+  }
+  .module-header__lede {
+    font-size: var(--fs-lg);
+    color: var(--fg-muted);
+    max-width: 60ch;
+    margin: 0 0 var(--sp-4);
+  }
+  .module-header__meta {
+    color: var(--fg-subtle);
+    font-size: var(--fs-sm);
+    margin: 0;
+  }
+
+  .module-body {
+    padding: var(--sp-7) var(--sp-5);
+  }
+</style>

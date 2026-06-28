@@ -1,0 +1,56 @@
+---
+/**
+ * /lessons/[module]/ — module landing page.
+ * Renders the module's lessons in a grid.
+ *
+ * Path: /lessons/hermes/ → Hermes module landing.
+ *
+ * Module is constrained to one of the three valid module names via getStaticPaths.
+ */
+import ModuleLayout from '../../../layouts/ModuleLayout.astro';
+import LessonCard from '../../../components/LessonCard.astro';
+import { getCollection } from 'astro:content';
+import { MODULES, moduleMeta, type ModuleName } from '../../../content.config';
+
+export async function getStaticPaths() {
+  return MODULES.map((mod) => ({ params: { module: mod } }));
+}
+
+const { module } = Astro.params;
+const mod = module as ModuleName;
+const meta = moduleMeta[mod];
+
+const all = await getCollection('lessons');
+const lessons = all
+  .filter((l) => l.data.module === mod)
+  .sort((a, b) => a.data.order - b.data.order);
+---
+<ModuleLayout
+  moduleTitle={meta.title}
+  moduleDescription={meta.description}
+  accent={meta.accent}
+  lessonCount={lessons.length}
+  path={`/lessons/${mod}/`}
+>
+  <div class="lesson-grid">
+    {lessons.map((l) => (
+      <LessonCard
+        order={l.data.order}
+        title={l.data.title}
+        summary={l.data.summary}
+        href={`/lessons/${mod}/${l.data.slug}/`}
+        readingMinutes={l.data.readingMinutes}
+        updatedDate={l.data.updatedDate}
+        accent={meta.accent}
+      />
+    ))}
+  </div>
+</ModuleLayout>
+
+<style>
+  .lesson-grid {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-3);
+  }
+</style>
