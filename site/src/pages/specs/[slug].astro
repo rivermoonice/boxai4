@@ -1,0 +1,75 @@
+---
+/**
+ * /specs/[slug] — render any markdown file from the repo's Specs/ directory.
+ * Currently supports: lesson-spec (ai-academy-lesson-specification.md)
+ * and channel-identity (ChannelIdentity.md).
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { readFile } from 'node:fs/promises';
+import { join, resolve, dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { render } from 'astro:content';
+import { SPEC_PAGES, SPEC_SLUGS } from '../../data/specs';
+
+const PROJECT_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..', '..', '..', '..');
+const SPECS_DIR = join(PROJECT_ROOT, 'Specs');
+
+export async function getStaticPaths() {
+  return SPEC_SLUGS.map((slug) => ({ params: { slug } }));
+}
+
+const { slug } = Astro.params;
+const info = SPEC_PAGES[slug as string];
+if (!info) {
+  return Astro.redirect('/404');
+}
+
+const filePath = join(SPECS_DIR, info.file);
+const raw = await readFile(filePath, 'utf8');
+const { Content } = await render(raw);
+---
+<BaseLayout title={info.title} description={info.description} path={`/specs/${slug}/`}>
+  <section class="container spec">
+    <header class="spec__header">
+      <p class="spec__eyebrow">Reference</p>
+      <h1>{info.title}</h1>
+      <p class="spec__lede">{info.description}</p>
+      <p class="spec__source">
+        Source: <a href={`https://github.com/rivermoonice/boxai4/blob/main/Specs/${info.file}`} rel="noopener external">Specs/{info.file}</a> in the repo.
+      </p>
+    </header>
+    <div class="spec__body prose">
+      <Content />
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .spec {
+    padding: var(--sp-7) var(--sp-5) var(--sp-9);
+  }
+  .spec__header { margin-bottom: var(--sp-7); max-width: 70ch; }
+  .spec__eyebrow {
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--fg-subtle);
+    margin: 0 0 var(--sp-2);
+  }
+  .spec__header h1 {
+    font-size: clamp(2rem, 4vw, 2.5rem);
+    margin: 0 0 var(--sp-3);
+    letter-spacing: -0.02em;
+  }
+  .spec__lede {
+    font-size: var(--fs-lg);
+    color: var(--fg-muted);
+    margin: 0 0 var(--sp-3);
+  }
+  .spec__source {
+    font-size: var(--fs-sm);
+    color: var(--fg-subtle);
+    margin: 0;
+  }
+</style>

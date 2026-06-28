@@ -1,0 +1,97 @@
+---
+/**
+ * /about — methodology, source data, quality gate.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+<BaseLayout
+  title="About"
+  description="How the Boxmining AI Academy course was built: methodology, source data, and quality gate."
+  path="/about/"
+>
+  <section class="container about">
+    <header class="about__header">
+      <p class="about__eyebrow">About</p>
+      <h1>How this course was built</h1>
+      <p class="about__lede">A beginner-friendly course built from BoxminingAI's YouTube library. Every claim traces back to a transcript.</p>
+    </header>
+
+    <div class="about__body prose">
+      <h2>Source data</h2>
+      <p>Every lesson is built from a BoxminingAI YouTube video. We use the video transcripts and descriptions — no outside knowledge of the videos. Source data lives in the Supabase project <code>BoxminingAI</code>, in the <code>public.videos</code> table.</p>
+
+      <p>Three index files mirror the scoped video set per module:</p>
+      <ul>
+        <li><a href="https://github.com/rivermoonice/boxai4/tree/main/index">Hermes module index</a> — 103 scoped videos, 57 transcripts.</li>
+        <li><a href="https://github.com/rivermoonice/boxai4/tree/main/index-ai-models">AI model comparison index</a> — 134 scoped videos, 102 transcripts.</li>
+        <li><a href="https://github.com/rivermoonice/boxai4/tree/main/index-ai-projects">New AI projects index</a> — 96 scoped videos, 58 transcripts.</li>
+      </ul>
+
+      <h2>Methodology: the 4-layer pipeline</h2>
+      <ol>
+        <li><strong>Index.</strong> SQL query scopes videos by title and summary verdict — never tags alone. Tags are bundle-polluted (most recent uploads share a generic 22-tag bundle), so a title-based filter is the only reliable scope.</li>
+        <li><strong>Cluster.</strong> LLM proposes lesson groupings. User reviews every skeleton before drafting begins.</li>
+        <li><strong>Draft.</strong> LLM fills in the lesson template from the approved skeleton. One lesson in flight at a time. Source transcripts cross-checked for factual claims.</li>
+        <li><strong>Quality gate.</strong> A deterministic Python script asserts every lesson satisfies the 12-section spec. PRs that fail the gate fail CI.</li>
+      </ol>
+
+      <h2>The 12-section lesson spec</h2>
+      <p>Every lesson follows <a href="/specs/lesson-spec/">the lesson specification</a>:</p>
+      <ol>
+        <li>Title, URL &amp; metadata (SEO foundation)</li>
+        <li>Introduction &amp; Hook</li>
+        <li>Core Content &amp; Delivery</li>
+        <li>Comparisons, Tables &amp; Decision Frameworks</li>
+        <li>Common Pitfalls, Troubleshooting &amp; "What Beginners Break"</li>
+        <li>Key Takeaways &amp; Ron's Bottom Line</li>
+        <li>Hands-On Practice &amp; Actionable Next Steps</li>
+        <li>Self-Check / Mini-Quiz</li>
+        <li>Resources, Glossary &amp; Further Learning</li>
+        <li>SEO &amp; On-Page Optimization</li>
+        <li>Accessibility, Tone &amp; Inclusivity</li>
+        <li>Standalone Text Guides</li>
+      </ol>
+      <p>Word count target: 1,800–3,500+. Reading level: grade 8–10. Every term defined on first use.</p>
+
+      <h2>Voice: Ron's, not marketing</h2>
+      <p>The course is written in Ron's documented voice — direct, no-hype, "I tested this so you don't have to waste time." It draws on the channel's documented beliefs in <a href="/specs/channel-identity/">the channel identity reference</a>, including:</p>
+      <ul>
+        <li>"Pure, cost-efficient models like Kimi K2.7 and MiniMax M3 beat raw frontier capability for everyday use."</li>
+        <li>"Chinese open-weight models (Kimi, Qwen, DeepSeek) are the practical benchmark that Western frontier models must clear."</li>
+        <li>"AI agents are leverage on top of a pre-existing human advantage (network, niche knowledge), not pure automation that replaces the founder."</li>
+        <li>"Loop-based agent workflows with validation harnesses (Playwright/Puppeteer checklists) are the new default for shipping with agents."</li>
+      </ul>
+
+      <h2>Refresh cadence</h2>
+      <p>The model and tool landscape moves every few weeks. The course is reviewed quarterly. Major releases (Opus 4.x, Fable 5, Hermes 0.17+) trigger an out-of-cycle review of the affected lessons.</p>
+
+      <h2>Open source</h2>
+      <p>The whole course — lessons, indexes, transcripts, transcripts, the quality gate, the CI workflow, and this Astro 7 site — is open source on <a href="https://github.com/rivermoonice/boxai4" rel="noopener external">GitHub</a>.</p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .about {
+    padding: var(--sp-7) var(--sp-5) var(--sp-9);
+  }
+  .about__header { margin-bottom: var(--sp-7); max-width: 70ch; }
+  .about__eyebrow {
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--fg-subtle);
+    margin: 0 0 var(--sp-2);
+  }
+  .about__header h1 {
+    font-size: clamp(2rem, 4vw, 2.5rem);
+    margin: 0 0 var(--sp-3);
+    letter-spacing: -0.02em;
+  }
+  .about__lede {
+    font-size: var(--fs-lg);
+    color: var(--fg-muted);
+    margin: 0;
+  }
+</style>

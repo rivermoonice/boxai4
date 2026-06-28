@@ -1,0 +1,115 @@
+---
+/**
+ * /search — client-side search powered by Pagefind.
+ *
+ * Pagefind indexes the built site at build time and ships a static
+ * search index under /pagefind/. The script and styles are loaded
+ * lazily on this page (and on any page that includes the search UI).
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+<BaseLayout
+  title="Search lessons"
+  description="Search across all 19 Boxmining AI Academy lessons."
+  path="/search/"
+>
+  <section class="container search">
+    <header class="search__header">
+      <h1>Search lessons</h1>
+      <p class="search__lede">Full-text search across all 19 lessons. Powered by <a href="https://pagefind.app" rel="noopener external">Pagefind</a>.</p>
+    </header>
+
+    <div id="search" data-pagefind-body></div>
+
+    <noscript>
+      <p class="search__fallback">Search requires JavaScript. <a href="/lessons/">Browse all lessons by module</a>.</p>
+    </noscript>
+  </section>
+
+  <link href="/pagefind/pagefind-ui.css" rel="stylesheet" />
+  <script src="/pagefind/pagefind-ui.js" is:inline></script>
+  <script is:inline>
+    window.addEventListener('DOMContentLoaded', () => {
+      // @ts-ignore — Pagefind ships its own globals
+      new PagefindUI({
+        element: '#search',
+        showImages: false,
+        showSubResults: true,
+        resetStyles: false,
+        excerptLength: 30,
+      });
+    });
+  </script>
+</BaseLayout>
+
+<style>
+  .search {
+    padding: var(--sp-7) var(--sp-5);
+  }
+  .search__header { margin-bottom: var(--sp-6); }
+  .search__lede {
+    color: var(--fg-muted);
+    margin: 0;
+  }
+  .search__fallback {
+    margin-top: var(--sp-5);
+    padding: var(--sp-4);
+    background: var(--bg-sunk);
+    border-radius: var(--radius-md);
+    color: var(--fg-muted);
+  }
+
+  /* Pagefind UI overrides — match the site design. */
+  :global(#search .pagefind-ui__form) {
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: var(--sp-2) var(--sp-3);
+  }
+  :global(#search .pagefind-ui__search-input) {
+    font-family: inherit;
+    font-size: var(--fs-md);
+    background: transparent;
+    border: none;
+    color: var(--fg);
+    width: 100%;
+    padding: var(--sp-2);
+  }
+  :global(#search .pagefind-ui__search-input:focus) {
+    outline: none;
+  }
+  :global(#search .pagefind-ui__results-area) {
+    margin-top: var(--sp-5);
+  }
+  :global(#search .pagefind-ui__result) {
+    padding: var(--sp-4) 0;
+    border-top: 1px solid var(--border);
+    list-style: none;
+  }
+  :global(#search .pagefind-ui__result:last-child) {
+    border-bottom: 1px solid var(--border);
+  }
+  :global(#search .pagefind-ui__result-title) {
+    font-size: var(--fs-lg);
+    margin: 0 0 var(--sp-1);
+  }
+  :global(#search .pagefind-ui__result-title a) {
+    color: var(--link);
+    text-decoration: none;
+  }
+  :global(#search .pagefind-ui__result-title a:hover) {
+    text-decoration: underline;
+  }
+  :global(#search .pagefind-ui__result-excerpt) {
+    color: var(--fg-muted);
+    font-size: var(--fs-sm);
+    margin: 0;
+  }
+  :global(#search .pagefind-ui__result-excerpt mark) {
+    background: var(--selection);
+    color: var(--fg);
+    padding: 0 0.15em;
+    border-radius: 2px;
+  }
+  :global(#search .pagefind-ui__filter) { display: none; }
+</style>
