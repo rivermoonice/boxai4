@@ -6,3 +6,8 @@
 # Large derived files (re-derivable from Supabase via index/build script)
 index/transcripts/*.txt
 index-*/transcripts/*.txt
+
+# IDE-specific files (project-wide)
+**/AGENTS.md
+**/CLAUDE.md
+**/.vscode/

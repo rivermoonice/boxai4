@@ -1,0 +1,91 @@
+---
+/**
+ * Footer — global site footer.
+ */
+const year = new Date().getFullYear();
+---
+<footer class="footer">
+  <div class="footer__inner container">
+    <div class="footer__col">
+      <p class="footer__brand">Boxmining AI Academy</p>
+      <p class="footer__tag">A beginner-friendly course built from BoxminingAI's YouTube library.</p>
+    </div>
+    <div class="footer__col">
+      <p class="footer__heading">Course</p>
+      <ul>
+        <li><a href="/lessons/hermes/">Hermes module</a></li>
+        <li><a href="/lessons/ai-models/">AI model comparison</a></li>
+        <li><a href="/lessons/ai-projects/">New AI projects</a></li>
+        <li><a href="/lessons/">All lessons</a></li>
+      </ul>
+    </div>
+    <div class="footer__col">
+      <p class="footer__heading">Reference</p>
+      <ul>
+        <li><a href="/about/">About</a></li>
+        <li><a href="/specs/lesson-spec/">Lesson specification</a></li>
+        <li><a href="/specs/channel-identity/">Channel identity</a></li>
+        <li><a href="/rss.xml">RSS</a></li>
+      </ul>
+    </div>
+    <div class="footer__col">
+      <p class="footer__heading">Source</p>
+      <ul>
+        <li><a href="https://github.com/rivermoonice/boxai4" rel="noopener external">GitHub repo</a></li>
+        <li><a href="https://www.youtube.com/@boxmining" rel="noopener external">YouTube channel</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer__base container">
+    <p>© {year} BoxminingAI. Built with Astro 7.</p>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    margin-top: var(--sp-9);
+    border-top: 1px solid var(--border);
+    background: var(--bg-sunk);
+  }
+  .footer__inner {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: var(--sp-6);
+    padding: var(--sp-7) var(--sp-5);
+  }
+  .footer__col p, .footer__col ul { margin: 0; padding: 0; list-style: none; }
+  .footer__col li { margin-bottom: var(--sp-2); }
+  .footer__col a {
+    color: var(--fg-muted);
+    text-decoration: none;
+    font-size: var(--fs-sm);
+  }
+  .footer__col a:hover { color: var(--fg); text-decoration: underline; }
+
+  .footer__brand { font-weight: 700; font-size: var(--fs-md); color: var(--fg); margin-bottom: var(--sp-2) !important; }
+  .footer__tag { color: var(--fg-muted); font-size: var(--fs-sm); }
+  .footer__heading {
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--fg-subtle);
+    margin-bottom: var(--sp-3) !important;
+  }
+  .footer__base {
+    border-top: 1px solid var(--border);
+    padding: var(--sp-4) var(--sp-5);
+    color: var(--fg-subtle);
+    font-size: var(--fs-xs);
+  }
+  .footer__base p { margin: 0; }
+
+  @media (max-width: 720px) {
+    .footer__inner {
+      grid-template-columns: 1fr 1fr;
+    }
+    .footer__col:first-child {
+      grid-column: 1 / -1;
+    }
+  }
+</style>

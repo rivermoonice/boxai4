@@ -1,0 +1,335 @@
+---
+/**
+ * Homepage — hero, value prop, module overview.
+ *
+ * Pulls module data from the content config so adding a new module
+ * automatically appears here. Lesson counts are computed at build time.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import { MODULES, moduleMeta } from '../content.config';
+
+const allLessons = await getCollection('lessons');
+const totalLessons = allLessons.length;
+
+// Compute counts and latest-update per module
+const byModule = {} as Record<string, { count: number; latestDate: Date | null; latestTitle: string | null; order: number }>;
+for (const mod of MODULES) {
+  const lessons = allLessons.filter((l) => l.data.module === mod);
+  const sorted = lessons.sort((a, b) => a.data.order - b.data.order);
+  const latest = sorted[sorted.length - 1];
+  byModule[mod] = {
+    count: lessons.length,
+    latestDate: latest ? latest.data.updatedDate : null,
+    latestTitle: latest ? latest.data.title : null,
+    order: moduleMeta[mod].order,
+  };
+}
+
+const orderedModules = MODULES
+  .map((m) => ({ key: m, ...moduleMeta[m], ...byModule[m] }))
+  .sort((a, b) => a.order - b.order);
+
+const totalReading = allLessons.reduce((s, l) => s + l.data.readingMinutes, 0);
+const totalHours = Math.round(totalReading / 60);
+
+const siteUrl = 'https://boxai4.boxmining.ai';
+const path = '/';
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Course',
+    name: 'Boxmining AI Academy',
+    description: 'A beginner-friendly course built from BoxminingAI\'s YouTube library. Three modules: Hermes agent, AI model comparison, and new AI projects. 19 lessons, ~3.5 hours of reading.',
+    provider: {
+      '@type': 'Organization',
+      name: 'BoxminingAI',
+      url: 'https://www.youtube.com/@boxmining',
+    },
+    url: siteUrl + path,
+    inLanguage: 'en',
+    isAccessibleForFree: true,
+    hasCourseInstance: {
+      '@type': 'CourseInstance',
+      courseMode: 'online',
+      courseWorkload: 'PT3H30M',
+    },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: 'Boxmining AI Academy',
+    url: siteUrl,
+  },
+];
+---
+<BaseLayout
+  title="Boxmining AI Academy"
+  description="A beginner-friendly course built from BoxminingAI's YouTube library. 19 lessons across Hermes agent, AI model comparison, and new AI projects. ~3.5 hours of reading."
+  path={path}
+  jsonLd={jsonLd}
+>
+  <section class="hero">
+    <div class="container">
+      <p class="hero__eyebrow">BoxminingAI · 19 lessons · 3 modules</p>
+      <h1 class="hero__title">A beginner-friendly course on AI agents, models, and real projects.</h1>
+      <p class="hero__lede">Built from the BoxminingAI YouTube library. 19 lessons. ~{totalHours} hours of reading. True-beginner tone, Ron's voice, no hype.</p>
+      <div class="hero__cta">
+        <a class="btn btn--primary" href="/lessons/hermes/L01-what-is-hermes-agent/">Start with Hermes L01</a>
+        <a class="btn btn--ghost" href="/lessons/">Browse all lessons</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="modules container">
+    <h2>Three modules. Pick a starting point.</h2>
+    <p class="modules__lede">Each module stands on its own. Modules are loosely coupled — jump to whichever fits what you want to learn.</p>
+    <div class="modules__grid">
+      {orderedModules.map((mod) => (
+        <a class="module-card" href={`/lessons/${mod.key}/`} style={`--accent: ${mod.accent}`}>
+          <p class="module-card__order">Module {mod.order}</p>
+          <h3 class="module-card__title">{mod.title}</h3>
+          <p class="module-card__desc">{mod.description}</p>
+          <p class="module-card__meta">
+            <span>{mod.count} lessons</span>
+            {mod.latestDate && (
+              <>
+                <span aria-hidden="true">·</span>
+                <span>Updated {mod.latestDate.toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}</span>
+              </>
+            )}
+          </p>
+          <span class="module-card__arrow" aria-hidden="true">→</span>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section class="why container">
+    <h2>Why this course</h2>
+    <div class="why__grid">
+      <article>
+        <h3>True beginner tone</h3>
+        <p>Grade 8–10 reading level. Every term defined on first use. No assumed knowledge of tokens, MCPs, TUIs, or slash commands.</p>
+      </article>
+      <article>
+        <h3>Ron's voice, not marketing</h3>
+        <p>Direct, no-hype, "I tested this so you don't have to waste time." Honest about what works and what doesn't.</p>
+      </article>
+      <article>
+        <h3>Every claim is sourced</h3>
+        <p>Every lesson cites the BoxminingAI YouTube video it's built from. We use transcripts and descriptions only — no outside knowledge of the videos.</p>
+      </article>
+      <article>
+        <h3>12-section quality gate</h3>
+        <p>Every lesson passes an automated checker that enforces the spec. <a href="/specs/lesson-spec/">See the spec</a>.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="start container">
+    <h2>Where to start</h2>
+    <ol class="start__list">
+      <li>
+        <strong>Want to set up an AI agent for daily use?</strong>
+        Start with <a href="/lessons/hermes/L01-what-is-hermes-agent/">Hermes L01</a>.
+      </li>
+      <li>
+        <strong>Want to understand which AI model to use?</strong>
+        Start with <a href="/lessons/ai-models/L01-what-is-an-ai-model-tier-list/">AI model comparison L01</a>.
+      </li>
+      <li>
+        <strong>Want to build something real?</strong>
+        Start with <a href="/lessons/ai-projects/L01-coding-with-claude-code/">New AI projects L01</a>.
+      </li>
+    </ol>
+    <p class="start__cta">
+      Or read <a href="/lessons/">all 19 lessons in order</a>.
+    </p>
+  </section>
+</BaseLayout>
+
+<style>
+  .hero {
+    padding: var(--sp-9) 0 var(--sp-8);
+    border-bottom: 1px solid var(--border);
+  }
+  .hero__eyebrow {
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--fg-subtle);
+    margin: 0 0 var(--sp-3);
+  }
+  .hero__title {
+    font-size: clamp(2rem, 4vw, 3rem);
+    line-height: 1.1;
+    letter-spacing: -0.025em;
+    margin: 0 0 var(--sp-4);
+    max-width: 22ch;
+  }
+  .hero__lede {
+    font-size: var(--fs-lg);
+    color: var(--fg-muted);
+    max-width: 56ch;
+    margin: 0 0 var(--sp-6);
+  }
+  .hero__cta {
+    display: flex;
+    gap: var(--sp-3);
+    flex-wrap: wrap;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    padding: var(--sp-3) var(--sp-5);
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    font-size: var(--fs-sm);
+    text-decoration: none;
+    transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+    border: 1px solid transparent;
+  }
+  .btn--primary {
+    background: var(--fg);
+    color: var(--bg);
+  }
+  .btn--primary:hover {
+    background: var(--link);
+    color: white;
+  }
+  .btn--ghost {
+    background: transparent;
+    color: var(--fg);
+    border-color: var(--border-strong);
+  }
+  .btn--ghost:hover {
+    background: var(--bg-elev);
+    border-color: var(--fg);
+  }
+
+  .modules {
+    padding: var(--sp-8) var(--sp-5);
+  }
+  .modules h2 {
+    margin-top: 0;
+  }
+  .modules__lede {
+    color: var(--fg-muted);
+    max-width: 60ch;
+    margin-bottom: var(--sp-6);
+  }
+  .modules__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--sp-4);
+  }
+  .module-card {
+    --accent: var(--fg);
+    position: relative;
+    display: block;
+    padding: var(--sp-5);
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    text-decoration: none;
+    color: var(--fg);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    overflow: hidden;
+  }
+  .module-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 3px;
+    height: 100%;
+    background: var(--accent);
+  }
+  .module-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--border-strong);
+  }
+  .module-card__order {
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    margin: 0 0 var(--sp-2);
+  }
+  .module-card__title {
+    font-size: var(--fs-xl);
+    margin: 0 0 var(--sp-2);
+  }
+  .module-card__desc {
+    color: var(--fg-muted);
+    font-size: var(--fs-sm);
+    margin: 0 0 var(--sp-3);
+  }
+  .module-card__meta {
+    display: flex;
+    gap: var(--sp-2);
+    color: var(--fg-subtle);
+    font-size: var(--fs-xs);
+    margin: 0;
+  }
+  .module-card__arrow {
+    position: absolute;
+    top: var(--sp-4);
+    right: var(--sp-4);
+    color: var(--fg-subtle);
+    transition: transform 0.2s ease, color 0.2s ease;
+  }
+  .module-card:hover .module-card__arrow {
+    color: var(--fg);
+    transform: translateX(2px);
+  }
+
+  .why {
+    padding: var(--sp-8) var(--sp-5);
+    background: var(--bg-sunk);
+    border-radius: var(--radius-xl);
+    margin-block: var(--sp-7);
+  }
+  .why h2 { margin-top: 0; }
+  .why__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: var(--sp-5);
+    margin-top: var(--sp-5);
+  }
+  .why__grid article h3 {
+    font-size: var(--fs-md);
+    margin: 0 0 var(--sp-2);
+  }
+  .why__grid article p {
+    color: var(--fg-muted);
+    font-size: var(--fs-sm);
+    margin: 0;
+  }
+
+  .start {
+    padding: var(--sp-8) var(--sp-5);
+  }
+  .start h2 { margin-top: 0; }
+  .start__list {
+    list-style: decimal;
+    padding-left: 1.5em;
+    max-width: 70ch;
+  }
+  .start__list li {
+    margin-bottom: var(--sp-3);
+  }
+  .start__list li strong {
+    color: var(--fg);
+    display: inline;
+  }
+  .start__cta {
+    margin-top: var(--sp-5);
+    color: var(--fg-muted);
+  }
+</style>

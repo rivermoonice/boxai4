@@ -1,0 +1,282 @@
+/*
+ * Boxmining AI Academy — design tokens + base styles.
+ *
+ * Goals:
+ * - Honest, no-hype voice reflected in the visuals: clean, generous whitespace,
+ *   no gradients-as-marketing, no aggressive CTAs.
+ * - Code-friendly: tables, code blocks, and callouts all styled deliberately.
+ * - Light + dark mode. System fonts. No external font fetches by default.
+ * - All long-form text is content-width (~70ch). Sidebars/rails are narrower.
+ */
+
+:root {
+  /* Type scale (modular ~1.2) */
+  --fs-xs: 0.78rem;
+  --fs-sm: 0.875rem;
+  --fs-base: 1rem;
+  --fs-md: 1.125rem;
+  --fs-lg: 1.25rem;
+  --fs-xl: 1.5rem;
+  --fs-2xl: 1.875rem;
+  --fs-3xl: 2.25rem;
+  --fs-4xl: 3rem;
+
+  /* Spacing scale */
+  --sp-1: 0.25rem;
+  --sp-2: 0.5rem;
+  --sp-3: 0.75rem;
+  --sp-4: 1rem;
+  --sp-5: 1.5rem;
+  --sp-6: 2rem;
+  --sp-7: 3rem;
+  --sp-8: 4rem;
+  --sp-9: 6rem;
+
+  /* Layout */
+  --content-width: 70ch;
+  --wide-width: 84ch;
+  --nav-height: 4rem;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 20px;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+  --shadow-lg: 0 12px 32px rgba(0,0,0,0.12);
+
+  /* Light mode */
+  --bg: #fdfdfb;
+  --bg-elev: #ffffff;
+  --bg-sunk: #f3f1ec;
+  --fg: #1a1a1a;
+  --fg-muted: #5a5a5a;
+  --fg-subtle: #8a8a8a;
+  --border: #e6e2d8;
+  --border-strong: #c8c2b3;
+  --accent: #1a1a1a;
+  --link: #1f4dd9;
+  --link-hover: #143aa8;
+  --code-bg: #f4f1e9;
+  --code-fg: #1a1a1a;
+  --selection: #ffe9a8;
+}
+
+:root[data-theme="dark"], :root.dark {
+  --bg: #14130f;
+  --bg-elev: #1d1c17;
+  --bg-sunk: #100f0c;
+  --fg: #ece8db;
+  --fg-muted: #a8a395;
+  --fg-subtle: #6e6c5e;
+  --border: #2c2b25;
+  --border-strong: #44433a;
+  --accent: #ece8db;
+  --link: #8ab4ff;
+  --link-hover: #a8c5ff;
+  --code-bg: #1a1915;
+  --code-fg: #ece8db;
+  --selection: #5a4a16;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #14130f;
+    --bg-elev: #1d1c17;
+    --bg-sunk: #100f0c;
+    --fg: #ece8db;
+    --fg-muted: #a8a395;
+    --fg-subtle: #6e6c5e;
+    --border: #2c2b25;
+    --border-strong: #44433a;
+    --accent: #ece8db;
+    --link: #8ab4ff;
+    --link-hover: #a8c5ff;
+    --code-bg: #1a1915;
+    --code-fg: #ece8db;
+    --selection: #5a4a16;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--nav-height) + 1rem);
+}
+
+body {
+  margin: 0;
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: var(--fs-base);
+  line-height: 1.6;
+  color: var(--fg);
+  background: var(--bg);
+  font-feature-settings: "kern" 1, "liga" 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background: var(--selection);
+  color: var(--fg);
+}
+
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  margin: 0;
+  color: var(--fg);
+}
+
+h1 { font-size: var(--fs-3xl); letter-spacing: -0.02em; }
+h2 { font-size: var(--fs-2xl); margin-top: var(--sp-7); margin-bottom: var(--sp-3); }
+h3 { font-size: var(--fs-xl); margin-top: var(--sp-6); margin-bottom: var(--sp-2); }
+h4 { font-size: var(--fs-lg); margin-top: var(--sp-5); margin-bottom: var(--sp-2); }
+h5, h6 { font-size: var(--fs-md); margin-top: var(--sp-4); margin-bottom: var(--sp-1); }
+
+p, ul, ol, blockquote, pre, table, dl, figure {
+  margin: 0 0 var(--sp-4) 0;
+}
+
+/* Links */
+a {
+  color: var(--link);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+  transition: color 0.15s ease;
+}
+a:hover {
+  color: var(--link-hover);
+}
+
+/* Lists */
+ul, ol {
+  padding-left: 1.5em;
+}
+li + li { margin-top: var(--sp-1); }
+li > p { margin-bottom: var(--sp-2); }
+
+/* Blockquotes (used for callouts in lessons) */
+blockquote {
+  padding: var(--sp-3) var(--sp-4);
+  border-left: 3px solid var(--border-strong);
+  color: var(--fg-muted);
+  font-style: italic;
+  background: var(--bg-sunk);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+}
+blockquote p:last-child { margin-bottom: 0; }
+
+/* Inline code */
+:not(pre) > code {
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+  font-size: 0.92em;
+  background: var(--code-bg);
+  color: var(--code-fg);
+  padding: 0.1em 0.35em;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+}
+
+/* Code blocks */
+pre {
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+  font-size: var(--fs-sm);
+  line-height: 1.55;
+  padding: var(--sp-4);
+  background: var(--code-bg);
+  color: var(--code-fg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow-x: auto;
+}
+pre code {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: inherit;
+}
+
+/* Tables — used heavily in lessons */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--fs-sm);
+}
+th, td {
+  text-align: left;
+  padding: var(--sp-2) var(--sp-3);
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+th {
+  font-weight: 600;
+  background: var(--bg-sunk);
+  border-bottom-color: var(--border-strong);
+}
+
+/* Horizontal rules */
+hr {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: var(--sp-6) 0;
+}
+
+/* Images */
+img {
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--radius-md);
+}
+
+/* Layout primitives */
+.container {
+  width: 100%;
+  max-width: var(--wide-width);
+  margin-inline: auto;
+  padding-inline: var(--sp-5);
+}
+.container--narrow {
+  max-width: var(--content-width);
+}
+
+/* Skip link for a11y */
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: var(--sp-3);
+  z-index: 100;
+  background: var(--bg-elev);
+  color: var(--fg);
+  padding: var(--sp-2) var(--sp-3);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-md);
+  text-decoration: none;
+}
+.skip-link:focus {
+  top: var(--sp-3);
+}
+
+/* Focus styles */
+:focus-visible {
+  outline: 2px solid var(--link);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

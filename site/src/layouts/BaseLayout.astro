@@ -1,0 +1,97 @@
+---
+/**
+ * BaseLayout — the global page shell.
+ *
+ * Renders:
+ *   - <head> with SEO meta, Open Graph, Twitter Card, JSON-LD
+ *   - Skip link for keyboard users
+ *   - <Nav /> with theme toggle
+ *   - <main> slot
+ *   - <Footer />
+ *   - A small inline script to set initial theme before paint (avoids flash).
+ */
+
+import '../styles/global.css';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  /** Path under the site root, e.g. "/lessons/hermes/L01-..." — used for canonical. */
+  path: string;
+  /** Optional Open Graph image absolute URL. */
+  image?: string;
+  /** Optional JSON-LD structured data object. */
+  jsonLd?: Record<string, unknown> | Record<string, unknown>[];
+  /** Set true for content that shouldn't be indexed. */
+  noindex?: boolean;
+}
+
+const siteName = 'Boxmining AI Academy';
+const siteUrl = 'https://boxai4.boxmining.ai';
+const { title, description, path, image, jsonLd, noindex } = Astro.props;
+const canonical = new URL(path, siteUrl).toString();
+const ogImage = image ?? new URL('/og-default.png', siteUrl).toString();
+const fullTitle = title === siteName ? title : `${title} — ${siteName}`;
+const jsonLdArray = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+
+    {/* Open Graph */}
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:site_name" content={siteName} />
+
+    {/* Twitter Card */}
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    {/* Icons */}
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+
+    {/* Sitemap */}
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <link rel="alternate" type="application/rss+xml" title={siteName} href="/rss.xml" />
+
+    {/* Pre-paint theme to avoid flash. Script runs before <body>. */}
+    <script is:inline>
+      (() => {
+        try {
+          const stored = localStorage.getItem('theme');
+          if (stored === 'dark' || stored === 'light') {
+            document.documentElement.dataset.theme = stored;
+          }
+        } catch (_) {}
+      })();
+    </script>
+
+    {/* JSON-LD structured data */}
+    {jsonLdArray.map((obj) => (
+      <script type="application/ld+json" set:html={JSON.stringify(obj)} />
+    ))}
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <Nav />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>
