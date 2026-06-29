@@ -1,36 +1,37 @@
 ---
 /**
- * TerminalScreenshot — styled terminal-window wrapper around an <img>.
+ * TerminalScreenshot — styled terminal-window wrapper around an optimized
+ * Hermes CLI screenshot.
  *
- * Used to embed authentic Hermes CLI output captured via the screenshot
- * pipeline (site/scripts/capture-hermes.sh + render-terminal.mjs).
- *
- * Renders as <figure> with macOS-style chrome (three traffic-light dots and
- * a centered title bar) wrapping a single <img loading="lazy">.
+ * Uses Astro's <Image> from astro:assets for built-in optimization
+ * (Vite hashes the asset, emits AVIF/WebP variants, infers width/height).
+ * Sharp is the underlying image service.
  *
  * Usage in MDX:
+ *   ---
+ *   import hermesHelp from '../../../assets/lessons/hermes/L01/hermes-help.png';
+ *   ---
  *   <TerminalScreenshot
- *     src="/lessons/hermes/L01/hermes-help.png"
+ *     image={hermesHelp}
  *     title="hermes --help"
  *     alt="Output of the hermes --help command"
  *   />
  *
  * Optional props:
- *   - srcset, sizes: for responsive raster images (defaults to src).
- *   - width, height: intrinsic dimensions for aspect-ratio reservation.
- *   - caption: shown below the figure (above the chrome title bar context).
+ *   - caption: shown below the figure.
+ *   - loading: 'lazy' (default) | 'eager'.
  */
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
 interface Props {
-  src: string;
+  image: ImageMetadata;
   title?: string;
   alt: string;
-  srcset?: string;
-  sizes?: string;
-  width?: number;
-  height?: number;
   caption?: string;
+  loading?: 'lazy' | 'eager';
 }
-const { src, title, alt, srcset, sizes, width, height, caption } = Astro.props;
+const { image, title, alt, caption, loading = 'lazy' } = Astro.props;
 ---
 <figure class="term">
   <div class="term__chrome" role="presentation">
@@ -39,16 +40,16 @@ const { src, title, alt, srcset, sizes, width, height, caption } = Astro.props;
     <span class="term__dot term__dot--g" aria-hidden="true"></span>
     {title && <span class="term__title">{title}</span>}
   </div>
-  <img
-    class="term__img"
-    src={src}
-    srcset={srcset}
-    sizes={sizes}
+  <Image
+    src={image}
     alt={alt}
-    width={width}
-    height={height}
-    loading="lazy"
+    loading={loading}
     decoding="async"
+    widths={[480, 800, 1200]}
+    sizes="(max-width: 880px) 100vw, 800px"
+    format="webp"
+    quality={80}
+    class="term__img"
   />
   {caption && <figcaption class="term__caption">{caption}</figcaption>}
 </figure>

@@ -20,7 +20,7 @@
  *   output: site/public/lessons/hermes/L01
  */
 
-import { readdir, readFile, writeFile, mkdir } from 'node:fs/promises';
+import { readdir, readFile, mkdir } from 'node:fs/promises';
 import { join, basename, extname } from 'node:path';
 import sharp from 'sharp';
 
@@ -32,8 +32,22 @@ const TITLE_OVERRIDES = {
   'hermes-skills': 'hermes skills list',
 };
 
+// Per-capture line budgets. L01 is an intro lesson — these have to be
+// glanceable. Show what's useful, not everything Hermes can print.
+// Each entry is { maxLines, skipTop?, skipBottom?, takeFromEnd? }.
+const TRUNCATIONS = {
+  'hermes-help': { maxLines: 28 }, // synopsis + first ~24 subcommands
+  'hermes-version': { maxLines: 5 },
+  'hermes-status': { maxLines: 26, skipTop: 1 }, // drop blank line 1, keep banner + Environment + API Keys
+  'hermes-doctor': { maxLines: 22 }, // banner + security/python/ssl summary
+  'hermes-skills': { maxLines: 28 }, // header + 25 skill rows
+};
+
 const INPUT = process.argv[2] || '/tmp/hermes-captures';
-const OUTPUT = process.argv[3] || join(process.cwd(), 'site/public/lessons/hermes/L01');
+// Default destination is src/assets/ so the PNGs flow through Astro's
+// image optimization pipeline (<Image> from astro:assets). Override with a
+// 2nd CLI arg if you want plain public/ output.
+const OUTPUT = process.argv[3] || join(process.cwd(), 'src/assets/lessons');
 
 const FONT_SIZE = 14;
 const CHROME_HEIGHT = 36;
@@ -96,7 +110,18 @@ function buildSvg({ title, lines, width, bodyHeight }) {
 
 async function renderOne(name, raw) {
   const text = stripAnsi(raw);
-  const lines = splitLines(text);
+  let lines = splitLines(text);
+
+  // Apply per-capture truncation. Truncations are tuned for L01 brevity.
+  const trunc = TRUNCATIONS[name];
+  if (trunc) {
+    if (trunc.skipTop) lines = lines.slice(trunc.skipTop);
+    if (trunc.maxLines && lines.length > trunc.maxLines) {
+      lines = lines.slice(0, trunc.maxLines);
+      // Add a faint "…" indicator line so readers know it's clipped.
+      lines.push('…  (output continues — see L02 for the full install walkthrough)');
+    }
+  }
 
   // Measure width with a fixed assumption: ~8.4px per monospace char at 14px.
   // Add some slack for safety.
@@ -110,7 +135,6 @@ async function renderOne(name, raw) {
   const svg = buildSvg({ title, lines, width: Math.round(bodyWidth), bodyHeight });
 
   const outPath = join(OUTPUT, `${name}.png`);
-  await writeFile(join(OUTPUT, `${name}.svg`), svg, 'utf8');
   await sharp(Buffer.from(svg))
     .png({ compressionLevel: 9 })
     .toFile(outPath);

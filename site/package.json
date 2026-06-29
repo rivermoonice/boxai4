@@ -10,7 +10,7 @@
     "build": "astro build && pagefind --site dist",
     "preview": "astro preview",
     "astro": "astro",
-    "capture:hermes": "bash scripts/capture-hermes.sh /tmp/hermes-captures && node scripts/render-terminal.mjs /tmp/hermes-captures public/lessons"
+    "capture:hermes": "bash scripts/capture-hermes.sh /tmp/hermes-captures && node scripts/render-terminal.mjs /tmp/hermes-captures src/assets/lessons"
   },
   "dependencies": {
     "@astrojs/mdx": "^7.0.0",
