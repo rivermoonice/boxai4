@@ -1,0 +1,182 @@
+---
+title: "Haiku vs Sonnet vs Opus: The Anthropic Model Family Explained (2026)"
+module: ai-models
+slug: l02-the-anthropic-family
+order: 2
+updatedDate: 2026-06-29
+updatedRaw: "June 2026"
+summary: "Anthropic ships three Claude tiers in 2026 — Haiku, Sonnet, Opus — and most beginners waste hundreds of dollars a month picking the wrong one. Here's the plain-English framework for matching tier to task."
+description: "Learn what each Anthropic Claude tier (Haiku, Sonnet, Opus) is good at, what each costs in 2026, and which to reach for first. No prior model knowledge required — start here after L01."
+readingMinutes: 9
+accent: "#0ea5a4"
+---
+
+**Last tested and updated:** June 2026
+
+import Quiz from '../../../components/lesson/Quiz.astro';
+import Callout from '../../../components/lesson/Callout.astro';
+import { Picture } from 'astro:assets';
+
+If you opened a Claude account this week, you saw three — maybe four — model names staring back at you: **Haiku, Sonnet, Opus**, and the oddly-named flagship older sibling lingering in the menu. Most beginners either pick the most expensive one out of habit, or the cheapest one out of fear, and both choices quietly cost them hours and dollars.
+
+This lesson gives you the mental model in plain English, plus a one-page rule for picking the right tier on the first try. It's the lesson you wish existed before your first $200 API bill.
+
+By the end you'll know what each Claude tier is good at, what it costs, and which to reach for first. If you've never picked a Claude model before, you're in the right place — start at [L01 — What Is an AI Model Tier List?](/lessons/ai-models/l01-what-is-an-ai-model-tier-list/) if you haven't yet.
+
+## The hook
+
+Picture three people sitting at a desk:
+
+- **Haiku** is the intern. Fast, cheap, happy to do the boring volume work — classify this email, extract that name, draft a one-paragraph summary. Asks for help when the question gets fuzzy.
+- **Sonnet** is the senior IC. Costs five times the intern per hour, finishes in roughly the same wall-clock time, and rarely hands the task back to you with "I'm not sure." This is the person you assign eighty percent of your week to.
+- **Opus** is the partner you call in for the gnarly stuff — the ones that don't decompose cleanly, the ones where being wrong costs you a customer. Slowest to start, slowest to bill, and worth every cent when the problem actually needs it.
+
+That metaphor maps directly to Anthropic's actual 2026 lineup. The three Claude models share one family name and one API — they just dial the trade-off between speed, cost, and capability in different directions.
+
+<Callout type="tip" title="Same brain, different gears">
+Haiku, Sonnet, and Opus are trained by the same lab, on the same roadmap, and called by the same `client.messages.create()` call. You're not picking between "Claude" and "not-Claude" — you're picking between three gears inside one engine.
+</Callout>
+
+## The mental model
+
+There's one diagram that should sit on your wall whenever a Claude bill lands in your inbox. It's the **speed-vs-capability matrix**, with cost climbing as you move toward the upper-left corner.
+
+<Picture src="/lessons/ai-models/L02/anthropic-family-tree.svg" alt="The Anthropic family tree: Haiku, Sonnet, and Opus placed on a speed-vs-capability matrix, with cost tier shown beneath each" width={920} height={580} formats={["avif", "webp"]} />
+
+Three rules to internalize from the diagram:
+
+1. **The further up-and-left you go, the smarter the model gets — and the more it costs.** Capability is the y-axis, and pricing scales roughly with it.
+2. **The further right you go, the faster the model replies.** Haiku can finish a classification call before Opus has finished its first sentence.
+3. **Sonnet is the sweet spot for almost everyone.** It lives in the fast-and-capable quadrant. The intern and the partner are corners; the senior IC is the centre of mass.
+
+A useful way to read the matrix: the y-axis is "how often does it have to think twice before answering?" and the x-axis is "how many of those answers can you wait for?" Tasks that have the right answer *built in* — classification, extraction, summarisation, route-this-email — live low on the y-axis and earn the speed. Tasks that have to *construct* an answer where none exists live high on the y-axis, and you pay for the thinking in both dollars and minutes.
+
+<Callout type="gotcha" title="Don't confuse version numbers with tiers">
+Anthropic ships new *versions* of each tier on a roughly quarterly cadence — Sonnet 4.0, 4.5, 5.0; Opus 4.6, 4.7, 4.8. The *tier* (Haiku / Sonnet / Opus) is the speed/cost slot. The *version* is which generation of that tier you're using. Newer is generally better within a tier, but the tier choice matters more than the version choice.
+</Callout>
+
+If you've ever wondered why your monthly cost jumped after "upgrading" inside the same tier, this is why — version bumps sometimes price out higher than the previous one, and the marketing tends to undersell the change. The cross-tier decision (Haiku → Sonnet → Opus) is the lever that swings your bill by 5–60×; the version bump is roughly a 1.2× difference at most. Optimise tier first, version second — and check Anthropic's pricing page before you trust any number you read in a lesson, including this one.
+
+## Pick your tool
+
+Here's the cheat sheet. Save this table and reach for it before every new Claude project.
+
+| If your task looks like… | Reach for | Why |
+|---|---|---|
+| Classify, route, extract, summarise in bulk | **Haiku** | 12× cheaper than Sonnet per token; quality is fine for structured volume work |
+| Daily Q&A, drafting emails, code review, refactoring | **Sonnet** | Best price-for-capability. This should be your default for roughly 80% of work. |
+| A coding session where the test suite runs and tells you if you're wrong | **Sonnet** | "Verify by running" loops don't need Opus-level reasoning — see [hermes/L01 — coding harness vs agent harness](/lessons/hermes/l01-what-is-hermes-agent/). |
+| Hard reasoning, ambiguous problem statement, multi-day planning | **Opus** | Pays for itself when re-doing the task on Sonnet would cost more in your time |
+| Long-document analysis where nuance matters (legal, medical, financial draft review) | **Opus** | Better calibration means less hallucinated detail |
+| A one-shot where "good enough" fails (a sales email that has to land, a launch announcement) | **Opus** | Will rewrite until it gets the right tone |
+| Anything running in a tight cron loop, hundreds of times a day | **Haiku** | Latency and cost compound; Sonnet burns a real bill at scale |
+
+The decision doesn't have to be a commitment. Most Claude clients let you flip tiers per-conversation or even mid-prompt. The right habit is to **start at Sonnet**, escalate to Opus when you hit a wall, and downgrade to Haiku when you realise the task didn't need much in the first place.
+
+<Callout type="tip" title="The escalation habit">
+A team that has spent one week with Sonnet before touching Opus makes better tier decisions than a team that reached for Opus on day one. Default cheap, escalate when you see a wall, downgrade when you realise the wall was you being timid.
+</Callout>
+
+### Where this gets you in real money
+
+If you ran ten million output tokens this month — a perfectly reasonable amount for a personal project — your bill across tiers looks like this:
+
+- **Haiku:** roughly $12
+- **Sonnet:** roughly $150
+- **Opus:** roughly $750
+
+The same ten million tokens. A 60× spread between the cheapest and most expensive tier. Picking correctly here is the difference between "this hobby costs me a coffee a month" and "this hobby costs me a car payment."
+
+If you want the open-weight comparison side — Kimi, DeepSeek, GLM, Qwen — that's covered in [L03 — Chinese open-weight models](/lessons/ai-models/l03-chinese-open-weight/) and [L04 — Cost-efficient tier](/lessons/ai-models/l04-cost-efficient-tier/). And for the full decision framework across *all* providers (Claude, GPT, Gemini, open-weight), the capstone is [L05 — Frontier vs Open-Weight: Decision Framework](/lessons/ai-models/l05-frontier-vs-open-weight-decisions/).
+
+<Callout type="gotcha" title="The billing-trust caveat">
+Anthropic has been flagged in 2026 for quietly adjusting usage limits and rate ceilings for consumer accounts. Set a hard monthly spend cap in the dashboard on day one — $20 for a beginner is a reasonable floor — and check usage every Friday. The cap exists; the warning emails don't always arrive before the limit does.
+</Callout>
+
+## Try it
+
+### The exercise
+
+Pick one task you actually did this week that involved writing or thinking. Something like: summarising a meeting, drafting an email to a hard recipient, writing a regex, planning a project, debugging a function. You're going to run the **same** task on all three Claude tiers — Haiku, Sonnet, Opus — and compare.
+
+For each tier, ask yourself three questions:
+
+1. **Did I get a usable answer on the first try, or did I have to push back?**
+2. **How long did it take to first token?**
+3. **What did this cost me, in API dollars or in subscription budget?**
+
+You don't need precise numbers — a side-by-side comparison in a spreadsheet is enough. The point is to feel the trade-off in your own hands, not to memorise mine.
+
+**Success criteria:** You can name the task, the wall-clock difference between tiers, the quality difference, and which tier you'd pick as your default for that task. If you can do that without re-reading the lesson, you have the model.
+
+### Suggested first-week workload split
+
+A reasonable starting budget for a beginner — assuming a $20/month spend cap — looks roughly like this:
+
+- **~70% of tokens on Sonnet.** Daily Q&A, drafting, code review, summarisation. This is your workhorse.
+- **~25% on Haiku.** Volume work like routing, classification, the cron-loop stuff you automate later.
+- **~5% on Opus.** Reserved for the one or two tasks per week where you actually need the partner-on-call.
+
+The percentages will swing as you find more or fewer walls. Start there, adjust at the end of each week.
+
+### Common failure modes to expect
+
+Three patterns show up over and over in the first month of using Claude across tiers. Knowing them ahead of time saves you from diagnosing them in the dark.
+
+**The lazy Opus habit.** You used Opus once for a hard problem. It worked. So you leave it as the default "to be safe." Two weeks later your bill is five times what you planned and you can't figure out why. The fix is structural, not willpower: most Claude clients let you set per-project defaults. Set Sonnet as your project default, and only opt into Opus when you actually start a task that earns it.
+
+**The Haiku ceiling surprise.** A task that felt trivial — "extract the dates from these 200 emails" — turns out to need subtle judgement, and Haiku gets it 80% right and 20% confidently wrong. The 20% is the expensive part. When the failure mode of a Haiku call is "the user has to check every answer," you've already burned the cost saving. Recognise the asymmetry: cheap models are cheap *only* when the failure mode of a wrong answer is also cheap.
+
+**The mid-tier uncertainty.** Sometimes Sonnet returns a result that isn't wrong, exactly, but isn't what you'd have written. You'll second-guess it, paste it into Opus for a "second opinion," and end up paying for both tiers on the same task. The answer isn't "always escalate" — it's to set a personal rule for which kinds of tasks get a second opinion, and skip the audit on the rest. Drafts that go to you for editing? Sonnet alone. Drafts that go to a customer without your eyes on them? Worth the audit.
+
+### Check your understanding
+
+<Quiz questions={[
+  {
+    q: "Which Claude tier is the best default choice for most daily work in 2026?",
+    choices: ["Haiku", "Sonnet", "Opus", "Whatever the home screen recommends"],
+    answer: 1,
+    explain: "Sonnet lives in the fast-and-capable quadrant. It handles roughly 80% of daily work — drafting, code review, summarisation — at one-fifth the cost of Opus and one-twentieth the cost of the very top tier.",
+  },
+  {
+    q: "You're running a cron job that classifies 5,000 support emails a day. Which tier should you reach for, and why?",
+    choices: ["Opus, because Opus is the best", "Sonnet, because it's the safe default", "Haiku, because volume work compounds latency and cost", "Either Sonnet or Opus, they're equivalent on classification"],
+    answer: 2,
+    explain: "Volume tasks compound the cost and latency difference. Haiku is roughly 12× cheaper than Sonnet per token and responds much faster — exactly what matters when you're doing the same thing 5,000 times a day. Classification is exactly the kind of structured task that doesn't need Opus-level reasoning.",
+  },
+  {
+    q: "What's the single biggest cost mistake beginners make with the Claude family?",
+    choices: ["Picking Haiku when they should have picked Sonnet", "Reaching for Opus on every task out of habit", "Subscribing to the Max plan before testing on pay-as-you-go", "Both B and C"],
+    answer: 3,
+    explain: "Routing everything through Opus burns a 5–60× cost premium per token, and the $200/month Max plan is wasted if you don't actually need Opus-level reasoning that often. The fix is the same for both: start at Sonnet, set a hard spend cap, escalate only when you hit a wall, downgrade when you realise the wall was you being timid.",
+  },
+  {
+    q: "True or false: 'Opus 4.8' and 'Opus' are interchangeable ways to refer to the same thing.",
+    choices: ["True — the version is just a label", "False — Opus is the tier; 4.8 is the version of that tier"],
+    answer: 1,
+    explain: "Tier is the speed/cost slot (Haiku / Sonnet / Opus). Version is which generation of that tier you're calling (4.6, 4.7, 4.8 — these numbers update quarterly). The tier choice swings your bill by 5–60×; the version choice swings it by maybe 1.2×. Tier first, version second.",
+  },
+  {
+    q: "You need an LLM to draft a launch announcement that absolutely has to land in the right tone on the first try. Which tier?",
+    choices: ["Haiku", "Sonnet", "Opus"],
+    answer: 2,
+    explain: "This is a one-shot where 'good enough' fails. Opus's better calibration and willingness to rewrite until the tone reads right makes it the right tool here — assuming you can afford the higher per-token cost. For everything else, start at Sonnet.",
+  },
+  {
+    q: "Why does the cost gap between Opus and Sonnet matter more than the gap between Sonnet versions?",
+    choices: ["Versions change pricing more often than tiers do", "The cross-tier cost gap is roughly 5×; cross-version is at most ~1.2×", "Anthropic only bills by version, not by tier", "It doesn't — they're roughly the same size"],
+    answer: 1,
+    explain: "Rough per-million-token cost: Haiku ≈ $1.25 out, Sonnet ≈ $15 out, Opus ≈ $75 out. The tier-to-tier move is a 5–60× swing in your bill. Version-to-version inside a tier is at most about 1.2×. Optimise tier first, version second.",
+  },
+]} />
+
+### What's next
+
+- **Want the cost-efficient Chinese open-weight alternatives?** → [L03 — Chinese open-weight models](/lessons/ai-models/l03-chinese-open-weight/) (Kimi, DeepSeek).
+- **Want the cost-tier comparison?** → [L04 — Cost-efficient tier](/lessons/ai-models/l04-cost-efficient-tier/) (Qwen, GLM, MiniMax).
+- **Want the single decision framework across all providers?** → [L05 — Frontier vs Open-Weight: Decision Framework](/lessons/ai-models/l05-frontier-vs-open-weight-decisions/).
+- **Want to wire tier-routing into a coding or agent harness?** → [Hermes L01 — What Is Hermes Agent?](/lessons/hermes/l01-what-is-hermes-agent/) (a harness can route tasks to the right tier automatically once you've told it which tier maps to which job).
+
+<Callout type="bottom-line">
+**Ron's bottom line:** same family, three gears. Start at Sonnet, escalate to Opus when you hit a wall, downgrade to Haiku when you realise the wall was you being timid. Set a $20 spend cap on day one. The version number matters far less than the tier choice — and the tier choice matters far more than the brand.
+</Callout>

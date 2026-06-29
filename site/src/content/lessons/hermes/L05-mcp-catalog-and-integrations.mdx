@@ -1,0 +1,209 @@
+---
+title: "Hermes Agent MCP Catalog & Integrations: Connect to Linear, GitHub, Notion (2026)"
+module: hermes
+slug: l05-mcp-catalog-and-integrations
+order: 5
+updatedDate: 2026-06-29
+updatedRaw: "June 2026"
+summary: "MCP is how Hermes talks to outside apps. The built-in catalog makes it four commands. Here's the catalog-vs-custom mental model, the four commands, and how to install Linear without breaking anything."
+description: "You'll learn what an MCP is, how the Hermes MCP Catalog works, the four commands that run the whole workflow, and how to install Linear from the catalog in under five minutes. No prior MCP experience needed."
+readingMinutes: 9
+accent: "#7c5cff"
+---
+
+**Last tested and updated:** June 2026
+
+import Quiz from '../../../components/lesson/Quiz.astro';
+import TerminalScreenshot from '../../../components/lesson/TerminalScreenshot.astro';
+import VidCard from '../../../components/lesson/VidCard.astro';
+import Callout from '../../../components/lesson/Callout.astro';
+import { Picture } from 'astro:assets';
+
+By now you've installed Hermes, sent a few messages, and started to think of it as a daily driver. The next question is: **how do I get it to do things in the apps I already use?** Linear, GitHub, Notion, Discord — the work that actually lives somewhere. That's what **MCP** is for, and this lesson is the four commands you need to know.
+
+This is lesson five in the [Hermes Agent track](/lessons/hermes/). If you haven't installed Hermes yet, start with [L02 — Install and First Run](/lessons/hermes/l02-install-and-first-run/). For the harness concept first, see [L01 — What Is Hermes Agent](/lessons/hermes/l01-what-is-hermes-agent/).
+
+## The hook
+
+Here's the thing an AI assistant can do today that a chatbot from 2023 could not: **read your Linear backlog, find the issue assigned to you this week, draft a reply, and post it back — all from a single sentence in the chat.** The piece of software that makes that possible is an **MCP server**, and the standard that lets your agent talk to one is the **Model Context Protocol**.
+
+The reason this is a lesson and not a footnote: the *safe* way to do this changed in May 2026. Before the catalog, you had to find a community MCP server, copy a JSON snippet into your config, manage an API key by hand, and hope the code wasn't malicious. **The Hermes team now ships a built-in catalog of pre-reviewed MCPs.** For a beginner, the catalog is the only on-ramp that exists; for everyone else, it's the sane default.
+
+<Callout type="tip" title="Why MCPs matter">
+> "We get a curated list of MCP servers that live in the optional MCPs directory in the official repo. And every single one is reviewed by the News research team before it ships." — Ron, source video `IMO8ooIqONM`
+</Callout>
+
+## The mental model
+
+There are two ways to give Hermes a new tool. Pick the right one for the situation.
+
+<Picture src="/lessons/hermes/L05/catalog-vs-custom-mcp.svg" alt="Diagram: catalog MCP path versus custom MCP path" width={900} height={480} formats={["avif", "webp"]} />
+
+**Catalog MCP** is the safe path. The Hermes team has read the source code, tested the install, and signed off on every entry. You run one command, click through an OAuth prompt, review a tool whitelist, and you're done. As of June 2026, the catalog ships **Linear** and **n8n**. That list will grow — run `hermes update` and `hermes mcp` to see what's available today.
+
+**Custom MCP** is the flexible path. The app you need isn't in the catalog, so you go to GitHub, find a community MCP someone wrote, copy its `command` and `env` into your `mcp.yaml`, add your own API key, and run it. Higher ceiling, lower floor. Some community MCPs are excellent; some are malicious. The catalog exists because the gap between those two is exactly where new users get burned.
+
+<Callout type="gotcha" title="The rule">
+**First MCP install: catalog.** Don't graduate to custom until you've run a catalog install end-to-end and you understand where the credentials live and how to revoke them. L07 — Security Essentials — covers the threat model in detail.
+</Callout>
+
+### The four commands
+
+The whole catalog workflow is four commands. This is the part worth memorising — every other piece of MCP knowledge hangs off these.
+
+| Command | What it does |
+|---|---|
+| `hermes update` | Pulls the latest Hermes release, including the latest catalog manifests. Run this first. |
+| `hermes mcp` | Shows the catalog. Lists every approved MCP server with a short description. |
+| `hermes mcp install <name>` | Installs a specific MCP from the catalog. Prompts for credentials and shows the tool whitelist. |
+| `hermes mcp configure <name>` | Re-opens the tool whitelist for an installed MCP. Use this to tighten permissions later. |
+
+You can see them on screen by running `hermes mcp --help`. The output is short and worth a glance before your first install — the subcommand list tells you which verbs the catalog actually exposes:
+
+```
+usage: hermes mcp [-h] [--accept-hooks]
+       {serve,add,remove,rm,list,ls,test,configure,config,login,reauth,
+        picker,catalog,install} ...
+
+Manage MCP server connections and run Hermes as an MCP server.
+MCP servers provide additional tools via the Model Context Protocol.
+Use 'hermes mcp add' to connect to a new server, or 'hermes mcp serve'
+to expose Hermes conversations over MCP.
+```
+
+`picker` and `install` are the two you'll touch. `configure` is the one you'll come back to. The rest are there when you need them.
+
+<Callout type="tip" title="Ron on the ceiling">
+> "If you want to try out MCPs, we recommend that you try out first from their catalog, and then once you get a better feel for it, then you can expand to, you know, installing your own custom MCP servers." — Ron, source video `IMO8ooIqONM`
+</Callout>
+
+## Pick your tool
+
+Which app should you connect first? The honest answer is: **the one that already holds work you'd do this week.** Here are the realistic first picks, in order of how cleanly they install and how immediately useful they are.
+
+**Linear** — the cleanest first install, and the recommended one for this lesson. It uses OAuth, so there's no API key to copy/paste. The catalog install gets you `find_issues`, `create_issue`, and a few other read/write tools in about three minutes. Pick this if your team plans work in Linear.
+
+**n8n** — pick this if you already run n8n workflows and want Hermes to inspect, trigger, or edit them. Uses an API key instead of OAuth.
+
+**GitHub, Notion, Discord, Telegram** — not in the catalog as of June 2026. The community has MCPs for all of them, and the quality varies. Do not install these as your first MCP.
+
+| App | Path | Effort | When to pick it |
+|---|---|---|---|
+| Linear | Catalog | 3 min | First install, OAuth, immediate payoff |
+| n8n | Catalog | 5 min | You already run n8n workflows |
+| GitHub | Custom | 15–30 min | Read source first; community MCPs vary |
+| Notion | Custom | 15–30 min | Same caveat as GitHub |
+| Discord | Custom | 15–30 min | Use a vetted MCP; never paste a bot token into a random repo |
+| Telegram | Custom | 15–30 min | Same caveat as Discord |
+
+The decision tree is the same one the source video draws: **catalog first, custom second, write-your-own last.** Beginners stop at the catalog until they're confident.
+
+### What an MCP actually is (the short version)
+
+An **MCP** is a small server program that speaks one app's API. Each MCP exposes a list of **tools** — discrete functions like `find_issues` or `create_issue` — that the agent can call. The MCP is the bridge between the model in Hermes and the app on the other side. One MCP per app. The agent routes tool calls to the right MCP by name.
+
+That's the whole model. The rest is configuration.
+
+## Try it
+
+### Install Linear from the catalog
+
+Linear is the cleanest first install because it uses OAuth. No API key, no `.env` editing, no copy/paste of long strings.
+
+**1. Update.** Run `hermes update` to pull the latest catalog manifest.
+
+**2. Browse.** Run `hermes mcp`. You should see `linear` and `n8n` listed with short descriptions.
+
+**3. Install.** Run `hermes mcp install linear`. Hermes will:
+- Show you a link to authenticate with Linear.
+- Wait while you click the link, log in to your workspace, and grant access.
+- Return you to a **tool whitelist** screen.
+
+**4. Whitelist.** By default, read-only and safe-write tools are checked; destructive tools are unchecked. **Read the list.** If you wouldn't give a new intern the `delete_workspace` permission, don't give it to an MCP. Hit enter to save.
+
+**5. Use it.** From the Hermes chat:
+
+> *"Find all issues assigned to me in Linear this week and summarise them in three bullets."*
+
+The agent will route the call to the Linear MCP and return real results from your workspace. If the call fails, run `hermes mcp` again — your OAuth token may have expired, and `hermes mcp configure linear` will let you re-authenticate.
+
+**6. Tighten later.** When you come back to this MCP a week from now and want to revoke a permission, run `hermes mcp configure linear`. This is the single most important defensive habit: re-review the whitelist on every MCP you have installed.
+
+### Where the credentials live
+
+After install, your Linear OAuth token is cached at `~/.hermes/mcp-tokens/linear.json`. If you installed an API-key MCP (like n8n), the key is written to `~/.hermes/.env`. Both are plaintext on your disk. Treat them like passwords: don't commit them, don't paste them into chats, and clean up the files for any MCP you've uninstalled. L07 — Security Essentials — covers this in depth; the only thing you need from this lesson is the *locations*, not the full threat model.
+
+### Watch Ron walk through it
+
+<VidCard id="IMO8ooIqONM" title="Hermes Agent MCP Catalog Guide (NEW) — Ron, May 2026" />
+
+### Check your understanding
+
+<Quiz questions={[
+  {
+    q: "What does MCP stand for, and what is it?",
+    choices: [
+      "Multi-Channel Plugin — a way to broadcast prompts to many apps at once",
+      "Model Context Protocol — a standard that lets an AI agent talk to one outside app via a small server",
+      "Master Control Program — the central scheduler inside Hermes",
+      "Managed Claude Pipeline — a wrapper that batches Claude API calls",
+    ],
+    answer: 1,
+    explain: "MCP is the open standard. A single MCP server wraps one app's API and exposes a list of tools (find_issues, create_issue, etc.) the agent can call.",
+  },
+  {
+    q: "As of June 2026, which apps ship in the built-in Hermes MCP catalog?",
+    choices: ["Linear and n8n", "Linear, GitHub, and Notion", "GitHub, Discord, and Telegram", "Only Linear"],
+    answer: 0,
+    explain: "Linear and n8n only. Run `hermes mcp` after every `hermes update` — the list will grow.",
+  },
+  {
+    q: "You want to connect Hermes to GitHub. The catalog doesn't have it. What should you do?",
+    choices: [
+      "Give up — without the catalog, GitHub integration isn't safe.",
+      "Find a community GitHub MCP, read its source, and configure it yourself.",
+      "Run `hermes mcp install github` anyway and see what happens.",
+      "Wait for the catalog and don't use GitHub in the meantime.",
+    ],
+    answer: 1,
+    explain: "Custom MCPs are the right path for apps the catalog doesn't cover — but only after you've read the source and understand what the MCP is doing. Catalog-first, then custom, then write-your-own.",
+  },
+  {
+    q: "What's the most important defensive habit after installing any MCP?",
+    choices: [
+      "Run `hermes update` immediately after install.",
+      "Review the tool whitelist during install, and re-review it with `hermes mcp configure <name>` later.",
+      "Set up a separate API key for every team member.",
+      "Disable the MCP at night so it can't run while you sleep.",
+    ],
+    answer: 1,
+    explain: "The whitelist is the most important defensive control. Review it at install; re-review with `hermes mcp configure` later. Don't accept defaults blindly.",
+  },
+  {
+    q: "Short answer: name the four commands that make up the catalog workflow.",
+    choices: [],
+    answer: 0,
+    explain: "`hermes update`, `hermes mcp`, `hermes mcp install <name>`, `hermes mcp configure <name>`.",
+  },
+  {
+    q: "After uninstalling an MCP, what should you do with the cached credentials?",
+    choices: [
+      "Nothing — Hermes cleans up automatically.",
+      "Manually delete the token from `~/.hermes/mcp-tokens/` (or the API key from `~/.hermes/.env`).",
+      "Re-install the MCP to overwrite the old token.",
+      "Run `hermes update` to flush the cache.",
+    ],
+    answer: 1,
+    explain: "Uninstalling an MCP doesn't delete the cached OAuth token or API key. Clean up `~/.hermes/mcp-tokens/` and `~/.hermes/.env` for any MCP you've removed.",
+  },
+]} />
+
+### What's next
+
+- **Want to talk to GitHub today?** The community MCP ecosystem has you covered, but read [L07 — Security Essentials](/lessons/hermes/l07-security-essentials/) first.
+- **Cost-aware?** Continue to [L06 — Performance, Model Routing, and Cost](/lessons/hermes/l06-performance-model-routing-cost/).
+- **Want to schedule an MCP-driven task?** [L08 — Automation: Cron, Kanban, Sub-Agents](/lessons/hermes/l08-automation-cron-kanban-sub-agents/) walks through a 7am Linear digest.
+
+<Callout type="bottom-line">
+**Ron's bottom line:** start with the catalog and only the catalog. The four commands are all you need for your first week. Graduate to custom MCPs only when the catalog doesn't cover the app you need, and never accept a default tool whitelist without reading it.
+</Callout>

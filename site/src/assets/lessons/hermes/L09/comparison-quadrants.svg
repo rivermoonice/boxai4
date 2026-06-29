@@ -1,0 +1,127 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 560" role="img" aria-labelledby="cmp-title cmp-desc">
+  <title id="cmp-title">Hermes vs Claude Code vs Mavis vs Gemini — effort vs cost quadrants</title>
+  <desc id="cmp-desc">Two-axis chart. Horizontal axis: setup effort (low on the left, high on the right). Vertical axis: monthly cost (low at the bottom, high at the top). Four tools are plotted: Mavis in the low-effort low-cost quadrant, Claude Code in the low-effort high-cost quadrant, Gemini spanning the top centre, and Hermes in the high-effort low-cost quadrant.</desc>
+
+  <defs>
+    <style>
+      .title { font: 700 18px/1 ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif; fill: #2b2a36; }
+      .axis { font: 600 12px/1 ui-sans-serif, system-ui, sans-serif; fill: #4a4960; letter-spacing: 0.06em; text-transform: uppercase; }
+      .axis-low { font: 600 11px/1 ui-sans-serif, system-ui, sans-serif; fill: #4a4960; letter-spacing: 0.06em; text-transform: uppercase; }
+      .body { font: 13px/1.5 ui-sans-serif, system-ui, -apple-system, sans-serif; fill: #2b2a36; }
+      .body-sm { font: 12px/1.4 ui-sans-serif, system-ui, sans-serif; fill: #4a4960; }
+      .grid { stroke: #e2dfd2; stroke-width: 1; }
+      .axis-line { stroke: #5a5a5a; stroke-width: 1.5; }
+      .arrow-head { fill: #5a5a5a; }
+      .quadrant-label { font: italic 12px/1.4 ui-sans-serif, system-ui, sans-serif; fill: #8a8a8a; }
+
+      .hermes-dot { fill: #7c5cff; stroke: #fff; stroke-width: 3; }
+      .claude-dot { fill: #d97706; stroke: #fff; stroke-width: 3; }
+      .mavis-dot  { fill: #0ea5a4; stroke: #fff; stroke-width: 3; }
+      .gemini-dot { fill: #2563eb; stroke: #fff; stroke-width: 3; }
+
+      .hermes-text { font: 700 14px/1 ui-sans-serif, system-ui, sans-serif; fill: #7c5cff; }
+      .claude-text { font: 700 14px/1 ui-sans-serif, system-ui, sans-serif; fill: #d97706; }
+      .mavis-text  { font: 700 14px/1 ui-sans-serif, system-ui, sans-serif; fill: #0ea5a4; }
+      .gemini-text { font: 700 14px/1 ui-sans-serif, system-ui, sans-serif; fill: #2563eb; }
+
+      .hermes-bg { fill: #7c5cff; fill-opacity: 0.08; stroke: #7c5cff; stroke-width: 1.5; }
+      .claude-bg { fill: #d97706; fill-opacity: 0.08; stroke: #d97706; stroke-width: 1.5; }
+      .mavis-bg  { fill: #0ea5a4; fill-opacity: 0.08; stroke: #0ea5a4; stroke-width: 1.5; }
+      .gemini-bg { fill: #2563eb; fill-opacity: 0.08; stroke: #2563eb; stroke-width: 1.5; }
+
+      .summary { font: 600 14px/1.4 ui-sans-serif, system-ui, sans-serif; fill: #1a1a1a; }
+      .caption { font: italic 13px/1.4 ui-sans-serif, system-ui, sans-serif; fill: #5a5a5a; }
+      .price  { font: 12px/1 ui-monospace, "SF Mono", Menlo, monospace; fill: #4a4960; }
+
+      @media (prefers-color-scheme: dark) {
+        .title, .body { fill: #ece8db; }
+        .axis, .axis-low, .body-sm { fill: #a8a395; }
+        .axis-line, .grid { stroke: #5a5a6a; }
+        .arrow-head { fill: #a8a395; }
+        .quadrant-label { fill: #6a6a7a; }
+        .summary { fill: #ece8db; }
+        .caption { fill: #a8a395; }
+        .price { fill: #a8a395; }
+        .hermes-bg { fill: #7c5cff; fill-opacity: 0.14; }
+        .claude-bg { fill: #d97706; fill-opacity: 0.14; }
+        .mavis-bg  { fill: #0ea5a4; fill-opacity: 0.14; }
+        .gemini-bg { fill: #2563eb; fill-opacity: 0.14; }
+      }
+    </style>
+
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0 0 L10 5 L0 10 z" class="arrow-head"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text class="title" x="450" y="30" text-anchor="middle">Pick by quadrant — setup effort vs monthly cost</text>
+  <text class="body-sm" x="450" y="50" text-anchor="middle">Where each harness lives on the beginner map. Pick by workload, not by quadrant.</text>
+
+  <!-- Chart area: x: 110..820, y: 90..480 -->
+  <!-- Background grid -->
+  <rect x="110" y="90" width="710" height="390" fill="#fafaf6" stroke="#e2dfd2" stroke-width="1" rx="8"/>
+  <line class="grid" x1="465" y1="90" x2="465" y2="480"/>
+  <line class="grid" x1="110" y1="285" x2="820" y2="285"/>
+
+  <!-- Quadrant labels -->
+  <text class="quadrant-label" x="125" y="110">Low effort · Low cost</text>
+  <text class="quadrant-label" x="805" y="110" text-anchor="end">High effort · Low cost</text>
+  <text class="quadrant-label" x="125" y="470">Low effort · High cost</text>
+  <text class="quadrant-label" x="805" y="470" text-anchor="end">High effort · High cost</text>
+
+  <!-- Axes -->
+  <line class="axis-line" x1="110" y1="480" x2="820" y2="480" marker-end="url(#arrow)"/>
+  <line class="axis-line" x1="110" y1="480" x2="110" y2="90"  marker-end="url(#arrow)"/>
+
+  <!-- Axis labels -->
+  <text class="axis" x="465" y="510" text-anchor="middle">Setup effort  →</text>
+  <text class="axis-low" x="115" y="500">LOW</text>
+  <text class="axis-low" x="815" y="500" text-anchor="end">HIGH</text>
+  <text class="axis" x="50" y="285" text-anchor="middle" transform="rotate(-90 50 285)">Monthly cost  →</text>
+  <text class="axis-low" x="92" y="475">LOW</text>
+  <text class="axis-low" x="92" y="105">HIGH</text>
+
+  <!-- Mavis: low effort, low cost (~5 min, $10/mo) — bottom left -->
+  <g>
+    <rect class="mavis-bg" x="170" y="370" width="180" height="90" rx="12"/>
+    <circle class="mavis-dot" cx="200" cy="395" r="12"/>
+    <text class="mavis-text" x="220" y="400">Mavis</text>
+    <text class="body-sm" x="180" y="420">Beginner multi-agent</text>
+    <text class="body-sm" x="180" y="437">5-min setup · $10/mo</text>
+    <text class="body-sm" x="180" y="454">"Starter, not destination"</text>
+  </g>
+
+  <!-- Claude Code: low effort, high cost (5 min, $200/mo Max) — top left -->
+  <g>
+    <rect class="claude-bg" x="170" y="120" width="180" height="90" rx="12"/>
+    <circle class="claude-dot" cx="200" cy="145" r="12"/>
+    <text class="claude-text" x="220" y="150">Claude Code</text>
+    <text class="body-sm" x="180" y="170">Coding harness, IDE-bound</text>
+    <text class="body-sm" x="180" y="187">5-min setup · $20–$200/mo</text>
+    <text class="body-sm" x="180" y="204">Subscription · no BYOK</text>
+  </g>
+
+  <!-- Hermes: high effort, low cost (20+ min, $5–$50/mo) — bottom right -->
+  <g>
+    <rect class="hermes-bg" x="560" y="370" width="200" height="90" rx="12"/>
+    <circle class="hermes-dot" cx="590" cy="395" r="12"/>
+    <text class="hermes-text" x="610" y="400">Hermes</text>
+    <text class="body-sm" x="570" y="420">Open-source agent harness</text>
+    <text class="body-sm" x="570" y="437">20+ min setup · BYOK</text>
+    <text class="body-sm" x="570" y="454">$5–$50/mo at beginner usage</text>
+  </g>
+
+  <!-- Gemini: medium effort, high cost — top right -->
+  <g>
+    <rect class="gemini-bg" x="560" y="120" width="200" height="90" rx="12"/>
+    <circle class="gemini-dot" cx="590" cy="145" r="12"/>
+    <text class="gemini-text" x="610" y="150">Google Gemini</text>
+    <text class="body-sm" x="570" y="170">Vertical stack: model+sandbox</text>
+    <text class="body-sm" x="570" y="187">Bundled · Google Cloud pricing</text>
+    <text class="body-sm" x="570" y="204">Vendor lock-in</text>
+  </g>
+
+  <!-- Bottom summary -->
+  <text class="summary" x="450" y="538" text-anchor="middle">Two paths for the beginner: low-effort/high-cost (Claude Code) or high-effort/low-cost (Hermes). Pick by workload.</text>
+</svg>

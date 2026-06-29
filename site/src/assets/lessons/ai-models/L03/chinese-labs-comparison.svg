@@ -1,0 +1,154 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 620" role="img" aria-labelledby="cmp-title cmp-desc">
+  <title id="cmp-title">Chinese open-weight labs compared — what each is best at</title>
+  <desc id="cmp-desc">A 2x3 grid of six Chinese open-weight labs. Each card lists the lab, its flagship model, the licensing tier, and the workload it wins at. Labs shown: DeepSeek (tool-call reasoning), Kimi/Moonshot (UI generation and vision), Qwen (long context and multilingual), Zhipu/GLM (enterprise and tool use), MiniMax (cost-efficient generalist), StepFun (math and code reasoning).</desc>
+
+  <defs>
+    <style>
+      .title { font: 700 19px/1 ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif; fill: #1a1a1a; }
+      .subtitle { font: 13px/1.4 ui-sans-serif, system-ui, sans-serif; fill: #5a5a5a; }
+      .lab-name { font: 700 16px/1 ui-sans-serif, system-ui, sans-serif; fill: #1a1a1a; }
+      .model { font: 600 12px/1 ui-monospace, "SF Mono", Menlo, monospace; fill: #4a4960; }
+      .license { font: 600 11px/1 ui-sans-serif, system-ui, sans-serif; fill: #ffffff; letter-spacing: 0.04em; }
+      .body { font: 13px/1.5 ui-sans-serif, system-ui, sans-serif; fill: #2b2a36; }
+      .body-sm { font: 12px/1.4 ui-sans-serif, system-ui, sans-serif; fill: #4a4960; }
+      .best-at { font: 700 11px/1 ui-sans-serif, system-ui, sans-serif; fill: #1a1a1a; letter-spacing: 0.05em; text-transform: uppercase; }
+      .card-border { stroke-width: 1.5; fill: none; }
+      .footer { font: italic 12px/1.4 ui-sans-serif, system-ui, sans-serif; fill: #5a5a5a; }
+
+      .lab-deepseek { fill: #0ea5a4; }
+      .lab-kimi { fill: #f59e0b; }
+      .lab-qwen { fill: #7c3aed; }
+      .lab-glm { fill: #2563eb; }
+      .lab-minimax { fill: #db2777; }
+      .lab-step { fill: #059669; }
+
+      .border-deepseek { stroke: #0ea5a4; }
+      .border-kimi { stroke: #f59e0b; }
+      .border-qwen { stroke: #7c3aed; }
+      .border-glm { stroke: #2563eb; }
+      .border-minimax { stroke: #db2777; }
+      .border-step { stroke: #059669; }
+
+      .swatch-deepseek { fill: #0ea5a4; }
+      .swatch-kimi { fill: #f59e0b; }
+      .swatch-qwen { fill: #7c3aed; }
+      .swatch-glm { fill: #2563eb; }
+      .swatch-minimax { fill: #db2777; }
+      .swatch-step { fill: #059669; }
+
+      @media (prefers-color-scheme: dark) {
+        .title, .lab-name, .best-at { fill: #ece8db; }
+        .subtitle, .footer { fill: #a8a395; }
+        .body { fill: #ece8db; }
+        .body-sm, .model { fill: #a8a395; }
+      }
+    </style>
+  </defs>
+
+  <!-- Title block -->
+  <text class="title" x="450" y="32" text-anchor="middle">Six Chinese open-weight labs — what each is best at</text>
+  <text class="subtitle" x="450" y="54" text-anchor="middle">Match the lab to the workload. Don't pick by price alone.</text>
+
+  <!-- Grid: 3 columns x 2 rows. Card size 270x230. Start x=30 y=80 -->
+  <!-- Card template: license pill at top, lab name, flagship model, "BEST AT" label, bullets -->
+
+  <!-- Row 1, Col 1 — DeepSeek -->
+  <g>
+    <rect x="30" y="80" width="270" height="230" rx="12" fill="#fafaf6" stroke="#e2dfd2" stroke-width="1"/>
+    <rect x="30" y="80" width="270" height="6" rx="3" class="swatch-deepseek"/>
+    <rect x="46" y="100" width="78" height="20" rx="10" class="lab-deepseek"/>
+    <text class="license" x="85" y="114" text-anchor="middle">MIT-style</text>
+    <text class="lab-name" x="46" y="148">DeepSeek</text>
+    <text class="model" x="46" y="166">V4 Pro · V4 Flash</text>
+    <text class="best-at" x="46" y="194">Best at · tool-call reasoning</text>
+    <text class="body" x="46" y="216">• Chain-of-thought inside tool calls</text>
+    <text class="body" x="46" y="236">• Self-correction mid-stream</text>
+    <text class="body" x="46" y="256">• Cached tokens across projects</text>
+    <text class="body-sm" x="46" y="282">By far the best agent-runtime choice.</text>
+    <text class="body-sm" x="46" y="298">Needs detailed prompts, not one-shots.</text>
+  </g>
+
+  <!-- Row 1, Col 2 — Kimi / Moonshot -->
+  <g>
+    <rect x="315" y="80" width="270" height="230" rx="12" fill="#fafaf6" stroke="#e2dfd2" stroke-width="1"/>
+    <rect x="315" y="80" width="270" height="6" rx="3" class="swatch-kimi"/>
+    <rect x="331" y="100" width="78" height="20" rx="10" class="lab-kimi"/>
+    <text class="license" x="370" y="114" text-anchor="middle">Modified MIT</text>
+    <text class="lab-name" x="331" y="148">Kimi (Moonshot)</text>
+    <text class="model" x="331" y="166">K2.7 · K2 Thinking</text>
+    <text class="best-at" x="331" y="194">Best at · UI generation &amp; vision</text>
+    <text class="body" x="331" y="216">• Cleanest UI output in the tier</text>
+    <text class="body" x="331" y="236">• Strong vision at low cost</text>
+    <text class="body" x="331" y="256">• Transparent request-count billing</text>
+    <text class="body-sm" x="331" y="282">Use `/swarm` or skip the $40/mo tier.</text>
+    <text class="body-sm" x="331" y="298">Weak as a single agent on its own.</text>
+  </g>
+
+  <!-- Row 1, Col 3 — Qwen / Alibaba -->
+  <g>
+    <rect x="600" y="80" width="270" height="230" rx="12" fill="#fafaf6" stroke="#e2dfd2" stroke-width="1"/>
+    <rect x="600" y="80" width="270" height="6" rx="3" class="swatch-qwen"/>
+    <rect x="616" y="100" width="92" height="20" rx="10" class="lab-qwen"/>
+    <text class="license" x="662" y="114" text-anchor="middle">Apache 2.0 (most)</text>
+    <text class="lab-name" x="616" y="148">Qwen (Alibaba)</text>
+    <text class="model" x="616" y="166">Qwen3 · Qwen3-Max</text>
+    <text class="best-at" x="616" y="194">Best at · long context &amp; multilingual</text>
+    <text class="body" x="616" y="216">• 1M-token context window</text>
+    <text class="body" x="616" y="236">• Strong Chinese + English balance</text>
+    <text class="body" x="616" y="256">• Multiple sizes (0.6B to 480B)</text>
+    <text class="body-sm" x="616" y="282">Best generalist if you self-host.</text>
+    <text class="body-sm" x="616" y="298">Check the model card per release.</text>
+  </g>
+
+  <!-- Row 2, Col 1 — Zhipu / GLM -->
+  <g>
+    <rect x="30" y="330" width="270" height="230" rx="12" fill="#fafaf6" stroke="#e2dfd2" stroke-width="1"/>
+    <rect x="30" y="330" width="270" height="6" rx="3" class="swatch-glm"/>
+    <rect x="46" y="350" width="92" height="20" rx="10" class="lab-glm"/>
+    <text class="license" x="92" y="364" text-anchor="middle">Custom (weights OK)</text>
+    <text class="lab-name" x="46" y="398">Zhipu (GLM)</text>
+    <text class="model" x="46" y="416">GLM-4.5 · GLM-4.5 Air</text>
+    <text class="best-at" x="46" y="444">Best at · enterprise tool use</text>
+    <text class="body" x="46" y="466">• Strong function-call schema adherence</text>
+    <text class="body" x="46" y="486">• Reliable at structured output</text>
+    <text class="body" x="46" y="506">• Plays well with agent frameworks</text>
+    <text class="body-sm" x="46" y="532">License has use-case restrictions —</text>
+    <text class="body-sm" x="46" y="548">read it before commercial deploy.</text>
+  </g>
+
+  <!-- Row 2, Col 2 — MiniMax -->
+  <g>
+    <rect x="315" y="330" width="270" height="230" rx="12" fill="#fafaf6" stroke="#e2dfd2" stroke-width="1"/>
+    <rect x="315" y="330" width="270" height="6" rx="3" class="swatch-minimax"/>
+    <rect x="331" y="350" width="78" height="20" rx="10" class="lab-minimax"/>
+    <text class="license" x="370" y="364" text-anchor="middle">MMLU Open</text>
+    <text class="lab-name" x="331" y="398">MiniMax</text>
+    <text class="model" x="331" y="416">M3 · M3-Plus</text>
+    <text class="best-at" x="331" y="444">Best at · cost-efficient generalist</text>
+    <text class="body" x="331" y="466">• A-tier on daily Q&amp;A at &lt;$10/mo</text>
+    <text class="body" x="331" y="486">• Compact 7B–20B distillations</text>
+    <text class="body" x="331" y="506">• Plays well with BYOK harnesses</text>
+    <text class="body-sm" x="331" y="532">The "boring default" — fits most work</text>
+    <text class="body-sm" x="331" y="548">at A-tier quality and B-tier price.</text>
+  </g>
+
+  <!-- Row 2, Col 3 — StepFun -->
+  <g>
+    <rect x="600" y="330" width="270" height="230" rx="12" fill="#fafaf6" stroke="#e2dfd2" stroke-width="1"/>
+    <rect x="600" y="330" width="270" height="6" rx="3" class="swatch-step"/>
+    <rect x="616" y="350" width="92" height="20" rx="10" class="lab-step"/>
+    <text class="license" x="662" y="364" text-anchor="middle">StepFun Open</text>
+    <text class="lab-name" x="616" y="398">StepFun</text>
+    <text class="model" x="616" y="416">Step-3 · Step-3 Reason</text>
+    <text class="best-at" x="616" y="444">Best at · math &amp; code reasoning</text>
+    <text class="body" x="616" y="466">• Strong on math olympiad benchmarks</text>
+    <text class="body" x="616" y="486">• Extended chain-of-thought mode</text>
+    <text class="body" x="616" y="506">• Niche but worth knowing for STEM</text>
+    <text class="body-sm" x="616" y="532">Use when the workload is math-heavy;</text>
+    <text class="body-sm" x="616" y="548">skip for general Q&amp;A.</text>
+  </g>
+
+  <!-- Footer / legend -->
+  <text class="footer" x="450" y="595" text-anchor="middle">License colour pill = how permissive the weights release is. Always read the model card before commercial use.</text>
+  <text class="footer" x="450" y="612" text-anchor="middle">Cross-reference: L01 (tier list), L04 (cost-efficient deep dive), L05 (frontier vs open-weight decision framework).</text>
+</svg>

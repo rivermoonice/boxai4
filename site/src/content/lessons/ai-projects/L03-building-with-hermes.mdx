@@ -1,0 +1,206 @@
+---
+title: "Build a Side Project with Hermes + Claude Code in One Weekend (2026)"
+module: ai-projects
+slug: l03-building-with-hermes
+order: 3
+updatedDate: 2026-06-29
+updatedRaw: "June 2026"
+summary: "What one person can realistically ship in a weekend with Hermes doing the spec and Claude Code doing the build, and how to set up the handoff between them."
+description: "You have the spec from L02 in mind and the Hermes module behind you. This lesson shows what one person can ship in a weekend by combining Hermes (for spec and research) with Claude Code (for the build/iterate loop), and where the handoff between the two actually lives."
+readingMinutes: 9
+accent: "#ea7a3b"
+---
+
+**Last tested and updated:** June 2026
+
+import Quiz from '../../../components/lesson/Quiz.astro';
+import Callout from '../../../components/lesson/Callout.astro';
+import { Picture } from 'astro:assets';
+
+import weekendFlow from '../../../assets/lessons/ai-projects/L03/weekend-build-flow.svg';
+
+You finished the Hermes module ([L01 — What Is Hermes Agent](/lessons/hermes/l01-what-is-hermes-agent/) through [L08 — Automation: cron, kanban, sub-agents](/lessons/hermes/l08-automation-cron-kanban-sub-agents/)). You finished [L01 — Coding with Claude Code](/lessons/ai-projects/l01-coding-with-claude-code/) and [L02 — Vibe Coding vs Real Coding](/lessons/ai-projects/l02-vibe-coding-vs-real-coding/). You have two harnesses on your machine and one weekend. So — **what can one person actually ship in 48 hours using both?** That's the question this lesson is built to answer.
+
+## The hook
+
+Here's a real weekend, the kind someone on the team shipped in June 2026:
+
+> **Friday 7pm.** Open Hermes, ask for five product angles on a niche you already know well. Pick the smallest one. Ask Hermes to draft the spec: features, data model, edge cases, test plan. Save it to `SPEC.md`. Stop for the night.
+>
+> **Saturday morning.** Open Claude Code in a fresh repo, paste the spec, watch the loop run. Spec → test → fix → spec → test → fix. By evening there is a working API and a basic UI.
+>
+> **Sunday.** Open Hermes again. Ask it to verify the build against the spec. Diff the gaps. Open Claude Code for the close-out: write the README, add the screenshots, deploy. Ship by midnight.
+
+That's it. One person. Two harnesses. One weekend. No heroic weekend coding sessions, no copy-paste boilerplate, no "I'll finish it next week" projects that never ship.
+
+The shape works because each harness is doing what it's good at. **Hermes thinks. Claude Code builds.** Mix them up and you waste time.
+
+## The mental model
+
+The single idea behind this lesson: **Hermes is for thinking, Claude Code is for shipping**.
+
+<Picture src="/lessons/ai-projects/L03/weekend-build-flow.svg" alt="Diagram: four-step weekend build flow — sketch (Hermes), spec (Hermes), code (Claude Code), review (Hermes)" width={980} height={420} formats={["avif", "webp"]} />
+
+If you try to remember nothing else, remember the four-step flow above.
+
+**Step 1 — Sketch (Hermes).** Before you write a line of code, you need an angle. Hermes reads your niche knowledge, your saved links, your notes from the last six months. It gives you three product angles ranked by weekend-fit. You pick one. This step takes 20 minutes. It saves you from building the wrong thing.
+
+**Step 2 — Spec (Hermes).** Once you have an angle, Hermes writes the spec. Features as bullets. Data model as a table. Edge cases as a list. Test plan as a checklist. You save it as `SPEC.md` in a new folder. This file is the contract between you and Claude Code on Saturday morning. If it's vague, Saturday breaks. If it's specific, Saturday flies.
+
+**Step 3 — Code (Claude Code).** On Saturday, you open Claude Code in a fresh repo, paste the spec, and let the loop run. Spec → test → fix → spec → test → fix. Claude Code verifies by **running tests**, which is exactly what you want for code that has to work. This is the step that actually ships the thing.
+
+**Step 4 — Review (Hermes).** On Sunday, you open Hermes again. You point it at the spec and at the codebase. It produces a gap analysis: what's built, what's partial, what's missing. You take that list back to Claude Code for the close-out pass.
+
+<Callout type="tip" title="The handoff file">
+The `SPEC.md` file is the contract. Hermes writes it. Claude Code reads it. Hermes reviews the build against it. **One markdown file, three uses, one weekend.** If you skip the spec and try to brief each tool in chat, you'll redo the same context-setting five times. The file is cheaper than your time.
+</Callout>
+
+**Why this works.** Each tool is doing what it's designed for. Hermes is in its element during steps 1, 2, and 4 — research, structured writing, comparison, gap analysis. Claude Code is in its element during step 3 — code, tests, fixes, iteration. Neither tool is fighting its nature.
+
+**Why one tool alone doesn't work.** If you try to ship with Hermes alone, you spend Saturday writing code in chat and the loop is slow. If you try to ship with Claude Code alone, you spend Friday evening brainstorming in chat and the spec drifts. The two together cover the whole weekend without gaps.
+
+### What this looks like in your terminal
+
+Friday evening, two Hermes commands get you most of the way:
+
+- `/brainstorm-angles` — produces three product angles, ranked, with a "weekend-fit" score.
+- `/write-spec` — takes the chosen angle and produces a `SPEC.md` with features, data model, edge cases, test plan.
+
+Saturday morning, one Claude Code command and a cup of coffee:
+
+- *"Read SPEC.md. Implement feature by feature. Run tests after each. Commit when green."*
+
+Sunday afternoon, one more Hermes command:
+
+- `/verify-spec` — diffs the codebase against the spec, outputs a gap list.
+
+That's the whole flow. The tools carry the typing; you carry the taste.
+
+<Callout type="gotcha" title="Don't skip step 4">
+The review step is the one beginners skip. They ship on Sunday evening, push to main, walk away — and discover three weeks later that the auth flow doesn't match the spec. `/verify-spec` takes 15 minutes and saves a rewrite. Always run it before you deploy.
+</Callout>
+
+## Pick your tool
+
+The hard part isn't the tools — it's the boundary between them. Here's where each one stops and the other starts.
+
+| Step | Tool | What it produces | What you do |
+|---|---|---|---|
+| Brainstorm angles | Hermes | Three ranked product angles | Pick one |
+| Draft the spec | Hermes | `SPEC.md` | Edit for taste, save |
+| Implement the build | Claude Code | Working code + green tests | Review the diff |
+| Verify the build | Hermes | Gap analysis vs spec | Decide ship-or-fix |
+| Close-out (README, deploy) | Claude Code | Production-ready repo | Hit merge |
+
+**Rule of thumb:** if the output is a **markdown file** (spec, README, gap analysis, blog post), Hermes is the right tool. If the output is **working code** with a green test suite, Claude Code is the right tool. Cross the boundary as few times as possible — every cross costs you context.
+
+<Callout type="tip" title="The mental shortcut">
+Ask: *will this work be verified by running it?* If yes, coding harness. If no, agent harness. Code that has to run → Claude Code. Writing that has to make sense → Hermes.
+</Callout>
+
+### When one tool is enough
+
+You don't always need both. Here's the honest decision:
+
+- **Hermes alone** is fine for research, daily automation, multi-channel orchestration, and writing-heavy projects (newsletter, weekly digest). Anything covered in [L04 — Skills and Skill Bundles](/lessons/hermes/l04-skills-and-skill-bundles/) and [L08 — Automation](/lessons/hermes/l08-automation-cron-kanban-sub-agents/) lives here.
+- **Claude Code alone** is fine for shipping software, refactoring an existing codebase, or one-off code questions. The full Claude Code workflow is in [L01 — Coding with Claude Code](/lessons/ai-projects/l01-coding-with-claude-code/).
+- **Both together** is for projects that need a real spec and a real build, in a tight timeframe, by one person.
+
+The weekend-build pattern is the third case. It's not the default — it's the escalation when you actually want to ship something with both rigour and speed.
+
+### Where Hermes' `agents.md` fits
+
+If you're running the weekend-build pattern, write an `agents.md` at the root of your project directory before you start. It tells Hermes the project context, the file conventions, the tone of the spec, the model preferences. Without it, you'll repeat the same context-setting on every Hermes call. With it, Hermes loads it once and stays consistent.
+
+The `agents.md` file is **not** read by Claude Code — that's `CLAUDE.md` or `.cursorrules` territory. Keep them separate. The reason: Hermes wants a long-form project brief; Claude Code wants a short list of repo-specific rules. Different shapes, different files.
+
+## Try it
+
+### The exercise
+
+Pick one product angle you already have domain knowledge in. It should be small enough that one person could realistically ship it in a weekend. Then run the four-step flow over the next 48 hours.
+
+**Step 1 — Friday (30 minutes total).**
+Open Hermes. Run `/brainstorm-angles` with your niche as input. Read the three options. Pick the one with the smallest surface area and the clearest "done" condition.
+
+**Step 2 — Friday (1 hour total).**
+Run `/write-spec` with the chosen angle. Edit the output for taste. Save as `SPEC.md`. Don't worry about perfect — worry about specific. "User can upload a CSV" is good. "User can do data stuff" is useless.
+
+**Step 3 — Saturday (6–8 hours).**
+Open Claude Code in a fresh repo. Paste the spec. Implement feature by feature. Run the test suite after each feature. Commit when green. Stop for the night when the loop stops being fun.
+
+**Step 4 — Sunday (3–4 hours).**
+Open Hermes again. Run `/verify-spec` against the codebase. Read the gap list. Open Claude Code for the close-out: fix the gaps, write the README, deploy, push.
+
+### Success criteria
+
+You'll know it worked if:
+- By Sunday night, you have a deployed URL you can show someone.
+- The `SPEC.md` matches the shipped behaviour (no drift).
+- You didn't write any glue code yourself — only spec edits and gap-fix decisions.
+- You'd be willing to do it again next weekend.
+
+If you don't have a URL by Sunday night, the spec was probably too vague. Tighten it and try again next weekend with a smaller scope.
+
+### A realistic scope check
+
+A weekend-build project is roughly:
+- **2–5 features**, each describable in one sentence.
+- **1 data model**, with 3–7 fields.
+- **1 user flow**, end-to-end (signup → use → result).
+- **0 auth complications** (skip login for the weekend; add it later).
+- **1 deployment target** (Vercel, Fly, or a single VPS).
+
+If your spec has more than that, the weekend will slip. Cut features, not time.
+
+### What's next
+
+- **Want the spec-writing details?** → [L02 — Vibe Coding vs Real Coding](/lessons/ai-projects/l02-vibe-coding-vs-real-coding/) shows how to write a spec that Claude Code can actually execute against.
+- **Want the Skills that power Hermes' side?** → [L04 — Skills and Skill Bundles](/lessons/hermes/l04-skills-and-skill-bundles/) covers `/brainstorm-angles`, `/write-spec`, and `/verify-spec`.
+- **Want the cron side of the loop?** → [L08 — Automation](/lessons/hermes/l08-automation-cron-kanban-sub-agents/) shows how to schedule the verification step to run daily.
+- **Want a real business case study?** → [L04 — Niche Directory Sites](/lessons/ai-projects/l04-niche-directory-sites/) is what this pattern looks like applied to a specific business type.
+
+<Callout type="bottom-line">
+**The bottom line:** pick the smallest angle that matters to you, write the spec with Hermes, build it with Claude Code, verify it with Hermes on Sunday. Two harnesses, one handoff file, one weekend. Most "side projects that never ship" die in the gap between thinking and building. The spec closes the gap.
+</Callout>
+
+### Check your understanding
+
+<Quiz questions={[
+  {
+    q: "In the weekend-build pattern, which tool writes the spec?",
+    choices: ["Claude Code", "Hermes", "Either works equally well", "Neither — you write it yourself"],
+    answer: 1,
+    explain: "Hermes writes the spec. It's structured writing work — features, data model, edge cases, test plan — and Hermes is built for that. Claude Code reads the spec; it doesn't author the spec.",
+  },
+  {
+    q: "What file format is the handoff between Hermes and Claude Code?",
+    choices: ["A Slack thread", "SPEC.md", "A Figma link", "A shared Google Doc"],
+    answer: 1,
+    explain: "SPEC.md — a single markdown file in the project directory. Hermes writes it Friday evening. Claude Code reads it Saturday morning. Hermes diffs the build against it on Sunday.",
+  },
+  {
+    q: "Short answer: why is the verify step (step 4) worth running before you deploy?",
+    choices: [],
+    answer: 0,
+    explain: "It diffs the codebase against the spec and surfaces gaps you missed. Without it, you ship features that don't match the spec and discover it three weeks later. Takes 15 minutes, saves a rewrite.",
+  },
+  {
+    q: "Which tool is the right pick for the close-out step (README, deploy, screenshots)?",
+    choices: ["Hermes", "Claude Code", "Either works equally well", "A no-code tool"],
+    answer: 1,
+    explain: "The close-out is code-adjacent work (repo files, deploy scripts, screenshots committed to the repo) and it ships from the same repo where step 3 ran. Claude Code owns it.",
+  },
+  {
+    q: "A spec is 'good enough' for Claude Code when:",
+    choices: ["It is at least 10 pages long", "It has specific, testable features and a clear 'done' condition", "It uses lots of bullet points", "It is written in pseudocode"],
+    answer: 1,
+    explain: "Specificity beats length. 'User can upload a CSV' is good. 'User can do data stuff' is useless. A clear 'done' condition is what stops the build loop from running forever.",
+  },
+  {
+    q: "Short answer: name one thing you should NOT include in a weekend-build spec.",
+    choices: [],
+    answer: 0,
+    explain: "Pick one: complex auth (signup, OAuth, password reset); real-time collaboration features; more than 5 features; payment processing; admin dashboards. These each take more than a weekend on their own. Cut them from the scope.",
+  },
+]} />

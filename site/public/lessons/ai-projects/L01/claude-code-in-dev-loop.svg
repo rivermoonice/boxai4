@@ -1,0 +1,158 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 360" role="img" aria-labelledby="loop-title loop-desc">
+  <title id="loop-title">Claude Code in your dev loop</title>
+  <desc id="loop-desc">A cyclical diagram showing the standard PR review and build-test cycle, with Claude Code sitting between the editor, the test runner, and the pull request. Arrows show how a developer opens the harness in the repo, Claude Code reads the diff, runs the test suite, fixes failures, and the cycle loops until green.</desc>
+
+  <defs>
+    <linearGradient id="editor" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#ea7a3b" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#ea7a3b" stop-opacity="0.04"/>
+    </linearGradient>
+    <linearGradient id="claude" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#ea7a3b" stop-opacity="0.32"/>
+      <stop offset="100%" stop-color="#ea7a3b" stop-opacity="0.08"/>
+    </linearGradient>
+    <linearGradient id="tests" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#2da44e" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#2da44e" stop-opacity="0.04"/>
+    </linearGradient>
+    <linearGradient id="pr" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#7c5cff" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#7c5cff" stop-opacity="0.04"/>
+    </linearGradient>
+    <style>
+      .panel { fill: url(#editor); stroke: #ea7a3b; stroke-width: 1.5; }
+      .panel-c { fill: url(#claude); stroke: #ea7a3b; stroke-width: 2.5; }
+      .panel-t { fill: url(#tests); stroke: #2da44e; stroke-width: 1.5; }
+      .panel-p { fill: url(#pr); stroke: #7c5cff; stroke-width: 1.5; }
+      .label { font: 700 15px/1 ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif; fill: #2b2a36; }
+      .label-c { font: 800 18px/1 ui-sans-serif, system-ui, sans-serif; fill: #b04a1c; }
+      .head { font: 600 11px/1 ui-sans-serif, system-ui, sans-serif; fill: #4a4960; letter-spacing: 0.08em; text-transform: uppercase; }
+      .body { font: 13px/1.5 ui-sans-serif, system-ui, -apple-system, sans-serif; fill: #2b2a36; }
+      .small { font: 11px/1.4 ui-sans-serif, system-ui, sans-serif; fill: #5a5a5a; }
+      .arrow { stroke: #5a5a5a; stroke-width: 1.5; fill: none; }
+      .arrow-c { stroke: #ea7a3b; stroke-width: 2; fill: none; }
+      .loop-arrow { stroke: #b04a1c; stroke-width: 2.2; fill: none; stroke-dasharray: 6 4; }
+      .arrow-text { font: 11px/1 ui-monospace, monospace; fill: #5a5a5a; }
+      .icon-stroke { stroke: #ea7a3b; stroke-width: 1.5; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+      .icon-fill-c { fill: #ea7a3b; }
+      .icon-fill-t { fill: #2da44e; }
+      .icon-fill-p { fill: #7c5cff; }
+      .icon-stroke-t { stroke: #2da44e; stroke-width: 1.5; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+      .icon-stroke-p { stroke: #7c5cff; stroke-width: 1.5; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+      .summary { font: 600 14px/1.4 ui-sans-serif, system-ui, sans-serif; fill: #1a1a1a; }
+      @media (prefers-color-scheme: dark) {
+        .label, .body, .summary { fill: #ece8db; }
+        .label-c { fill: #f5a677; }
+        .head, .small, .arrow-text { fill: #a8a395; }
+        .arrow { stroke: #a8a395; }
+        .arrow-c { stroke: #f5a677; }
+        .loop-arrow { stroke: #f5a677; }
+      }
+    </style>
+  </defs>
+
+  <!-- Top banner: where Claude Code sits -->
+  <g>
+    <text class="head" x="450" y="28" text-anchor="middle">Where Claude Code sits in your dev loop</text>
+    <text class="summary" x="450" y="50" text-anchor="middle">It owns the engineering shell: editor ↔ harness ↔ tests ↔ PR, looped until green.</text>
+  </g>
+
+  <!-- Editor / repo (top-left) -->
+  <g>
+    <rect class="panel" x="40" y="84" width="180" height="140" rx="14"/>
+    <text class="head" x="60" y="108">You</text>
+    <text class="label" x="60" y="128">Editor + Repo</text>
+    <!-- code icon -->
+    <g transform="translate(58, 144)">
+      <rect x="0" y="0" width="22" height="28" rx="3" fill="#ea7a3b" fill-opacity="0.85"/>
+      <text x="11" y="20" text-anchor="middle" font-family="ui-monospace, monospace" font-size="14" font-weight="700" fill="#fff">&lt;/&gt;</text>
+    </g>
+    <text class="body" x="92" y="158">Write or paste</text>
+    <text class="body" x="92" y="176">a task</text>
+    <text class="small" x="60" y="206">git status, diff,</text>
+    <text class="small" x="60" y="222">branch, commit.</text>
+  </g>
+
+  <!-- Claude Code (center) -->
+  <g>
+    <rect class="panel-c" x="290" y="76" width="240" height="160" rx="16"/>
+    <text class="head" x="310" y="100" fill="#b04a1c">Coding Harness</text>
+    <text class="label-c" x="310" y="126">Claude Code</text>
+    <!-- terminal icon -->
+    <g transform="translate(310, 142)">
+      <rect x="0" y="0" width="44" height="30" rx="4" fill="#ea7a3b" fill-opacity="0.18" class="icon-stroke"/>
+      <text x="6" y="20" font-family="ui-monospace, monospace" font-size="12" font-weight="700" fill="#b04a1c">$_</text>
+    </g>
+    <text class="body" x="364" y="158">Reads the repo,</text>
+    <text class="body" x="364" y="178">runs commands,</text>
+    <text class="body" x="364" y="198">proposes a diff.</text>
+    <text class="small" x="310" y="224" fill="#b04a1c">Iterates until tests pass.</text>
+  </g>
+
+  <!-- Test runner (top-right) -->
+  <g>
+    <rect class="panel-t" x="600" y="84" width="180" height="140" rx="14"/>
+    <text class="head" x="620" y="108">Verifier</text>
+    <text class="label" x="620" y="128" fill="#1d6b35">Test Runner</text>
+    <!-- check icon -->
+    <g transform="translate(620, 144)">
+      <circle cx="14" cy="14" r="14" fill="#2da44e" fill-opacity="0.18" class="icon-stroke-t"/>
+      <path d="M7 14 L12 19 L21 9" class="icon-stroke-t" stroke-width="2.5"/>
+    </g>
+    <text class="body" x="664" y="158">npm test,</text>
+    <text class="body" x="664" y="176">pytest, go test.</text>
+    <text class="small" x="620" y="206">Green = success.</text>
+    <text class="small" x="620" y="222">Red = loop again.</text>
+  </g>
+
+  <!-- Pull request (bottom) -->
+  <g>
+    <rect class="panel-p" x="290" y="270" width="240" height="76" rx="14"/>
+    <text class="head" x="310" y="294" fill="#4a2db0">Output</text>
+    <text class="label" x="310" y="316" fill="#3a1f8c">Pull Request</text>
+    <!-- PR icon -->
+    <g transform="translate(454, 290)">
+      <circle cx="14" cy="8" r="4" fill="#7c5cff" class="icon-stroke-p"/>
+      <line x1="14" y1="12" x2="14" y2="22" class="icon-stroke-p"/>
+      <circle cx="14" cy="26" r="4" fill="none" class="icon-stroke-p"/>
+      <line x1="14" y1="2" x2="14" y2="4" class="icon-stroke-p"/>
+      <path d="M22 14 Q26 14 26 18 L26 26" class="icon-stroke-p"/>
+    </g>
+    <text class="small" x="310" y="336">Commit + push. Teammate reviews.</text>
+  </g>
+
+  <!-- Editor -> Claude Code -->
+  <g>
+    <path class="arrow-c" d="M222 144 L286 144"/>
+    <path d="M280 140 L288 144 L280 148 Z" fill="#ea7a3b"/>
+    <text class="arrow-text" x="254" y="135" text-anchor="middle" fill="#b04a1c">"refactor X"</text>
+  </g>
+
+  <!-- Claude Code -> Test runner -->
+  <g>
+    <path class="arrow-c" d="M532 144 L596 144"/>
+    <path d="M590 140 L598 144 L590 148 Z" fill="#ea7a3b"/>
+    <text class="arrow-text" x="564" y="135" text-anchor="middle" fill="#b04a1c">run tests</text>
+  </g>
+
+  <!-- Test runner -> Claude Code (loop: failures) -->
+  <g>
+    <path class="loop-arrow" d="M598 168 L532 168"/>
+    <path d="M538 164 L530 168 L538 172 Z" fill="#b04a1c"/>
+    <text class="arrow-text" x="564" y="188" text-anchor="middle" fill="#b04a1c">fail → read error → fix</text>
+  </g>
+
+  <!-- Claude Code -> PR (down) -->
+  <g>
+    <path class="arrow-c" d="M410 238 L410 268"/>
+    <path d="M406 262 L410 270 L414 262 Z" fill="#ea7a3b"/>
+    <text class="arrow-text" x="450" y="258" fill="#b04a1c">commit + push</text>
+  </g>
+
+  <!-- PR -> Editor (next task) -->
+  <g>
+    <path class="arrow" d="M288 308 L222 308"/>
+    <path d="M228 304 L220 308 L228 312 Z" fill="#5a5a5a"/>
+    <text class="arrow-text" x="254" y="300" text-anchor="middle">next task</text>
+  </g>
+</svg>

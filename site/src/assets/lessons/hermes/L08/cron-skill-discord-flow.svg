@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 360" role="img" aria-labelledby="csd-title csd-desc">
+  <title id="csd-title">Cron to Skill to Discord automation flow</title>
+  <desc id="csd-desc">Three-step horizontal flow. At 7am, a cron job triggers Hermes, Hermes runs a Skill Bundle that produces a summary, and the result is posted to a Discord channel via a webhook.</desc>
+
+  <defs>
+    <linearGradient id="csd-step" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#7c5cff" stop-opacity="0.16"/>
+      <stop offset="100%" stop-color="#7c5cff" stop-opacity="0.04"/>
+    </linearGradient>
+    <style>
+      .panel { fill: url(#csd-step); stroke: #7c5cff; stroke-width: 1.5; }
+      .step-num { font: 700 13px/1 ui-sans-serif, system-ui, sans-serif; fill: #7c5cff; letter-spacing: 0.06em; text-transform: uppercase; }
+      .step-title { font: 700 18px/1 ui-sans-serif, system-ui, sans-serif; fill: #2b2a36; }
+      .body { font: 13px/1.5 ui-sans-serif, system-ui, -apple-system, sans-serif; fill: #2b2a36; }
+      .mono { font: 12px/1.4 ui-monospace, "SF Mono", Menlo, monospace; fill: #2b2a36; }
+      .cmd { font: 700 13px/1 ui-monospace, monospace; fill: #7c5cff; }
+      .arrow { stroke: #5a5a5a; stroke-width: 1.6; fill: none; }
+      .arrow-head { fill: #5a5a5a; }
+      .pill { fill: #fff; stroke: #7c5cff; stroke-width: 1.5; }
+      .pill-text { font: 600 12px/1 ui-sans-serif, system-ui, sans-serif; fill: #4a3eb0; }
+      .caption { font: italic 13px/1.4 ui-sans-serif, system-ui, sans-serif; fill: #5a5a5a; }
+      .summary { font: 600 14px/1.4 ui-sans-serif, system-ui, sans-serif; fill: #1a1a1a; }
+      @media (prefers-color-scheme: dark) {
+        .body, .mono, .summary { fill: #ece8db; }
+        .step-title { fill: #ece8db; }
+        .pill { fill: #1a1a22; }
+        .pill-text { fill: #b3a3ff; }
+        .caption { fill: #a8a395; }
+        .arrow { stroke: #a8a395; }
+        .arrow-head { fill: #a8a395; }
+      }
+    </style>
+  </defs>
+
+  <text class="step-num" x="450" y="28" text-anchor="middle">Daily automation flow</text>
+
+  <!-- STEP 1: Cron -->
+  <g>
+    <rect class="panel" x="20" y="56" width="260" height="220" rx="16"/>
+    <text class="step-num" x="40" y="84">Step 1</text>
+    <text class="step-title" x="40" y="110">Cron fires</text>
+    <text class="body" x="40" y="134">At 07:00 the system</text>
+    <text class="body" x="40" y="150">cron daemon wakes up</text>
+    <text class="body" x="40" y="166">and runs your entry.</text>
+
+    <rect class="pill" x="40" y="184" width="220" height="32" rx="8"/>
+    <text class="mono" x="52" y="205" fill="#7c5cff" font-weight="700">0 7 * * *</text>
+    <text class="mono" x="146" y="205">cd ~/proj &amp;&amp;</text>
+    <text class="mono" x="40" y="234" fill="#7c5cff" font-weight="700">hermes run /morning</text>
+
+    <text class="caption" x="40" y="262">You sleep. The laptop</text>
+    <text class="caption" x="40" y="278">(or VPS) does not.</text>
+  </g>
+
+  <!-- Arrow 1->2 -->
+  <path class="arrow" d="M286 166 L334 166"/>
+  <path class="arrow-head" d="M328 161 L338 166 L328 171 Z"/>
+
+  <!-- STEP 2: Skill -->
+  <g>
+    <rect class="panel" x="340" y="56" width="240" height="220" rx="16"/>
+    <text class="step-num" x="360" y="84">Step 2</text>
+    <text class="step-title" x="360" y="110">Skill runs</text>
+    <text class="body" x="360" y="134">Hermes loads the Skill</text>
+    <text class="body" x="360" y="150">Bundle, hits each step</text>
+    <text class="body" x="360" y="166">in order, writes output.</text>
+
+    <rect class="pill" x="360" y="186" width="200" height="26" rx="13"/>
+    <text class="pill-text" x="460" y="204" text-anchor="middle">/web-discovery</text>
+    <rect class="pill" x="360" y="216" width="200" height="26" rx="13"/>
+    <text class="pill-text" x="460" y="234" text-anchor="middle">/extract-points</text>
+    <rect class="pill" x="360" y="246" width="200" height="26" rx="13"/>
+    <text class="pill-text" x="460" y="264" text-anchor="middle">/report-output</text>
+  </g>
+
+  <!-- Arrow 2->3 -->
+  <path class="arrow" d="M586 166 L634 166"/>
+  <path class="arrow-head" d="M628 161 L638 166 L628 171 Z"/>
+
+  <!-- STEP 3: Discord -->
+  <g>
+    <rect class="panel" x="640" y="56" width="240" height="220" rx="16"/>
+    <text class="step-num" x="660" y="84">Step 3</text>
+    <text class="step-title" x="660" y="110">Discord posts</text>
+    <text class="body" x="660" y="134">Hermes POSTs the</text>
+    <text class="body" x="660" y="150">summary to your</text>
+    <text class="body" x="660" y="166">channel via webhook.</text>
+
+    <!-- Discord-style message bubble mock -->
+    <rect x="660" y="186" width="200" height="68" rx="10" fill="#5865F2" opacity="0.18"/>
+    <rect x="660" y="186" width="200" height="68" rx="10" fill="none" stroke="#5865F2" stroke-width="1.4"/>
+    <text class="mono" x="672" y="208" fill="#5865F2" font-weight="700">#morning-brief</text>
+    <text class="body" x="672" y="226">Top 3 AI stories</text>
+    <text class="body" x="672" y="242">for 2026-06-29.</text>
+
+    <text class="caption" x="660" y="278">You see it on your phone.</text>
+  </g>
+
+  <!-- Bottom summary -->
+  <text class="summary" x="450" y="320" text-anchor="middle">Cron is the trigger. Skill is the brain. Webhook is the delivery.</text>
+  <text class="caption" x="450" y="342" text-anchor="middle">Hermes does not need you awake for any of it.</text>
+</svg>

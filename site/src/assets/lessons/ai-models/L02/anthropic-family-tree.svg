@@ -1,0 +1,142 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 580" role="img" aria-labelledby="aft-title aft-desc">
+  <title id="aft-title">The Anthropic family tree: Haiku, Sonnet, Opus on the speed-vs-capability matrix</title>
+  <desc id="aft-desc">A 2x2 matrix with capability on the vertical axis (low to high) and speed on the horizontal axis (slow to fast). Haiku sits in the fast/lower-capability quadrant, Sonnet sits in the middle, Opus sits in the slow/high-capability quadrant. A cost row underneath shows the price tier for each.</desc>
+
+  <defs>
+    <linearGradient id="haiku-grad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#10b981" stop-opacity="0.22"/>
+      <stop offset="100%" stop-color="#10b981" stop-opacity="0.05"/>
+    </linearGradient>
+    <linearGradient id="sonnet-grad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0ea5a4" stop-opacity="0.24"/>
+      <stop offset="100%" stop-color="#0ea5a4" stop-opacity="0.05"/>
+    </linearGradient>
+    <linearGradient id="opus-grad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#7c5cff" stop-opacity="0.22"/>
+      <stop offset="100%" stop-color="#7c5cff" stop-opacity="0.04"/>
+    </linearGradient>
+    <marker id="arrow-aft" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#2b2a36"/>
+    </marker>
+    <style>
+      .grid { stroke: #d8d4c5; stroke-width: 1; stroke-dasharray: 3 4; }
+      .axis { stroke: #2b2a36; stroke-width: 2; fill: none; }
+      .axis-label { font: 700 13px/1 ui-sans-serif, system-ui, sans-serif; fill: #2b2a36; letter-spacing: 0.06em; text-transform: uppercase; }
+      .quad-label { font: 600 11px/1 ui-sans-serif, system-ui, sans-serif; fill: #8a8775; letter-spacing: 0.08em; text-transform: uppercase; }
+      .haiku-box { fill: url(#haiku-grad); stroke: #10b981; stroke-width: 2; }
+      .sonnet-box { fill: url(#sonnet-grad); stroke: #0ea5a4; stroke-width: 2.5; }
+      .opus-box { fill: url(#opus-grad); stroke: #7c5cff; stroke-width: 2; }
+      .name { font: 700 22px/1 ui-sans-serif, system-ui, sans-serif; fill: #1a1a1a; }
+      .name-h { fill: #065f46; }
+      .name-s { fill: #064e4d; }
+      .name-o { fill: #3b2e9c; }
+      .tag { font: 600 11px/1 ui-monospace, monospace; fill: #5a5a5a; letter-spacing: 0.04em; text-transform: uppercase; }
+      .detail { font: 13px/1.45 ui-sans-serif, system-ui, sans-serif; fill: #2b2a36; }
+      .meta { font: 12px/1.4 ui-monospace, monospace; fill: #4a4960; }
+      .price { font: 700 13px/1 ui-monospace, monospace; fill: #1a1a1a; }
+      .price-label { font: 11px/1 ui-sans-serif, system-ui, sans-serif; fill: #5a5a5a; letter-spacing: 0.04em; text-transform: uppercase; }
+      .arrow { stroke: #2b2a36; stroke-width: 1.5; fill: none; }
+      .summary { font: 600 14px/1.45 ui-sans-serif, system-ui, sans-serif; fill: #1a1a1a; }
+      @media (prefers-color-scheme: dark) {
+        .grid { stroke: #4a4960; }
+        .axis { stroke: #ece8db; }
+        .axis-label { fill: #ece8db; }
+        .quad-label { fill: #a8a395; }
+        .name, .summary, .price, .detail { fill: #ece8db; }
+        .name-h { fill: #6ee7b7; }
+        .name-s { fill: #7cd9d8; }
+        .name-o { fill: #c4b5fd; }
+        .tag, .meta, .price-label { fill: #a8a395; }
+        .arrow { stroke: #ece8db; }
+        marker path { fill: #ece8db; }
+      }
+    </style>
+  </defs>
+
+  <!-- Title strip -->
+  <g>
+    <text class="axis-label" x="40" y="34">The Anthropic family tree</text>
+    <text class="quad-label" x="40" y="54">Speed vs. capability — pick the tier that fits the job.</text>
+  </g>
+
+  <!-- Matrix axes -->
+  <g>
+    <!-- horizontal axis (speed) at y=380 -->
+    <line class="axis" x1="120" y1="380" x2="820" y2="380" marker-end="url(#arrow-aft)"/>
+    <text class="axis-label" x="820" y="370" text-anchor="end">FAST →</text>
+    <text class="axis-label" x="120" y="370" text-anchor="start">← SLOW</text>
+    <text class="quad-label" x="470" y="406" text-anchor="middle">SPEED (tokens/sec, latency-to-first-token)</text>
+
+    <!-- vertical axis (capability) at x=120 -->
+    <line class="axis" x1="120" y1="380" x2="120" y2="90" marker-end="url(#arrow-aft)"/>
+    <text class="axis-label" x="138" y="100">HIGH</text>
+    <text class="axis-label" x="138" y="370">LOW</text>
+    <text class="quad-label" x="62" y="240" text-anchor="middle" transform="rotate(-90 62 240)">CAPABILITY (reasoning, hard problems)</text>
+
+    <!-- inner gridlines -->
+    <line class="grid" x1="120" y1="180" x2="820" y2="180"/>
+    <line class="grid" x1="470" y1="90" x2="470" y2="380"/>
+  </g>
+
+  <!-- Quadrant labels -->
+  <g>
+    <text class="quad-label" x="295" y="120" text-anchor="middle">SLOW + CAPABLE</text>
+    <text class="quad-label" x="645" y="120" text-anchor="middle">FAST + CAPABLE  ←  SWEET SPOT</text>
+    <text class="quad-label" x="295" y="220" text-anchor="middle">SLOW + LIMITED</text>
+    <text class="quad-label" x="645" y="220" text-anchor="middle">FAST + LIMITED</text>
+  </g>
+
+  <!-- Haiku: fast + limited (right side, lower half) -->
+  <g>
+    <rect class="haiku-box" x="540" y="232" width="240" height="130" rx="14"/>
+    <text class="tag" x="560" y="258" fill="#065f46">TIER · HAIKU</text>
+    <text class="name name-h" x="560" y="286">Haiku</text>
+    <text class="detail" x="560" y="310">Fastest, cheapest. Volume work:</text>
+    <text class="detail" x="560" y="328">classify, route, extract, draft.</text>
+    <text class="meta" x="560" y="352">~ $0.25 in / $1.25 out per 1M tok</text>
+  </g>
+
+  <!-- Sonnet: fast + capable — the sweet spot (right side, upper half) -->
+  <g>
+    <rect class="sonnet-box" x="540" y="100" width="240" height="130" rx="14"/>
+    <text class="tag" x="560" y="126" fill="#064e4d">TIER · SONNET  ★ DEFAULT</text>
+    <text class="name name-s" x="560" y="154">Sonnet</text>
+    <text class="detail" x="560" y="178">80% of daily work. Quality and</text>
+    <text class="detail" x="560" y="196">speed hold together here.</text>
+    <text class="meta" x="560" y="220">~ $3 in / $15 out per 1M tok</text>
+  </g>
+
+  <!-- Opus: slow + capable (left side, upper half) -->
+  <g>
+    <rect class="opus-box" x="160" y="100" width="240" height="130" rx="14"/>
+    <text class="tag" x="180" y="126" fill="#3b2e9c">TIER · OPUS</text>
+    <text class="name name-o" x="180" y="154">Opus</text>
+    <text class="detail" x="180" y="178">Slowest, priciest. The hard</text>
+    <text class="detail" x="180" y="196">problems — long-horizon, ambiguous.</text>
+    <text class="meta" x="180" y="220">~ $15 in / $75 out per 1M tok</text>
+  </g>
+
+  <!-- Cost row at the bottom -->
+  <g>
+    <text class="axis-label" x="40" y="450">The cost ladder (per 1M output tokens, approx.)</text>
+
+    <rect x="160" y="468" width="240" height="48" rx="10" fill="none" stroke="#7c5cff" stroke-width="1.5"/>
+    <text class="price" x="180" y="492">Opus</text>
+    <text class="price" x="380" y="492" text-anchor="end">$75</text>
+    <text class="price-label" x="396" y="492">/ 1M out</text>
+
+    <rect x="420" y="468" width="240" height="48" rx="10" fill="none" stroke="#0ea5a4" stroke-width="1.5"/>
+    <text class="price" x="440" y="492">Sonnet</text>
+    <text class="price" x="640" y="492" text-anchor="end">$15</text>
+    <text class="price-label" x="656" y="492">/ 1M out</text>
+
+    <rect x="680" y="468" width="160" height="48" rx="10" fill="none" stroke="#10b981" stroke-width="1.5"/>
+    <text class="price" x="700" y="492">Haiku</text>
+    <text class="price" x="820" y="492" text-anchor="end">$1.25</text>
+  </g>
+
+  <!-- Bottom rule of thumb -->
+  <g>
+    <text class="summary" x="460" y="554" text-anchor="middle">Same family. Three gears. Pick the gear that matches the job, not the gear that's loudest.</text>
+  </g>
+</svg>

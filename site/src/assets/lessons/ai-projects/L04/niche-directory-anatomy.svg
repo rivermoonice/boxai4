@@ -1,0 +1,153 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 600" role="img" aria-labelledby="nda-title nda-desc">
+  <title id="nda-title">Niche directory site anatomy: data model + pages + SEO loop</title>
+  <desc id="nda-desc">Three connected layers for a niche directory site. Top: the data model (Listing entity with name, URL, category, tags, description, paid flag). Middle: the page layer (homepage, category pages, individual listing pages). Bottom: the SEO loop (listings in, SEO optimised, organic traffic in, paid conversions out, revenue feeds more listings). All three layers form a self-reinforcing system whose moat is the founder's prior niche knowledge.</desc>
+
+  <defs>
+    <linearGradient id="nda-bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ea7a3b" stop-opacity="0.06"/>
+      <stop offset="100%" stop-color="#ea7a3b" stop-opacity="0.02"/>
+    </linearGradient>
+    <linearGradient id="nda-data" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ea7a3b" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#ea7a3b" stop-opacity="0.06"/>
+    </linearGradient>
+    <linearGradient id="nda-pages" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#7c5cff" stop-opacity="0.14"/>
+      <stop offset="100%" stop-color="#7c5cff" stop-opacity="0.04"/>
+    </linearGradient>
+    <linearGradient id="nda-seo" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0ea5a4" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#0ea5a4" stop-opacity="0.06"/>
+    </linearGradient>
+    <style>
+      .frame { fill: url(#nda-bg); stroke: #ea7a3b; stroke-width: 1.5; }
+      .layer-data { fill: url(#nda-data); stroke: #ea7a3b; stroke-width: 1.5; }
+      .layer-pages { fill: url(#nda-pages); stroke: #7c5cff; stroke-width: 1.5; }
+      .layer-seo { fill: url(#nda-seo); stroke: #0ea5a4; stroke-width: 1.5; }
+      .layer-title { font: 700 13px/1 ui-sans-serif, system-ui, sans-serif; letter-spacing: 0.06em; text-transform: uppercase; }
+      .layer-title-data { fill: #ea7a3b; }
+      .layer-title-pages { fill: #7c5cff; }
+      .layer-title-seo { fill: #0ea5a4; }
+      .entity-box { fill: #ffffff; stroke: #ea7a3b; stroke-width: 1.5; }
+      .entity-title { font: 700 13px/1 ui-sans-serif, system-ui, sans-serif; fill: #1a1a1a; }
+      .field { font: 11px/1.4 ui-monospace, monospace; fill: #2b2a36; }
+      .field-key { fill: #ea7a3b; font-weight: 700; }
+      .page-box { fill: #ffffff; stroke: #7c5cff; stroke-width: 1.5; }
+      .page-label { font: 700 12px/1 ui-sans-serif, system-ui, sans-serif; fill: #1a1a1a; }
+      .page-sub { font: 11px/1 ui-sans-serif, system-ui, sans-serif; fill: #5a5a5a; }
+      .seo-step { fill: #ffffff; stroke: #0ea5a4; stroke-width: 1.5; }
+      .seo-label { font: 700 12px/1 ui-sans-serif, system-ui, sans-serif; fill: #1a1a1a; }
+      .arrow-down { stroke: #2b2a36; stroke-width: 2; fill: none; marker-end: url(#nda-arrow); }
+      .arrow-loop { stroke: #0ea5a4; stroke-width: 2.5; fill: none; marker-end: url(#nda-arrow-teal); }
+      .arrow-paid { stroke: #ea7a3b; stroke-width: 2; fill: none; marker-end: url(#nda-arrow-orange); }
+      .title { font: 700 18px/1 ui-sans-serif, system-ui, sans-serif; fill: #1a1a1a; }
+      .caption { font: italic 12px/1.4 ui-sans-serif, system-ui, sans-serif; fill: #5a5a5a; }
+      .moat { font: 700 12px/1 ui-sans-serif, system-ui, sans-serif; fill: #ea7a3b; }
+      .moat-sub { font: 11px/1.3 ui-sans-serif, system-ui, sans-serif; fill: #5a5a5a; }
+      @media (prefers-color-scheme: dark) {
+        .entity-box, .page-box, .seo-step { fill: #1f1d2a; }
+        .entity-title, .page-label, .seo-label, .title { fill: #ece8db; }
+        .field { fill: #ece8db; }
+        .field-key { fill: #ffb380; }
+        .page-sub, .caption, .moat-sub { fill: #a8a395; }
+        .arrow-down { stroke: #ece8db; }
+      }
+    </style>
+    <marker id="nda-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#2b2a36"/>
+    </marker>
+    <marker id="nda-arrow-teal" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#0ea5a4"/>
+    </marker>
+    <marker id="nda-arrow-orange" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#ea7a3b"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text class="title" x="450" y="28" text-anchor="middle">Niche directory anatomy: data + pages + SEO loop</text>
+  <text class="caption" x="450" y="48" text-anchor="middle">Three layers that have to work together. The moat at the bottom is the founder — not the AI.</text>
+
+  <!-- Outer frame -->
+  <rect class="frame" x="40" y="70" width="820" height="480" rx="14"/>
+
+  <!-- LAYER 1: DATA MODEL (top) -->
+  <rect class="layer-data" x="70" y="90" width="760" height="100" rx="10"/>
+  <text class="layer-title layer-title-data" x="86" y="110">1. Data model — one Listing entity, repeated</text>
+
+  <!-- Listing entity -->
+  <rect class="entity-box" x="100" y="120" width="240" height="60" rx="6"/>
+  <text class="entity-title" x="116" y="138">Listing</text>
+  <text class="field" x="116" y="156"><tspan class="field-key">name</tspan>: string</text>
+  <text class="field" x="116" y="170"><tspan class="field-key">url</tspan>: string · <tspan class="field-key">category</tspan>: enum</text>
+
+  <rect class="entity-box" x="360" y="120" width="240" height="60" rx="6"/>
+  <text class="entity-title" x="376" y="138">Listing (cont.)</text>
+  <text class="field" x="376" y="156"><tspan class="field-key">tags</tspan>: string[] · <tspan class="field-key">paid</tspan>: boolean</text>
+  <text class="field" x="376" y="170"><tspan class="field-key">description</tspan>: rich text (~150 words)</text>
+
+  <!-- Counter -->
+  <rect class="entity-box" x="620" y="120" width="180" height="60" rx="6"/>
+  <text class="entity-title" x="636" y="138">100+ listings</text>
+  <text class="field" x="636" y="156">the minimum for SEO traction</text>
+  <text class="field" x="636" y="170">each listing = one indexable page</text>
+
+  <!-- Arrow from data to pages -->
+  <line class="arrow-down" x1="450" y1="190" x2="450" y2="220"/>
+
+  <!-- LAYER 2: PAGES (middle) -->
+  <rect class="layer-pages" x="70" y="230" width="760" height="100" rx="10"/>
+  <text class="layer-title layer-title-pages" x="86" y="250">2. Page layer — three templates, all from the same data</text>
+
+  <rect class="page-box" x="100" y="265" width="220" height="55" rx="6"/>
+  <text class="page-label" x="116" y="284">Homepage</text>
+  <text class="page-sub" x="116" y="302">featured + categories</text>
+  <text class="page-sub" x="116" y="316">single indexable page</text>
+
+  <rect class="page-box" x="340" y="265" width="220" height="55" rx="6"/>
+  <text class="page-label" x="356" y="284">Category page</text>
+  <text class="page-sub" x="356" y="302">e.g. /crypto-orderflow-exchanges</text>
+  <text class="page-sub" x="356" y="316">one per niche segment</text>
+
+  <rect class="page-box" x="580" y="265" width="220" height="55" rx="6"/>
+  <text class="page-label" x="596" y="284">Listing detail page</text>
+  <text class="page-sub" x="596" y="302">/listings/[slug]</text>
+  <text class="page-sub" x="596" y="316">N of these — long tail SEO</text>
+
+  <!-- Arrow from pages to SEO -->
+  <line class="arrow-down" x1="450" y1="330" x2="450" y2="360"/>
+
+  <!-- LAYER 3: SEO LOOP (bottom) -->
+  <rect class="layer-seo" x="70" y="370" width="760" height="140" rx="10"/>
+  <text class="layer-title layer-title-seo" x="86" y="390">3. SEO loop — paid listings before AdSense</text>
+
+  <!-- Loop boxes -->
+  <rect class="seo-step" x="100" y="410" width="160" height="50" rx="6"/>
+  <text class="seo-label" x="116" y="430">100+ listings</text>
+  <text class="page-sub" x="116" y="448">indexable, unique content</text>
+
+  <rect class="seo-step" x="290" y="410" width="160" height="50" rx="6"/>
+  <text class="seo-label" x="306" y="430">SEO compounds</text>
+  <text class="page-sub" x="306" y="448">Google ranks each page</text>
+
+  <rect class="seo-step" x="480" y="410" width="160" height="50" rx="6"/>
+  <text class="seo-label" x="496" y="430">Organic traffic</text>
+  <text class="page-sub" x="496" y="448">6–12 months to scale</text>
+
+  <rect class="seo-step" x="670" y="410" width="160" height="50" rx="6"/>
+  <text class="seo-label" x="686" y="430">Revenue</text>
+  <text class="page-sub" x="686" y="448">paid listings → AdSense</text>
+
+  <!-- Loop arrows (clockwise) -->
+  <line class="arrow-loop" x1="260" y1="435" x2="290" y2="435"/>
+  <line class="arrow-loop" x1="450" y1="435" x2="480" y2="435"/>
+  <line class="arrow-loop" x1="640" y1="435" x2="670" y2="435"/>
+  <path class="arrow-loop" d="M 750 460 Q 750 488 700 488 L 200 488 Q 150 488 150 460" />
+
+  <!-- Paid conversion emphasis -->
+  <text class="moat" x="100" y="478">paid listing  →</text>
+  <text class="moat-sub" x="100" y="498">primary monetisation, week 4–8</text>
+
+  <!-- Footer moat note -->
+  <text class="caption" x="450" y="540" text-anchor="middle">The build is fast (48 hours with AI). The loop is slow (6–18 months). The moat is the founder's prior niche knowledge — AI amplifies it, it doesn't create it.</text>
+</svg>

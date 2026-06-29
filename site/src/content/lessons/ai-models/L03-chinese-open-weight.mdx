@@ -1,0 +1,187 @@
+---
+title: "Chinese Open-Weight Models in 2026: DeepSeek, Kimi, Qwen, GLM, MiniMax, StepFun"
+module: ai-models
+slug: l03-chinese-open-weight
+order: 3
+updatedDate: 2026-06-29
+updatedRaw: "June 2026"
+summary: "Six Chinese open-weight labs, what each is best at, and how to pick the right one without confusing 'open-weight' with 'open-source' or 'free API'."
+description: "You'll learn the difference between open-weight, open-source, and a free API tier — and which Chinese lab (DeepSeek, Kimi, Qwen, Zhipu/GLM, MiniMax, StepFun) wins at which workload in 2026."
+readingMinutes: 11
+accent: "#0ea5a4"
+---
+
+**Last tested and updated:** June 2026
+
+import Quiz from '../../../components/lesson/Quiz.astro';
+import Callout from '../../../components/lesson/Callout.astro';
+import { Picture } from 'astro:assets';
+
+If you've read [L01 — What Is an AI Model Tier List?](/lessons/ai-models/l01-what-is-an-ai-model-tier-list/) and [L02 — The Anthropic Family](/lessons/ai-models/l02-the-anthropic-family/), you know Claude is expensive and tier lists help you sort the noise. Now meet the labs doing most of the catching up — and the licensing confusion that comes with them.
+
+By the end of this lesson you'll tell open-weight from open-source from a free API, name what each of the six major Chinese labs is best at, and pick one for a task you're actually doing today.
+
+## The hook
+
+Three terms get thrown around as if they meant the same thing. They don't.
+
+- **Open-source** — training data (or a recipe), training code, fine-tuning scripts, and weights are all public. Truly open-source models are rare; most "open" models don't qualify.
+- **Open-weight** — only the trained parameters are downloadable. You can run, fine-tune, and host the model yourself. The data and training recipe stay proprietary.
+- **Free API** — a hosted endpoint at no cost, usually with rate limits. Weights may be proprietary (GPT, Gemini) or partially open (some Kimi tiers). You pay with usage limits, not dollars.
+
+<Callout type="tip" title="The shorthand">
+"Open-weight means you can download it. Open-source means you can rebuild it. Free API means you can call it — until the rate limit kicks in."
+</Callout>
+
+If you assume "open-weight = free," you'll be surprised when the API bill arrives. If you assume "open-weight = open-source," you'll be surprised when you can't get the training data. Most Chinese models in 2026 are **open-weight with permissive commercial use** — useful, but not "free" and not "fully open-source."
+
+## The mental model
+
+Six Chinese open-weight labs are worth knowing in 2026. They are not interchangeable. Each has a workload it wins at, a license tier that affects what you can do commercially, and a cost profile that matters once you start sending real traffic through it.
+
+<Picture src="/lessons/ai-models/L03/chinese-labs-comparison.svg" alt="Diagram: six Chinese open-weight labs compared, with license tier and what each is best at" width={900} height={620} formats={["avif", "webp"]} />
+
+### The labs at a glance
+
+| Lab | Flagship | License tier | What it wins at |
+|---|---|---|---|
+| **DeepSeek** | V4 Pro / V4 Flash | MIT-style | Tool-call reasoning, agent runtimes |
+| **Kimi (Moonshot)** | K2.7 / K2 Thinking | Modified MIT | UI generation, vision, transparent billing |
+| **Qwen (Alibaba)** | Qwen3 / Qwen3-Max | Apache 2.0 (most) | Long context (1M), multilingual, self-host |
+| **Zhipu (GLM)** | GLM-4.5 / GLM-4.5 Air | Custom (weights OK) | Enterprise tool use, structured output |
+| **MiniMax** | M3 / M3-Plus | MMLU Open | Cost-efficient generalist, BYOK default |
+| **StepFun** | Step-3 / Step-3 Reason | StepFun Open | Math, code reasoning, extended chain-of-thought |
+
+**Why "license tier" matters.** Apache 2.0 (Qwen) and MIT-style (DeepSeek) let you fine-tune and ship commercially with few strings. Modified MIT (Kimi) and Custom (GLM) require reading the model card before scaling up. The diagram above puts the license pill at the top of each card — check it first.
+
+<Callout type="gotcha" title="Beginner trap">
+"Don't assume 'open-weight' means 'free to run.'" You still pay for tokens via the API, or for electricity + GPU time if you self-host. The $5 DeepSeek starter covers weeks of beginner testing — but it's not zero.
+</Callout>
+
+### How the licensing tiers stack
+
+1. **Apache 2.0 / MIT** — train, fine-tune, redistribute, ship commercially. Almost no friction. (DeepSeek, Qwen)
+2. **Modified MIT / "weights OK"** — commercial use with conditions (attribution, use-case limits, scale thresholds). Read the card. (Kimi, GLM)
+3. **StepFun Open / MMLU Open** — newer licenses from the labs; usually permissive but less battle-tested. (MiniMax, StepFun)
+4. **Hosted-only, free API tier** — weights not released; you call the endpoint and accept the rate limit.
+
+Default to **Apache 2.0 or MIT** if you don't yet know which license you'll need.
+
+## Pick your tool
+
+Match the lab to the workload, not the price.
+
+### What to use each lab for
+
+**Pick DeepSeek V4 Pro if…**
+- You're wiring up an agent harness — [hermes/L01 — What Is Hermes Agent?](/lessons/hermes/l01-what-is-hermes-agent/) is the entry point.
+- Your workload has lots of tool calls and you want the model to *think inside the tool call*, not after it.
+- You want cached tokens to carry across projects; DeepSeek caches repeated context, which compounds savings.
+
+**Pick Kimi K2.7 if…**
+- Your workload is UI generation, dashboards, or vision-heavy prompts.
+- You want a monthly plan with **transparent request counts** (Claude's billing is opaque; Kimi is the opposite).
+- You're willing to launch `/swarm` or orchestrate parallel agents manually. Kimi is weak as a single agent; strong in parallel.
+- You do crypto or finance work — some orderflow platforms only accept Kimi API keys.
+
+**Pick Qwen if…**
+- You want to **self-host** the weights on your own hardware. Qwen ships from 0.6B up to 480B; pick the size that fits your GPU.
+- You need long context — Qwen3 supports 1M tokens, the right tool for "summarise this whole codebase" or "read these 50 PDFs."
+- Your workload is bilingual or Chinese-leaning. Qwen's English/Chinese balance is the strongest in the open-weight tier.
+
+**Pick Zhipu (GLM) if…** your workload is enterprise integration — function calls, schema-validated output, strict tool-use discipline. GLM is the most "enterprise-shaped" of the six.
+
+**Pick MiniMax M3 if…** you want a reliable default for daily Q&A at A-tier quality and B-tier price. It plays well with BYOK harnesses like Hermes, and ships 7B–20B distillations that run on a single consumer GPU.
+
+**Pick StepFun if…** your workload is math or code reasoning. Step-3 Reason mode is strong on olympiad-style problems.
+
+### When to skip Chinese open-weight entirely
+
+- You need Mythos-class intelligence. Use Claude Opus or GPT 5.x — [L02 — The Anthropic Family](/lessons/ai-models/l02-the-anthropic-family/).
+- You have a Claude-validated workflow you don't want to retest. Switching costs real time.
+- You have a politically sensitive prompt. Chinese models filter more on political topics; for coding, business, and creative work this rarely matters.
+
+<Callout type="tip" title="Ron's rule">
+"Don't try Kimi as a single agent. Don't try DeepSeek on a vague one-shot. Match the lab to the workload — that's the whole game."
+</Callout>
+
+For the cost-efficient tier, see [L04 — Cost-Efficient AI Model Tier](/lessons/ai-models/l04-cost-efficient-tier/). For the capstone framework, see [L05 — Frontier vs Open-Weight](/lessons/ai-models/l05-frontier-vs-open-weight-decisions/).
+
+## Try it
+
+### The exercise
+
+Pick one task you actually do — "summarise a 30-page PDF and email the summary," "build me a small dashboard from this CSV," anything real. Run it on **two** of the six labs above. The point isn't to pick the winner; the point is to internalise that the labs are not interchangeable.
+
+### How to do the comparison without burning the afternoon
+
+1. **Pick a workload** you'll actually use the output of. Don't pick a synthetic benchmark — [L01 explained why those mislead](/lessons/ai-models/l01-what-is-an-ai-model-tier-list/).
+2. **Pick two labs.** Default pair: DeepSeek V4 Pro + Kimi K2.7. That pair covers tool-call reasoning and UI/vision, where beginners feel the difference fastest.
+3. **Write the prompt once.** Same prompt, same input data, same time of day.
+4. **Run it twice.** Note latency, output quality, cost, and whether the model asked a clarifying question or just guessed.
+5. **Pick your default.** After two runs you'll know which model fits this workload. Don't generalise from one task — but don't dismiss a lab from one task either.
+
+### A note for harness users
+
+If you're already running Hermes ([hermes/L01](/lessons/hermes/l01-what-is-hermes-agent/) and [hermes/L02](/lessons/hermes/l02-install-and-first-run/)), the workflow is even simpler: swap the model name in your config, restart, rerun. You're only paying for tokens.
+
+### Check your understanding
+
+<Quiz questions={[
+  {
+    q: "An 'open-weight' model is one whose:",
+    choices: [
+      "Training data is public",
+      "Trained parameters (weights) are publicly downloadable",
+      "Source code is published under MIT",
+      "API is free for unlimited use",
+    ],
+    answer: 1,
+    explain: "Open-weight means the trained parameters are downloadable. The training data and training recipe usually stay proprietary — that's what separates it from open-source.",
+  },
+  {
+    q: "Short answer: name one workload DeepSeek V4 Pro wins at that Kimi K2.7 is weaker at.",
+    choices: [],
+    answer: 0,
+    explain: "Tool-call reasoning — DeepSeek thinks step-by-step inside tool calls, self-corrects mid-stream, and offers cached tokens across projects. Kimi is cleaner on UI/vision but weaker on agent runtimes.",
+  },
+  {
+    q: "Which lab is the strongest 'self-host on your own GPU' pick in 2026?",
+    choices: ["DeepSeek", "Kimi", "Qwen", "StepFun"],
+    answer: 2,
+    explain: "Qwen ships in sizes from 0.6B up to 480B under Apache 2.0 on most releases. You pick the size that fits your hardware and you own the deployment.",
+  },
+  {
+    q: "True or false: 'open-weight' means the model is free to run.",
+    choices: [],
+    answer: 0,
+    explain: "False. You still pay for tokens on the API, or you pay for electricity and GPU time if you self-host. Open-weight means downloadable, not free.",
+  },
+  {
+    q: "You're building a backend that needs schema-validated function calls and structured output. Which lab fits best?",
+    choices: ["DeepSeek", "Kimi", "Zhipu (GLM)", "StepFun"],
+    answer: 2,
+    explain: "GLM is the most 'enterprise-shaped' of the six — strong on function-call schema adherence and structured pipelines.",
+  },
+  {
+    q: "What's the strongest reason to read the model card before shipping commercially?",
+    choices: [
+      "To find the model's logo",
+      "To check the license tier and any use-case or scale restrictions",
+      "To see if the model has a website",
+      "You don't need to — open-weight means no restrictions",
+    ],
+    answer: 1,
+    explain: "Different labs ship under different licenses (Apache 2.0, MIT-style, Modified MIT, custom). Some have use-case limits or attribution requirements. The card tells you which tier you're in before you ship.",
+  },
+]} />
+
+### What's next
+
+- **Want the cost-efficient tier in depth?** → [L04 — Qwen, MiniMax, GLM](/lessons/ai-models/l04-cost-efficient-tier/).
+- **Want one decision framework?** → [L05 — Frontier vs Open-Weight](/lessons/ai-models/l05-frontier-vs-open-weight-decisions/). The capstone.
+- **Want to wire one of these into a harness?** → [hermes/L01 — What Is Hermes Agent?](/lessons/hermes/l01-what-is-hermes-agent/). BYOK setup.
+
+<Callout type="bottom-line">
+**Ron's bottom line:** open-weight is not open-source, and neither is free. Six labs, six strengths: DeepSeek for tool calls, Kimi for UI/vision, Qwen for long context and self-host, GLM for enterprise tool use, MiniMax for the boring default, StepFun for math. Pick the lab that matches the workload, not the price tag.
+</Callout>

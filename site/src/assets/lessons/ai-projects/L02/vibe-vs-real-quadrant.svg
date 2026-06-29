@@ -1,0 +1,163 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 560" role="img" aria-labelledby="vvq-title vvq-desc">
+  <title id="vvq-title">Vibe coding versus real coding: a 2x2 of intent and quality bar</title>
+  <desc id="vvq-desc">Two-axis quadrant chart. Horizontal axis: shipping intent, from throwaway (left) to production (right). Vertical axis: quality bar, from "looks right" (bottom) to "tested and reviewed" (top). Four quadrants hold: throwaway prototype (vibe coding wins), internal tool (vibe + light review), production app (real coding with a coding harness), long-lived codebase (real coding, ongoing review). The diagonal from top-right to bottom-left is the "ship the real thing" axis; the other diagonal is the "kill it on Friday" axis.</desc>
+
+  <defs>
+    <linearGradient id="vvq-bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ea7a3b" stop-opacity="0.06"/>
+      <stop offset="100%" stop-color="#ea7a3b" stop-opacity="0.02"/>
+    </linearGradient>
+    <linearGradient id="vvq-vibe" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ea7a3b" stop-opacity="0.10"/>
+      <stop offset="100%" stop-color="#ea7a3b" stop-opacity="0.04"/>
+    </linearGradient>
+    <linearGradient id="vvq-real" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0ea5a4" stop-opacity="0.10"/>
+      <stop offset="100%" stop-color="#0ea5a4" stop-opacity="0.04"/>
+    </linearGradient>
+    <style>
+      .frame { fill: url(#vvq-bg); stroke: #ea7a3b; stroke-width: 1.5; }
+      .zone-vibe { fill: url(#vvq-vibe); stroke: #ea7a3b; stroke-width: 1; stroke-dasharray: 4 4; opacity: 0.75; }
+      .zone-real { fill: url(#vvq-real); stroke: #0ea5a4; stroke-width: 1; stroke-dasharray: 4 4; opacity: 0.75; }
+      .axis { stroke: #2b2a36; stroke-width: 1.5; }
+      .grid { stroke: #2b2a36; stroke-width: 0.5; stroke-dasharray: 2 4; opacity: 0.35; }
+      .axis-label { font: 600 13px/1 ui-sans-serif, system-ui, sans-serif; fill: #2b2a36; }
+      .axis-title { font: 700 13px/1 ui-sans-serif, system-ui, sans-serif; fill: #2b2a36; letter-spacing: 0.04em; text-transform: uppercase; }
+      .quadrant-label { font: 700 11px/1 ui-sans-serif, system-ui, sans-serif; fill: #ea7a3b; letter-spacing: 0.08em; text-transform: uppercase; }
+      .quadrant-label-real { fill: #0ea5a4; }
+      .dot-vibe { fill: #ea7a3b; stroke: #fff; stroke-width: 2; }
+      .dot-real { fill: #0ea5a4; stroke: #fff; stroke-width: 2; }
+      .dot-mixed { fill: #b06a00; stroke: #fff; stroke-width: 2; }
+      .dot-label { font: 700 12px/1 ui-sans-serif, system-ui, sans-serif; fill: #1a1a1a; }
+      .dot-sub { font: 11px/1 ui-sans-serif, system-ui, sans-serif; fill: #5a5a5a; }
+      .title { font: 700 18px/1 ui-sans-serif, system-ui, sans-serif; fill: #1a1a1a; }
+      .caption { font: italic 12px/1.4 ui-sans-serif, system-ui, sans-serif; fill: #5a5a5a; }
+      .tick { font: 11px/1 ui-sans-serif, system-ui, sans-serif; fill: #5a5a5a; }
+      .diag { stroke: #b06a00; stroke-width: 2; stroke-dasharray: 6 4; opacity: 0.7; }
+      .diag-label { font: italic 700 12px/1 ui-sans-serif, system-ui, sans-serif; fill: #b06a00; }
+      @media (prefers-color-scheme: dark) {
+        .frame { stroke: #ffb089; }
+        .axis { stroke: #ece8db; }
+        .axis-label, .axis-title { fill: #ece8db; }
+        .dot-label { fill: #ece8db; }
+        .dot-sub, .caption, .tick { fill: #a8a395; }
+        .grid { stroke: #ece8db; }
+        .quadrant-label { fill: #ffb089; }
+      }
+    </style>
+  </defs>
+
+  <!-- Title -->
+  <text class="title" x="450" y="28" text-anchor="middle">Vibe coding vs real coding: a 2x2 (June 2026)</text>
+  <text class="caption" x="450" y="48" text-anchor="middle">X = how seriously you intend to ship. Y = how strict the quality bar is.</text>
+
+  <!-- Plot area frame -->
+  <rect class="frame" x="80" y="80" width="800" height="400" rx="12"/>
+
+  <!-- Vibe-coded zone (left half, both rows) -->
+  <rect class="zone-vibe" x="80" y="80" width="400" height="400" rx="12"/>
+  <text class="quadrant-label" x="100" y="100">Vibe coding zone</text>
+
+  <!-- Real-coded zone (right half, both rows) -->
+  <rect class="zone-real" x="480" y="80" width="400" height="400" rx="12"/>
+  <text class="quadrant-label quadrant-label-real" x="860" y="100" text-anchor="end">Real coding zone</text>
+
+  <!-- Grid lines -->
+  <line class="grid" x1="80" y1="180" x2="880" y2="180"/>
+  <line class="grid" x1="80" y1="280" x2="880" y2="280"/>
+  <line class="grid" x1="80" y1="380" x2="880" y2="380"/>
+  <line class="grid" x1="280" y1="80" x2="280" y2="480"/>
+  <line class="grid" x1="680" y1="80" x2="680" y2="480"/>
+
+  <!-- Axes -->
+  <line class="axis" x1="80" y1="480" x2="880" y2="480"/>
+  <line class="axis" x1="80" y1="80" x2="80" y2="480"/>
+
+  <!-- Axis ticks (x = shipping intent) -->
+  <text class="tick" x="80" y="498" text-anchor="middle">Throwaway</text>
+  <text class="tick" x="280" y="498" text-anchor="middle">Internal</text>
+  <text class="tick" x="480" y="498" text-anchor="middle">Shipped</text>
+  <text class="tick" x="680" y="498" text-anchor="middle">Production</text>
+  <text class="tick" x="880" y="498" text-anchor="middle">Long-lived</text>
+
+  <!-- Axis ticks (y = quality bar) -->
+  <text class="tick" x="68" y="384" text-anchor="end">"Looks right"</text>
+  <text class="tick" x="68" y="284" text-anchor="end">Light review</text>
+  <text class="tick" x="68" y="184" text-anchor="end">Tested</text>
+  <text class="tick" x="68" y="100" text-anchor="end">Reviewed + tested</text>
+
+  <!-- Axis titles -->
+  <text class="axis-title" x="480" y="528" text-anchor="middle">Shipping intent — throwaway to long-lived</text>
+  <text class="axis-title" x="20" y="280" text-anchor="middle" transform="rotate(-90 20 280)">Quality bar — "looks right" to "reviewed &amp; tested"</text>
+
+  <!-- Diagonal arrows: the two spectrums -->
+  <line class="diag" x1="120" y1="440" x2="840" y2="120"/>
+  <text class="diag-label" x="160" y="430" transform="rotate(-31 160 430)">"Ship the real thing" axis</text>
+
+  <line class="diag" x1="120" y1="120" x2="840" y2="440"/>
+  <text class="diag-label" x="160" y="160" transform="rotate(31 160 160)">"Kill it on Friday" axis</text>
+
+  <!-- Quadrant labels (corners) -->
+  <text class="quadrant-label" x="100" y="464">Throwaway prototype</text>
+  <text class="quadrant-label quadrant-label-real" x="860" y="120" text-anchor="end">Production codebase</text>
+  <text class="quadrant-label" x="100" y="120">Internal tool (small team)</text>
+  <text class="quadrant-label quadrant-label-real" x="860" y="464" text-anchor="end">Long-lived project</text>
+
+  <!-- EXAMPLES -->
+  <!-- One-off script (throwaway + looks right) -->
+  <circle class="dot-vibe" cx="160" cy="400" r="9"/>
+  <text class="dot-label" x="176" y="398">One-off script</text>
+  <text class="dot-sub" x="176" y="414">vibe code, run once, delete</text>
+
+  <!-- UI exploration (throwaway + light review) -->
+  <circle class="dot-vibe" cx="200" cy="320" r="9"/>
+  <text class="dot-label" x="216" y="318">UI exploration</text>
+  <text class="dot-sub" x="216" y="334">vibe 5 variants, pick one</text>
+
+  <!-- Hermes-managed internal tool (internal + tested) -->
+  <circle class="dot-mixed" cx="280" cy="200" r="9"/>
+  <text class="dot-label" x="296" y="198">Hermes internal tool</text>
+  <text class="dot-sub" x="296" y="214">agent harness, scheduled</text>
+
+  <!-- Internal dashboard (internal + light review) -->
+  <circle class="dot-vibe" cx="320" cy="280" r="10"/>
+  <text class="dot-label" x="336" y="278" font-weight="700">Internal dashboard</text>
+  <text class="dot-sub" x="336" y="294">vibe + quick read-through</text>
+
+  <!-- SaaS MVP (shipped + tested) -->
+  <circle class="dot-real" cx="540" cy="220" r="10"/>
+  <text class="dot-label" x="556" y="218" font-weight="700">SaaS MVP</text>
+  <text class="dot-sub" x="556" y="234">Claude Code + tests, real coding</text>
+
+  <!-- Production web app (production + reviewed) -->
+  <circle class="dot-real" cx="700" cy="160" r="11"/>
+  <text class="dot-label" x="716" y="158" fill="#0ea5a4">Production web app</text>
+  <text class="dot-sub" x="716" y="174">Claude Code / Kilo Code, full CI</text>
+
+  <!-- Mobile app (shipped + tested) -->
+  <circle class="dot-real" cx="600" cy="260" r="9"/>
+  <text class="dot-label" x="616" y="258">Mobile app</text>
+  <text class="dot-sub" x="616" y="274">real coding + platform constraints</text>
+
+  <!-- Long-lived library (long-lived + reviewed) -->
+  <circle class="dot-real" cx="820" cy="400" r="9"/>
+  <text class="dot-label" x="836" y="398">Long-lived library</text>
+  <text class="dot-sub" x="836" y="414">real coding + docs + CI forever</text>
+
+  <!-- Data pipeline (production + tested) -->
+  <circle class="dot-real" cx="660" cy="340" r="9"/>
+  <text class="dot-label" x="676" y="338">Data pipeline</text>
+  <text class="dot-sub" x="676" y="354">real coding + invariants matter</text>
+
+  <!-- Legend -->
+  <g transform="translate(80,540)">
+    <circle class="dot-vibe" cx="6" cy="0" r="6"/>
+    <text class="dot-sub" x="18" y="4">Vibe coding — AI proposes, you skim</text>
+
+    <circle class="dot-mixed" cx="320" cy="0" r="6"/>
+    <text class="dot-sub" x="332" y="4">Mixed — agent harness + light review</text>
+
+    <circle class="dot-real" cx="620" cy="0" r="6"/>
+    <text class="dot-sub" x="632" y="4">Real coding — coding harness + tests + review</text>
+  </g>
+</svg>

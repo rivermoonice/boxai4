@@ -1,0 +1,193 @@
+---
+title: "Qwen, MiniMax, and GLM: The Cost-Efficient AI Model Tier for 2026"
+module: ai-models
+slug: l04-cost-efficient-tier
+order: 4
+updatedDate: 2026-06-29
+updatedRaw: "June 2026"
+summary: "Three families — Qwen, MiniMax, and GLM — that handle 80% of daily work at 5 to 20× lower cost than Claude Opus. Pick by workload, not by price."
+description: "You'll learn where Qwen, MiniMax, and GLM each shine, how their monthly cost compares to frontier models, and which one to reach for when Kimi and DeepSeek aren't the right fit. No install required."
+readingMinutes: 10
+accent: "#0ea5a4"
+---
+
+**Last tested and updated:** June 2026
+
+import Quiz from '../../../components/lesson/Quiz.astro';
+import Callout from '../../../components/lesson/Callout.astro';
+import { Picture } from 'astro:assets';
+
+If you've worked through [L01 — What Is an AI Model Tier List](/lessons/ai-models/l01-what-is-an-ai-model-tier-list/), [L02 — The Anthropic Family](/lessons/ai-models/l02-the-anthropic-family/), and [L03 — Chinese Open-Weight Models](/lessons/ai-models/l03-chinese-open-weight/), you already know the shape of the field: Claude is the frontier, Kimi and DeepSeek are the cheap open-weight daily drivers. This lesson fills in the missing middle — **Qwen, MiniMax, and GLM** — the three families that each ship a model good enough to compete with Claude Opus on a specific workload, for a fraction of the cost.
+
+This is the capstone of the *cost-efficient* conversation. The next lesson, [L05 — Frontier vs Open-Weight Decision Framework](/lessons/ai-models/l05-frontier-vs-open-weight-decisions/), stitches all five lessons into one decision rule you can apply to any task.
+
+## The hook
+
+Run a fifty-message-a-day workload on Claude Opus and you spend roughly **$80–$200 per month**. Run the same workload on Qwen Plus, MiniMax M3, or GLM 5.2 and you spend **$5–$20**. That is a **5× to 20× cost gap** for work that, on everyday tasks, the cost-efficient tier handles as well as Opus.
+
+Why does the gap exist? Two reasons. First, the cost-efficient tier is designed for the 80% case: chat, coding, summarisation, image understanding, UI generation. Opus is designed for the hardest 1% — multi-day reasoning, novel creative work, ambiguous one-shots. Second, the Chinese open-weight families (and GLM, which is structurally similar) compete on price because their business model is volume + token-plan subscriptions, not per-seat enterprise contracts.
+
+The trap beginners fall into: they assume "cheap" means "worse," route everything through Opus "just to be safe," and burn $150 a month on tasks Kimi would have handled for $15. The fix is the mental model below.
+
+<Callout type="tip" title="The rule of thumb">
+If your workload would run on Claude Sonnet 4.5, it will almost certainly run on a cost-efficient tier model at 1/5 the price. Save Opus for tasks Sonnet can't do.
+</Callout>
+
+## The mental model
+
+The single most important idea in this lesson: **cost is a function of where the model sits on the capability axis, not a tax you pay for using AI**. Models lower on the capability axis charge less per token because they cost less to run, not because they're inferior at the workloads they were built for.
+
+<Picture src="/lessons/ai-models/L04/cost-vs-capability-quadrant.svg" alt="Diagram: a 2D quadrant chart plotting AI models on a cost (horizontal, $0 to $200 per month) versus capability (vertical, B-tier to Mythos) grid, with the cost-efficient tier clustering in the top-left cheap-and-strong zone" width={900} height={560} formats={["avif", "webp"]} />
+
+Three concepts make the chart make sense:
+
+**1. Price per million tokens is the only honest cost unit.** Monthly cost depends on how many tokens you burn. The cleanest comparison is `$/1M tokens` for input and output. Kimi K2.7 sits at roughly $0.30 input / $1.20 output. Qwen 3.7 Max charges more on output (~$7.50/M) because it runs slower, longer reasoning chains. Opus 4.8 charges $15/M output and burns through tokens faster because it thinks out loud. A headline price means nothing until you multiply it by your real workload.
+
+**2. Model size and capability aren't the same thing.** A 70B open-weight model can match a 1T frontier model on a specific narrow workload (summarisation, JSON extraction, image captioning) at 1/10 the cost. Cost-efficient models are not "smaller, weaker versions of Opus." They are differently-shaped models that win on a specific axis.
+
+**3. When cheap beats expensive is the lesson.** The cost-efficient tier beats frontier models when the task is well-defined, the prompt is clear, and the success criterion is verifiable by a human reading the output. It loses when the task is ambiguous, novel, or requires sustained multi-step reasoning. The diagram shows the divide — top-left is where 80% of daily work sits.
+
+<Callout type="tip" title="Ron's framing">
+Per the source video `2gDB-2ifLPw`: *"Qwen 3.7 Max came out and it has been the most impressive result we have seen so far."* And from `Specs/ChannelIdentity.md`: *"Practical, cost-efficient models like Kimi K2.7 and MiniMax M3 beat raw frontier capability for everyday use."* The cost-efficient tier is not a compromise — it is the right tool for the 80%.
+</Callout>
+
+The point is not "Opus is overpriced." Opus is genuinely the best model on the hardest 5% of tasks. The point is that you should not use it for the other 95%.
+
+## Pick your tool
+
+Three families, three different strengths. Pick by **workload**, not by price.
+
+### Qwen (Alibaba) — pick for long-horizon agent workflows
+
+**Qwen 3.7 Max** is Alibaba's flagship, released May 2026. It was specifically trained as an "agent backbone" — designed to run for tens of hours and hundreds of tool calls without collapsing. It ships a 1M token context window and won the "ancient Chinese building" test in **8 minutes 53 seconds**, where Kimi and MiniMax took 2–3 hours on the same task. It is the fastest model in the cost-efficient tier on long-context work.
+
+The gotcha: Qwen Max charges ~$7.50/M output tokens — pricey for the tier. **Qwen Plus** matches it on most tasks at roughly 40% lower cost. Most beginners should default to Plus and reserve Max for genuine long-horizon debugging.
+
+Reach for Qwen when you are running a multi-hour coding session, debugging complex infrastructure, or executing a long agent chain where speed compounds.
+
+### MiniMax — pick for multimodal and long-context speed
+
+**MiniMax M3** is the first open-weight release to combine agentic coding, a 1M token context window, and native multimodal understanding (text + image + video) in one model. Its **MSA (MiniMax Sparse Attention)** architecture gives roughly 9.7× faster pre-fill and 15.6× faster decode at 1M tokens versus M2.7 — meaningful when you're feeding a whole codebase into context.
+
+The gotcha: as of June 2026, MiniMax M3 is rolling out across coding harnesses. The MiniMax desktop app has it today; Kilo Code and Hermes integration is landing over the next few weeks. If your harness is your daily driver, check whether M3 is on the dropdown yet.
+
+Reach for MiniMax when your workload mixes text + image + video, when you're pushing long-context speed, or when you want cheap multimodal at ~$0.30/M input.
+
+### GLM (Z.AI) — pick for front-end design and one-shots
+
+**GLM 5.1 and 5.2** are Z.AI's flagships. GLM is the "front-end design specialist" of the cost tier — per source video `r039hxfog44`, GLM consistently produces the cleanest UIs and the strongest single-prompt one-shots. At ~$7–$10/mo it delivers Opus-like design quality at a fraction of the price.
+
+The gotcha: GLM is "too slow and bug-prone for live agentic game work" per the source — it's a one-shot and design tool, not a sustained agent backbone. Stability has been intermittent over June 2026; don't depend on it for production-critical pipelines.
+
+Reach for GLM when you're generating UI components, prototyping design systems, or trying to one-shot a self-contained app.
+
+### The full decision table
+
+| Workload | Pick | Typical cost (50 msgs/day) |
+|---|---|---|
+| Long-horizon agent workflow (hours of tool calls) | **Qwen 3.7 Max** | $20–$40/mo |
+| Daily-driver coding Q&A | **Qwen Plus** or **Kimi K2.7** | $12–$25/mo |
+| Multimodal (text + image + video) | **MiniMax M3** | $5–$15/mo |
+| Front-end design / UI one-shots | **GLM 5.2** | $7–$15/mo |
+| Daily chat / summarisation | **Kimi K2.7** or **Claude Sonnet 4.5** | $15–$25/mo |
+| Hard reasoning / novel creative | **Claude Opus 4.8** | $80–$150/mo |
+
+<Callout type="gotcha" title="Beginner trap">
+Do not pick by price alone. Picking GLM for a long-horizon agent run will burn hours on instability. Picking Opus for a UI one-shot will burn $40 on a task GLM does for $3. Match the model's strength to the workload, then check the price.
+</Callout>
+
+For the bigger picture of how all the Chinese open-weight families relate, see [L03 — Kimi K2.7 and DeepSeek V4 Pro](/lessons/ai-models/l03-chinese-open-weight/). For Anthropic's side, [L02 — The Anthropic Family](/lessons/ai-models/l02-the-anthropic-family/). For routing cheap models inside a real harness, see [Hermes L01 — What Is Hermes Agent?](/lessons/hermes/l01-what-is-hermes-agent/) plus [Hermes L06 — Performance, Model Routing & Cost](/lessons/hermes/l06-performance-model-routing-cost/).
+
+## Try it
+
+### The exercise
+
+Pick one real task you ran this week on Claude (or any model). It should be a task where the success criterion is *"I read it and it's correct"* — a refactor, a docstring pass, a one-shot UI, a research summary. Not *"write me a novel"* or *"design my business model."*
+
+Now route the same task to three of the four cost-efficient models — Qwen Plus, MiniMax M3, GLM 5.2. You can do this in your coding harness (if M3 is on the dropdown yet), through each provider's web playground, or via their public APIs.
+
+For each output, write down:
+
+- **Quality** — would you ship it as-is, edit-and-ship, or reject? (1 sentence)
+- **Speed** — wall-clock time from submit to response. (1 number)
+- **Cost** — tokens billed × price per million. (1 number)
+
+### Success criteria
+
+A good run looks like this:
+
+- At least one of the three produced "edit-and-ship" or better quality on your task.
+- The total cost across all three runs is less than what one Opus run would have cost.
+- You can name one model as your default for this workload going forward.
+
+If none of the three cleared "edit-and-ship," your task is in the 5% where Opus actually wins. Escalate, and don't feel bad about it.
+
+### Routing cheap models in production
+
+The exercise above is a single-task test. In production, you route cheaply by **tier**: cheap model for chat, mid model for hard reasoning, Opus only when cheap models fail. Hermes — the open-source harness covered in [Hermes L01](/lessons/hermes/l01-what-is-hermes-agent/) — has tiered routing built in, so a `/research` slash command can use Kimi for discovery and escalate to Opus only when the synthesis step needs it. See [Hermes L06](/lessons/hermes/l06-performance-model-routing-cost/) for the routing patterns.
+
+### Check your understanding
+
+<Quiz questions={[
+  {
+    q: "Roughly how much cheaper is a Qwen Plus monthly workload than a Claude Opus workload for 50 messages a day?",
+    choices: ["About the same", "About 2× cheaper", "About 5× cheaper", "About 20× cheaper"],
+    answer: 2,
+    explain: "Qwen Plus runs ~$12–$25/mo on a 50-msg/day workload; Opus runs ~$80–$150/mo. That's roughly 5× cheaper on average.",
+  },
+  {
+    q: "Per the source videos, Qwen 3.7 Max's defining strength is:",
+    choices: [
+      "Cheapest output token price in the tier",
+      "Native multimodal understanding",
+      "Long-horizon agent workflow speed (hours of tool calls)",
+      "Best front-end design output",
+    ],
+    answer: 2,
+    explain: "Qwen 3.7 Max was trained as an agent backbone — it runs for hours and hundreds of tool calls without collapsing. The ancient Chinese building test took 8m 53s on Max vs 2–3 hours on Kimi/MiniMax.",
+  },
+  {
+    q: "Short answer: Per the source video, what's the main gotcha with GLM 5.2?",
+    choices: [],
+    answer: 0,
+    explain: "Intermittent stability issues — GLM is \"too slow and bug-prone for live agentic game work.\" Use it for one-shot UI and design exploration; don't depend on it for production-critical pipelines.",
+  },
+  {
+    q: "MiniMax M3's MSA (sparse attention) architecture gives what advantage?",
+    choices: [
+      "Cheapest input token price in the tier",
+      "Best front-end design quality",
+      "~9.7× faster pre-fill and 15.6× faster decode at 1M tokens vs M2.7",
+      "Native video generation",
+    ],
+    answer: 2,
+    explain: "MSA is the speed play behind MiniMax M3's long-context performance — 9.7× faster pre-fill and 15.6× faster decode at 1M tokens vs M2.7.",
+  },
+  {
+    q: "When does the cost-efficient tier lose to frontier models?",
+    choices: [
+      "Always — cost-efficient means weaker",
+      "Never — cheap models are strictly better",
+      "On ambiguous, novel, or sustained multi-step reasoning tasks",
+      "Only when the user doesn't know what they're doing",
+    ],
+    answer: 2,
+    explain: "Cost-efficient models win on well-defined tasks with clear success criteria. They lose on ambiguous prompts, novel creative work, and tasks requiring multi-hour sustained reasoning — those need Opus.",
+  },
+  {
+    q: "Short answer: Per `Specs/ChannelIdentity.md`, why do cost-efficient models beat frontier models for everyday use?",
+    choices: [],
+    answer: 0,
+    explain: "\"Practical, cost-efficient models like Kimi K2.7 and MiniMax M3 beat raw frontier capability for everyday use.\" The 80% of daily work does not require Mythos-class reasoning — it requires accurate, fast, cheap models tuned for the workload.",
+  },
+]} />
+
+### What's next
+
+- **Stitch everything together.** → [L05 — Frontier vs Open-Weight Decision Framework](/lessons/ai-models/l05-frontier-vs-open-weight-decisions/) — the capstone that turns L01–L04 into one decision rule.
+- **Wire cheap models into your harness.** → [Hermes L06 — Performance, Model Routing & Cost](/lessons/hermes/l06-performance-model-routing-cost/) — tiered routing patterns that route cheap-by-default and escalate only when needed.
+- **See what a harness actually is.** → [Hermes L01 — What Is Hermes Agent?](/lessons/hermes/l01-what-is-hermes-agent/) — the lesson that anchors the harness vs model distinction you'll need to apply the routing patterns.
+
+<Callout type="bottom-line">
+**Ron's bottom line:** Qwen for long-horizon agent workflows. MiniMax for multimodal and long-context speed. GLM for UI and one-shots. Kimi for the daily-driver sweet spot. Don't pick by price alone — pick by workload, then check the price. And don't let "cheap" read as "weak": the cost-efficient tier is what the channel uses for 80% of daily work, and you should too.
+</Callout>

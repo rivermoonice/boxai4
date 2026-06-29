@@ -1,0 +1,125 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 280" role="img" aria-labelledby="svf-title svf-desc">
+  <title id="svf-title">SSH + VPS install flow</title>
+  <desc id="svf-desc">A 4-step horizontal flow showing the VPS path: your laptop opens an SSH tunnel to a rented Ubuntu server, the server runs the Hermes installer with sudo, the wizard writes your API key into ~/.hermes/config.yaml, and you chat with Hermes over the same SSH session.</desc>
+
+  <defs>
+    <linearGradient id="vps-step" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ea7a3b" stop-opacity="0.14"/>
+      <stop offset="100%" stop-color="#ea7a3b" stop-opacity="0.03"/>
+    </linearGradient>
+    <marker id="arrowhead-svf" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#2b2a36"/>
+    </marker>
+    <style>
+      .box { fill: url(#vps-step); stroke: #ea7a3b; stroke-width: 1.5; }
+      .step { font: 700 11px/1 ui-sans-serif, system-ui, sans-serif; fill: #ea7a3b; letter-spacing: 0.1em; }
+      .title { font: 600 15px/1.2 ui-sans-serif, system-ui, sans-serif; fill: #1a1a1a; }
+      .detail { font: 12px/1.4 ui-sans-serif, system-ui, sans-serif; fill: #4a4960; }
+      .mono { font: 12px/1.3 ui-monospace, "SFMono-Regular", monospace; fill: #4a4960; }
+      .arrow { stroke: #2b2a36; stroke-width: 2; fill: none; }
+      .label { font: 11px/1 ui-monospace, monospace; fill: #5a5a5a; }
+      .secure { fill: #2da44e; }
+      @media (prefers-color-scheme: dark) {
+        .title { fill: #ece8db; }
+        .detail, .mono, .label { fill: #a8a395; }
+        .arrow { stroke: #ece8db; }
+        marker path { fill: #ece8db; }
+      }
+    </style>
+  </defs>
+
+  <!-- Step 1: Your laptop — SSH client -->
+  <g>
+    <rect class="box" x="20" y="80" width="190" height="130" rx="14"/>
+    <text class="step" x="40" y="106">STEP 1</text>
+    <text class="title" x="40" y="130">Your laptop</text>
+    <text class="detail" x="40" y="152">Open Terminal, then:</text>
+    <text class="mono" x="40" y="174">$ ssh ubuntu@&lt;ip&gt;</text>
+    <text class="detail" x="40" y="196">Accept the host key fingerprint.</text>
+    <text class="detail" x="40" y="212" fill="#2da44e">Encrypted tunnel · port 22</text>
+    <!-- laptop icon -->
+    <g transform="translate(160, 100)">
+      <rect x="0" y="0" width="32" height="22" rx="2" fill="none" stroke="#ea7a3b" stroke-width="2"/>
+      <line x1="0" y1="22" x2="32" y2="22" stroke="#ea7a3b" stroke-width="2"/>
+      <line x1="-3" y1="26" x2="35" y2="26" stroke="#ea7a3b" stroke-width="2"/>
+    </g>
+  </g>
+
+  <!-- Arrow 1 -->
+  <g>
+    <line class="arrow" x1="216" y1="145" x2="252" y2="145" marker-end="url(#arrowhead-svf)"/>
+    <text class="label" x="234" y="135" text-anchor="middle">auth</text>
+  </g>
+
+  <!-- Step 2: Rent Ubuntu VPS -->
+  <g>
+    <rect class="box" x="260" y="80" width="190" height="130" rx="14"/>
+    <text class="step" x="280" y="106">STEP 2</text>
+    <text class="title" x="280" y="130">Ubuntu VPS</text>
+    <text class="detail" x="280" y="152">Hetzner / DigitalOcean / Vultr</text>
+    <text class="mono" x="280" y="174">22.04 or 24.04 · 2 GB</text>
+    <text class="mono" x="280" y="192">$2–$5 / month</text>
+    <text class="detail" x="280" y="212">You're now inside the server.</text>
+    <!-- server icon -->
+    <g transform="translate(400, 100)" stroke="#ea7a3b" stroke-width="2" fill="none">
+      <rect x="0" y="0" width="32" height="36" rx="3"/>
+      <line x1="6" y1="10" x2="26" y2="10"/>
+      <line x1="6" y1="18" x2="26" y2="18"/>
+      <line x1="6" y1="26" x2="26" y2="26"/>
+      <circle cx="29" cy="10" r="1.5" fill="#2da44e"/>
+      <circle cx="29" cy="18" r="1.5" fill="#2da44e"/>
+    </g>
+  </g>
+
+  <!-- Arrow 2 -->
+  <g>
+    <line class="arrow" x1="456" y1="145" x2="492" y2="145" marker-end="url(#arrowhead-svf)"/>
+    <text class="label" x="474" y="135" text-anchor="middle">runs</text>
+  </g>
+
+  <!-- Step 3: One-line installer -->
+  <g>
+    <rect class="box" x="500" y="80" width="190" height="130" rx="14"/>
+    <text class="step" x="520" y="106">STEP 3</text>
+    <text class="title" x="520" y="130">Hermes installer</text>
+    <text class="mono" x="520" y="154">curl … | bash</text>
+    <text class="detail" x="520" y="178">Wizard asks for:</text>
+    <text class="detail" x="520" y="196">· provider (Kimi, Anthropic…)</text>
+    <text class="detail" x="520" y="212">· API key (pasted once)</text>
+    <!-- gear icon -->
+    <g transform="translate(640, 100)" stroke="#ea7a3b" stroke-width="2" fill="none">
+      <circle cx="14" cy="14" r="7"/>
+      <g stroke-linecap="round">
+        <line x1="14" y1="2" x2="14" y2="6"/>
+        <line x1="14" y1="22" x2="14" y2="26"/>
+        <line x1="2" y1="14" x2="6" y2="14"/>
+        <line x1="22" y1="14" x2="26" y2="14"/>
+        <line x1="6" y1="6" x2="9" y2="9"/>
+        <line x1="19" y1="19" x2="22" y2="22"/>
+      </g>
+    </g>
+  </g>
+
+  <!-- Arrow 3 -->
+  <g>
+    <line class="arrow" x1="696" y1="145" x2="732" y2="145" marker-end="url(#arrowhead-svf)"/>
+    <text class="label" x="714" y="135" text-anchor="middle">writes</text>
+  </g>
+
+  <!-- Step 4: Hermes running in TUI -->
+  <g>
+    <rect class="box" x="740" y="80" width="140" height="130" rx="14"/>
+    <text class="step" x="760" y="106">STEP 4</text>
+    <text class="title" x="760" y="130">Hermes running</text>
+    <text class="mono" x="760" y="154">$ hermes</text>
+    <text class="detail" x="760" y="176">Same SSH session.</text>
+    <text class="detail" x="760" y="192">Type <tspan font-family="ui-monospace, monospace">hi</tspan>,</text>
+    <text class="detail" x="760" y="208">get a reply.</text>
+  </g>
+
+  <!-- Note re: secure key -->
+  <g>
+    <text class="label" x="450" y="252" text-anchor="middle">For higher security, replace password auth with an SSH key pair (covered in L07). Passwords above are fine for first-time learners.</text>
+    <text class="label" x="450" y="268" text-anchor="middle" fill="#2da44e">Encrypted end-to-end · no Hermes traffic ever touches your laptop's filesystem.</text>
+  </g>
+</svg>

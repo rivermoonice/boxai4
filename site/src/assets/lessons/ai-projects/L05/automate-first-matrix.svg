@@ -1,0 +1,123 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 600" role="img" aria-labelledby="prio-title prio-desc">
+  <title id="prio-title">What to automate first: effort vs. payoff matrix</title>
+  <desc id="prio-desc">A 2x2 priority matrix for a small online business in 2026. The vertical axis is effort (low at the bottom, high at the top). The horizontal axis is recurring payoff (low at the left, high at the right). Quadrants: top-left high effort low payoff (avoid), top-right high effort high payoff (build second), bottom-left low effort low payoff (skip), bottom-right low effort high payoff (do first).</desc>
+
+  <defs>
+    <style>
+      .frame { fill: #fffaf5; stroke: #ea7a3b; stroke-width: 1.5; }
+      .axis { stroke: #2b2a36; stroke-width: 1.5; fill: none; }
+      .grid { stroke: #d9cfc4; stroke-width: 1; stroke-dasharray: 3 3; fill: none; }
+      .q1 { fill: #ea7a3b; fill-opacity: 0.10; }
+      .q2 { fill: #ea7a3b; fill-opacity: 0.22; }
+      .q3 { fill: #ea7a3b; fill-opacity: 0.06; }
+      .q4 { fill: #ea7a3b; fill-opacity: 0.32; }
+      .label { font: 700 16px/1 ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif; fill: #2b2a36; }
+      .label-accent { fill: #b34d1c; }
+      .axis-label { font: 600 13px/1 ui-sans-serif, system-ui, sans-serif; fill: #4a4960; letter-spacing: 0.04em; text-transform: uppercase; }
+      .item { font: 13px/1.4 ui-sans-serif, system-ui, sans-serif; fill: #2b2a36; }
+      .item-strong { font: 700 13px/1.4 ui-sans-serif, system-ui, sans-serif; fill: #b34d1c; }
+      .quad-title { font: 700 13px/1 ui-sans-serif, system-ui, sans-serif; fill: #4a4960; letter-spacing: 0.08em; text-transform: uppercase; }
+      .arrow-text { font: 12px/1 ui-monospace, monospace; fill: #5a5a5a; }
+      .summary { font: 600 14px/1.4 ui-sans-serif, system-ui, sans-serif; fill: #1a1a1a; }
+
+      @media (prefers-color-scheme: dark) {
+        .frame { fill: #1f1812; stroke: #ea7a3b; }
+        .axis { stroke: #ece8db; }
+        .grid { stroke: #4a3a30; }
+        .label { fill: #ece8db; }
+        .label-accent { fill: #ffb888; }
+        .axis-label, .quad-title { fill: #d9cfc4; }
+        .item { fill: #ece8db; }
+        .item-strong { fill: #ffb888; }
+        .summary { fill: #ece8db; }
+        .arrow-text { fill: #b8b3a8; }
+      }
+    </style>
+  </defs>
+
+  <!-- Background frame -->
+  <rect class="frame" x="20" y="20" width="860" height="560" rx="16"/>
+
+  <!-- Title -->
+  <text class="label" x="40" y="58">What to automate first</text>
+  <text class="label-accent label" x="40" y="80">Effort vs. recurring payoff</text>
+
+  <!-- Y axis (effort: low at bottom, high at top) -->
+  <line class="axis" x1="220" y1="120" x2="220" y2="500"/>
+  <!-- X axis (recurring payoff: low at left, high at right) -->
+  <line class="axis" x1="220" y1="500" x2="820" y2="500"/>
+
+  <!-- Y axis arrow head -->
+  <path class="axis" d="M214 124 L220 110 L226 124 Z" fill="#2b2a36"/>
+  <!-- X axis arrow head -->
+  <path class="axis" d="M816 494 L830 500 L816 506 Z" fill="#2b2a36"/>
+
+  <!-- Y axis ticks -->
+  <line class="grid" x1="220" y1="310" x2="820" y2="310"/>
+  <!-- X axis tick (mid) -->
+  <line class="grid" x1="520" y1="120" x2="520" y2="500"/>
+
+  <!-- Quadrant fills -->
+  <rect class="q1" x="220" y="120" width="300" height="190"/>
+  <rect class="q2" x="520" y="120" width="300" height="190"/>
+  <rect class="q3" x="220" y="310" width="300" height="190"/>
+  <rect class="q4" x="520" y="310" width="300" height="190"/>
+
+  <!-- Quadrant titles -->
+  <text class="quad-title" x="240" y="148">AVOID</text>
+  <text class="quad-title label-accent" x="540" y="148">BUILD SECOND</text>
+  <text class="quad-title" x="240" y="338">SKIP</text>
+  <text class="quad-title label-accent" x="540" y="338">DO FIRST</text>
+
+  <!-- Quadrant 1 (top-left): high effort, low payoff -->
+  <g>
+    <text class="item" x="240" y="178">Custom CRM</text>
+    <text class="item" x="240" y="200">AI copywriter</text>
+    <text class="item" x="240" y="222">Chatbot for support</text>
+    <text class="item" x="240" y="244">Video generator</text>
+    <text class="arrow-text" x="240" y="278" font-style="italic">High effort,</text>
+    <text class="arrow-text" x="240" y="294" font-style="italic">low recurring payoff.</text>
+  </g>
+
+  <!-- Quadrant 2 (top-right): high effort, high payoff -->
+  <g>
+    <text class="item" x="540" y="178">Niche directory MVP</text>
+    <text class="item" x="540" y="200">Email capture flow</text>
+    <text class="item" x="540" y="222">Paid newsletter infra</text>
+    <text class="item" x="540" y="244">Listing scraper + CRM</text>
+    <text class="arrow-text" x="540" y="278" font-style="italic">Worth the build,</text>
+    <text class="arrow-text" x="540" y="294" font-style="italic">not worth day one.</text>
+  </g>
+
+  <!-- Quadrant 3 (bottom-left): low effort, low payoff -->
+  <g>
+    <text class="item" x="240" y="368">Daily LinkedIn posts</text>
+    <text class="item" x="240" y="390">Tweet thread bot</text>
+    <text class="item" x="240" y="412">One-off logo prompts</text>
+    <text class="item" x="240" y="434">"AI wrapper" demos</text>
+    <text class="arrow-text" x="240" y="468" font-style="italic">Easy,</text>
+    <text class="arrow-text" x="240" y="484" font-style="italic">but doesn't compound.</text>
+  </g>
+
+  <!-- Quadrant 4 (bottom-right): low effort, high payoff -->
+  <g>
+    <text class="item-strong" x="540" y="368">Email welcome sequence</text>
+    <text class="item-strong" x="540" y="390">Stripe / payment link</text>
+    <text class="item-strong" x="540" y="412">Cron job: weekly digest</text>
+    <text class="item-strong" x="540" y="434">Auto-receipt / invoice</text>
+    <text class="arrow-text" x="540" y="468" font-style="italic">Cheap to build,</text>
+    <text class="arrow-text" x="540" y="484" font-style="italic">runs forever.</text>
+  </g>
+
+  <!-- Axis labels -->
+  <text class="axis-label" x="120" y="310" transform="rotate(-90 120 310)" text-anchor="middle">EFFORT</text>
+  <text class="arrow-text" x="120" y="170" transform="rotate(-90 120 170)" text-anchor="middle">high</text>
+  <text class="arrow-text" x="120" y="450" transform="rotate(-90 120 450)" text-anchor="middle">low</text>
+
+  <text class="axis-label" x="520" y="540" text-anchor="middle">RECURRING PAYOFF</text>
+  <text class="arrow-text" x="320" y="524" text-anchor="middle">low</text>
+  <text class="arrow-text" x="720" y="524" text-anchor="middle">high</text>
+
+  <!-- Bottom summary -->
+  <text class="summary" x="450" y="572" text-anchor="middle">Ship one DO FIRST automation this week. Everything else waits.</text>
+</svg>

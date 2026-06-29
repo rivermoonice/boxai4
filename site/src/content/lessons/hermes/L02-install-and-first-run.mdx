@@ -1,0 +1,231 @@
+---
+title: "How to Install Hermes Agent for Beginners (2026): Mac and VPS, Step-by-Step"
+module: hermes
+slug: l02-install-and-first-run
+order: 2
+updatedDate: 2026-06-29
+updatedRaw: "June 2026"
+summary: "How to install Hermes Agent on your Mac or on a cheap Linux VPS, pick a model, paste an API key, and verify the install — without the guessing that wrecks most first attempts."
+description: "You'll learn how to install Hermes Agent on either a Mac (10 minutes) or a Linux VPS (20 minutes), pick the right model provider for a beginner, and verify your install with a single chat command."
+readingMinutes: 11
+accent: "#7c5cff"
+---
+
+**Last tested and updated:** June 2026
+
+import Quiz from '../../../components/lesson/Quiz.astro';
+import TerminalScreenshot from '../../../components/lesson/TerminalScreenshot.astro';
+import VidCard from '../../../components/lesson/VidCard.astro';
+import Callout from '../../../components/lesson/Callout.astro';
+import { Picture } from 'astro:assets';
+
+import hermesSetupHelp from '../../../assets/lessons/hermes/L02/hermes-setup-help.png';
+import hermesDoctor from '../../../assets/lessons/hermes/L02/hermes-doctor.png';
+import hermesSkills from '../../../assets/lessons/hermes/L02/hermes-skills.png';
+
+In [L01](/lessons/hermes/l01-what-is-hermes-agent/) you decided Hermes is right for you. Now you have to actually install it. Hermes runs in two places — your Mac, or a small rented Linux server called a VPS. Either path takes under twenty minutes if nothing breaks.
+
+## Before you install
+
+The one thing every first-time installer gets wrong is the prerequisite, not the installer — and the installer gives you a misleading error instead of telling you what to do. On a Mac, that prerequisite is **Xcode Command Line Tools**. macOS doesn't ship with build tools by default. Open Terminal (Finder → Applications → Utilities → Terminal) and run:
+
+```bash
+xcode-select --install
+```
+
+Click **Install** and wait. The first time, the download can take five to ten minutes.
+
+<Callout type="gotcha" title="Don't skip Xcode CLT">
+Skip this step and the installer fails with "no developer tools were found" or "command not found." You'll then spend twenty minutes debugging the wrong thing. Install Command Line Tools first, always.
+</Callout>
+
+You'll also need a model provider account. Hermes is the harness — it doesn't bundle model access. You bring your own key (BYOK). Any Hermes-supported provider works: Anthropic, OpenAI, DeepSeek, Kimi (Moonshot), MiniMax, or Qwen. Mac path needs macOS 13 or newer.
+
+## Two paths: Mac vs VPS
+
+Before you paste anything, decide where Hermes will live. Getting it right saves you weeks.
+
+<Picture src="/lessons/hermes/L02/mac-vs-vps-decision.svg" alt="Decision diagram: Mac path runs locally and is free but stays awake only while your laptop is open; VPS path costs $2–5/month and runs 24/7." width={880} height={480} formats={["avif", "webp"]} />
+
+**Mac (local).** Hermes is a process on your laptop. Zero monthly cost, fastest iteration, no new skills. Downside: only runs while your laptop is awake — not viable for 24/7 cron jobs. This is the **learning path**.
+
+**VPS (rented Linux server).** Hermes is a process on a small rented server in a data centre. Runs 24/7, isolated from your laptop, $2–$5/month. Downside: small monthly cost, you learn SSH. This is the **production path** — cron jobs, scheduled tasks, anything that has to fire when your laptop lid is closed.
+
+<Callout type="tip" title="Ron's rule">
+"If you've never used a terminal before, choose the VPS path. The setup is identical to what a Linux server admin would do, and you'll learn one transferable skill — SSH — that you'll use forever." — Ron, source video `UbK2kXygPUY`
+</Callout>
+
+**First-time learners, pick the Mac path.** Faster to iterate, nothing to undo. Once you want a 24/7 setup — cron jobs, automated research, scheduled messages — the VPS path is worth the $3/month.
+
+A handy rule of thumb:
+
+| Situation | Path |
+|---|---|
+| Brand new to terminals | Mac |
+| Want a 7am cron job that runs while you sleep | VPS |
+| On a Windows PC | VPS |
+| Want the cheapest possible test drive | Mac |
+| Plan to connect Telegram or Discord bots | VPS |
+| Want config to live forever on one server | VPS |
+
+### The Mac path
+
+Once `xcode-select --install` has finished:
+
+```bash
+curl -fsSL https://hermes-agent.newsresearch.com/install.sh | bash
+hermes
+```
+
+When the wizard offers **quick setup** versus **full setup**, pick **quick** — you can customise later, and on a first install the goal is to confirm the tool runs. The wizard then asks for a provider, your key, and a default model. Skip Telegram and Discord on first install; [L05](/lessons/hermes/l05-mcp-catalog-and-integrations/) wires those properly.
+
+### The VPS path
+
+The VPS path takes longer only because of SSH. Once you're in, the rest is identical to the Mac path.
+
+<Picture src="/lessons/hermes/L02/ssh-vps-flow.svg" alt="Four-step flow: your laptop SSHes into the VPS, the VPS runs the installer, the wizard writes your API key to ~/.hermes/config.yaml, and you chat with Hermes over the same SSH session." width={900} height={280} formats={["avif", "webp"]} />
+
+1. **Rent a server.** Hetzner, DigitalOcean, Vultr, or Linode — Ubuntu 22.04 or 24.04, 2 GB of RAM, $2–$5/month.
+2. **SSH in.** `ssh ubuntu@<your-server-ip>`. Type `yes` to trust the host fingerprint, paste the password (the cursor won't move — normal).
+3. **Install dependencies.** `sudo apt update && sudo apt install -y git curl`.
+4. **Run the installer.** Paste the one-line command. When prompted about importing from OpenClaw, answer **No** — even if you've used OpenClaw before.
+
+<Callout type="gotcha" title="Don't import from OpenClaw">
+The source video's creator tried the import and found cron jobs didn't migrate cleanly. A fresh install is more reliable than a migrated one, even if it means rebuilding a couple of skills.
+</Callout>
+
+## Pick your model
+
+Once the installer finishes, the wizard wants a model provider and an API key. Picking the right model is the difference between a $5/month learning habit and a $50/month surprise. Keep it boring for now — you can switch providers later by re-running `hermes setup`.
+
+| Provider | Pick when… |
+|---|---|
+| Kimi K2.6 (Moonshot) | Cost matters most; daily use, non-English |
+| Claude Sonnet 4.8 (Anthropic) | Reliable quality, broad capability |
+| Claude Opus 4.8 (Anthropic) | Hard reasoning, important deliverables |
+| DeepSeek V4 Pro | Strong tool-call reasoning, low cost |
+| OpenAI GPT-5.x | Solid general-purpose |
+| MiniMax M3 | Cost-efficient execution |
+
+For 50–100 messages a day at the cheap tier, expect **$5–$10/month** in API usage. Claude Opus runs roughly 4–5× that.
+
+**Set a hard monthly budget cap** in the provider's billing dashboard on day one. Without it, a runaway session at 3am can burn real money in minutes. $20 is a reasonable beginner ceiling. Then paste the key into the wizard — and never paste it anywhere else. API keys are passwords.
+
+<Callout type="bottom-line" title="Ron's bottom line: pick cheap, upgrade later">
+Start with Kimi K2.6 or DeepSeek V4 Pro. Once the loop is working and you can see what Hermes actually does, upgrade to Claude Sonnet only for the queries that need it. Pay-for-quality is a great habit; pay-for-everything is a fast way to overspend.
+</Callout>
+
+## Verify it works
+
+You have a working install when all three of these return without error:
+
+```bash
+hermes doctor          # checks Python, SSL, dependencies
+hermes status          # shows config, API keys, version
+hermes skills list     # enumerates available skills
+```
+
+A healthy doctor looks like this.
+
+<TerminalScreenshot
+  image={hermesDoctor}
+  title="hermes doctor"
+  alt="Output of the hermes doctor command showing green checks across security, Python, SSL, and dependencies"
+  caption="Everything green = healthy install. The two orange warnings about Telegram and Discord are optional and fix themselves in L05."
+/>
+
+`hermes setup --help` shows the subsections you can re-run individually — useful for swapping providers later.
+
+<TerminalScreenshot
+  image={hermesSetupHelp}
+  title="hermes setup --help"
+  alt="Output of hermes setup --help showing six sub-sections: model, tts, terminal, gateway, tools, agent"
+  caption="Re-run `hermes setup model` to swap providers later — you don't need to redo the whole wizard."
+/>
+
+And once you've added a few skills, `hermes skills list` shows what's available to invoke.
+
+<TerminalScreenshot
+  image={hermesSkills}
+  title="hermes skills list"
+  alt="Output of hermes skills list enumerating built-in skills with one-line descriptions"
+  caption="Each row is a skill Hermes already knows how to run. L04 covers how to add your own."
+/>
+
+The final smoke test: launch the chat and type `hi`. If Hermes responds, the install is complete.
+
+```bash
+hermes
+> hi
+< Hello! How can I help today?
+```
+
+If you see an error, the most common cause is a wrong API key in the wrong provider field, or a missing `curl`/`git` on the VPS path. Re-run `hermes setup` or install the dependencies and retry.
+
+### The exercise
+
+In the terminal where Hermes is installed, confirm these three commands all return without error:
+
+```bash
+hermes doctor
+hermes status
+hermes skills list | head
+```
+
+If everything is green and you can see your provider listed in `status`, your install is verified.
+
+### Watch the full install
+
+<VidCard id="lHVk1Agz3_I" title="Hermes Agent Setup on Mac — full Mac walkthrough, Ron, April 2026" />
+<VidCard id="UbK2kXygPUY" title="Hermes Agent Setup on VPS — full VPS walkthrough with SSH, Ron, April 2026" />
+
+### Check your understanding
+
+<Quiz questions={[
+  {
+    q: "The first thing a Mac user should run before the Hermes installer is:",
+    choices: ["Homebrew", "Docker Desktop", "Xcode Command Line Tools", "Node.js"],
+    answer: 2,
+    explain: "`xcode-select --install` provides the build tools the installer needs. Without it the installer fails with a misleading error.",
+  },
+  {
+    q: "When the VPS installer asks 'Import from OpenClaw?', a first-time VPS user should answer:",
+    choices: ["Yes — saves time", "Only if they've used OpenClaw", "No — fresh install is more reliable", "It doesn't matter"],
+    answer: 2,
+    explain: "Per the source video, the OpenClaw import is buggy and cron jobs do not migrate cleanly. A fresh install is safer even if you've used OpenClaw before.",
+  },
+  {
+    q: "Short answer: What is the single most important day-one habit in your model provider's dashboard?",
+    choices: [],
+    answer: 0,
+    explain: "Set a hard monthly budget cap. Without it, a runaway session can burn real money in minutes. The keys are passwords, the dashboard is the firewall.",
+  },
+  {
+    q: "Which model should a beginner pick if cost matters most?",
+    choices: ["Claude Opus 4.8", "MiniMax M3 / Kimi K2.6 / DeepSeek V4 Pro", "Claude Sonnet 4.8", "Whichever is free that day"],
+    answer: 1,
+    explain: "The cheap-tier models (Kimi, DeepSeek, MiniMax) cost roughly $5–$10/month at beginner volume. Opus runs 4–5× that.",
+  },
+  {
+    q: "You're on a Windows PC. Which install path should you pick?",
+    choices: ["The Mac path with WSL", "The VPS path", "Either — Windows install is smooth", "Skip Hermes, Windows is unsupported"],
+    answer: 1,
+    explain: "The local Windows install is rougher than the Mac path. The VPS path gives everyone the same Linux install experience — SSH into a Linux server and you get parity with Mac users.",
+  },
+  {
+    q: "Which three commands prove Hermes is installed and healthy?",
+    choices: [],
+    answer: 0,
+    explain: "`hermes doctor` (environment checks), `hermes status` (config + keys), `hermes skills list` (what's invocable). All three return cleanly when the install is verified.",
+  },
+]} />
+
+### What's next
+
+- **Daily-driver interface.** → [L03 — Hermes TUI vs Desktop App](/lessons/hermes/l03-daily-driver-tui-vs-desktop/). Which interface do you actually use day to day?
+- **Security before connecting anything.** → [L07 — How to Secure Your Hermes Agent](/lessons/hermes/l07-security-essentials/). Required within a week, especially if you went down the VPS path and pasted a password.
+- **Want to schedule something?** → [L08 — Automation: cron, kanban, sub-agents](/lessons/hermes/l08-automation-cron-kanban-sub-agents/). That's the workflow you signed up for in L01.
+
+<Callout type="bottom-line">
+**Ron's bottom line:** install on a Mac first, even if you plan to move to a VPS later. The first install is about muscle memory, not production. Once you've used Hermes for a week and you know what the agent even does, the VPS path will feel obvious. Before that, you're still learning what you're optimising for.
+</Callout>

@@ -1,0 +1,153 @@
+---
+title: "Frontier vs Open-Weight AI Models: How to Pick in 2026 (Decision Framework)"
+module: ai-models
+slug: l05-frontier-vs-open-weight-decisions
+order: 5
+updatedDate: 2026-06-29
+updatedRaw: "June 2026"
+summary: "The synthesis of L01–L04 into a single decision framework: given a task, what type of model do you choose — and when do you switch tiers mid-project?"
+description: "You'll learn how to apply a 5-question framework to pick the right model tier for any workload, how to recognise when to escalate from Tier 2 to Tier 1, and why the channel's documented belief is 'pick by loop, not by model'."
+readingMinutes: 9
+accent: "#0ea5a4"
+---
+
+**Last tested and updated:** June 2026
+
+import Quiz from '../../../components/lesson/Quiz.astro';
+import Callout from '../../../components/lesson/Callout.astro';
+import { Picture } from 'astro:assets';
+
+You've now learned about [Claude (L02)](/lessons/ai-models/l02-the-anthropic-family/), [Kimi and DeepSeek (L03)](/lessons/ai-models/l03-chinese-open-weight/), and [Qwen, MiniMax, and GLM (L04)](/lessons/ai-models/l04-cost-efficient-tier/). You know the cost-efficient tier handles 80% of daily work for a fraction of the cost of frontier models. This capstone synthesises everything into a single decision framework — and shows you when to switch tiers mid-project.
+
+## The hook
+
+The choice comes down to your **task type**. Not your budget. Not the latest tweet. Not the leaderboard.
+
+Pick a task you did yesterday. **"Draft a thank-you email to a client."** Could a $5/mo Kimi K2.7 do it? Yes — and the email will be indistinguishable from one written with a $200/mo Claude Max subscription. Now pick another: **"Architect a multi-tenant Postgres schema with audit trails and row-level security."** Could Kimi do it? Probably — but you'll spend three rounds catching edge cases that Opus would have caught in one. That gap is exactly what tier choice captures.
+
+## The mental model
+
+The channel's documented belief, captured across L02–L04: **"pick by loop, not by model."** A great model inside the wrong loop is still the wrong tool. The same principle that picks the harness (coding vs agent — see [Hermes L01](/lessons/hermes/l01-what-is-hermes-agent/)) also picks the model tier.
+
+<Picture src="/lessons/ai-models/L05/decision-framework.svg" alt="Decision framework flowchart: given a task, route to Tier 1 frontier, Tier 2 cost-efficient, or Tier 3 niche based on the loop" width={900} height={620} formats={["avif", "webp"]} />
+
+Three tiers, three jobs:
+
+- **Tier 1 — Frontier (closed, expensive, Mythos-class).** Opus 4.8, Fable 5, GPT 5.5, Gemini 3.1 Pro. Hard one-shots: novel creative work, ambiguous specs, architecture decisions. $80–$300/month.
+- **Tier 2 — Cost-efficient (open-weight or cheap closed).** Kimi K2.7, DeepSeek V4 Pro, Qwen 3.7 Max/Plus, MiniMax M3, GLM 5.2, Sonnet 4.5. Eighty percent of daily work: UI, vision, code review, summarisation, agent workflows. $5–$40/month.
+- **Tier 3 — Niche.** Sakana Fugu, agent-tuned models. One workload, done exceptionally well. Don't generalise out of a Tier 3 model — pick the niche on purpose, not by accident.
+
+<Callout type="tip" title="The shorthand">
+Coding harnesses verify by **running**. Agent harnesses verify by **inferring**. Tier 1 models verify by **knowing**. Tier 2 models verify by **checking**. Tier 3 models verify by **specialising**.
+</Callout>
+
+The right move, for almost everyone, almost every day: **Tier 2 by default, Tier 1 for hard work, Tier 3 only when the niche is exactly your workload.**
+
+## Pick your tool
+
+Use this 5-question framework to pick the right tier for any workload. Answer in order.
+
+**Q1 — What loop does the workload run in?** Five loops account for most work in 2026:
+
+| Loop | Default tier | Default model |
+|---|---|---|
+| One-shot creative / novel spec | Tier 1 | Opus 4.8 or Fable 5 |
+| Daily Q&A, summarisation | Tier 2 | Sonnet 4.5 or Kimi K2.7 |
+| Coding all day (production) | Tiered | Sonnet default, Opus on hard tasks |
+| Long-horizon agent (hours) | Tier 2 + agent harness | Qwen 3.7 Max or MiniMax M3 |
+| Multimodal (vision / UI / images) | Tier 2 specialist | MiniMax M3 or Kimi K2.7 |
+
+The single biggest mistake beginners make is treating "loop" as a synonym for "task name." A coding session is a *loop* (interactive, verified, multi-turn). A one-shot creative prompt is also coding-adjacent in name, but a *different loop* (single turn, no test feedback). Match the loop first; the model falls out of that.
+
+**Q2 — What's your monthly budget?** Under $20/mo: Tier 2 only, cheapest specialist that fits. $20–$50/mo: Tier 2 with occasional Tier 1 escalations. $50–$200/mo: Tier 2 default with Tier 1 routing on the hardest 10–20% of tasks. Over $200/mo: Tier 1 is fine for daily use, but audit whether you're paying for capability you don't consume.
+
+**Q3 — How reproducible is the workload?** Daily research summaries, recurring cron jobs, repeated Q&A patterns — Tier 2, full stop. Variable inputs push you toward Tier 1 or tiered routing. One-off creative work for an actual deadline is the one case where Tier 1 is unambiguously correct.
+
+**Q4 — How time-sensitive is it?** Days to weeks — Tier 2, take the cheap option. Hours — Tier 2 if Qwen Max or DeepSeek Flash is fast enough; they usually are. Minutes (a one-shot deadline) — Tier 1. Mythos-class intelligence matters when you don't get a second attempt.
+
+**Q5 — How much do you trust the harness?** This is the question people forget. A trusted harness (Claude Code for code, [Hermes](/lessons/hermes/l01-what-is-hermes-agent/) for agentic loops) catches Tier 2's mistakes through verification. A new or experimental harness cannot, so you pay the Tier 1 premium as insurance. Tiered routing is covered end-to-end in [Hermes L06](/lessons/hermes/l06-model-routing-and-tier-orchestration/).
+
+### When to switch tiers mid-project
+
+**Tier 2 → Tier 1:** three or more retries with the same prompt; the task escalates from routine to novel; production-critical work where reliability outweighs cost.
+
+**Tier 1 → Tier 2:** you realise Tier 1 isn't doing anything Tier 2 can't; workload shifts from novel to routine; you're spending $200+/mo on marginal tasks that aren't pulling their weight.
+
+**Within Tier 2:** workload changes shape (coding → UI → vision); a new release ships in another family that's clearly better for *your* workload; cost-tier specials land (Qwen Plus at 40% off Max, Kimi flash-tier promos).
+
+<Callout type="gotcha" title="Common trap">
+Switching tiers weekly, chasing the latest release, is the most expensive mistake beginners make. The model market moves fast, but your workload doesn't. Pick a tier (not a specific model) and stay there for a quarter. Re-evaluate on a calendar reminder, not on every tweet.
+</Callout>
+
+### Worked examples
+
+**Example 1 — Daily research cron (Hermes, 7am).** Cron summarises three AI news stories and posts to Discord (the pattern in [Hermes L08](/lessons/hermes/l08-automation-cron-kanban-sub-agents/)). Loop: reproducible, batch, low-stakes. Default: **Tier 2**, DeepSeek V4 Flash or Kimi K2.7. Escalate only if summaries start missing important stories three days running. Cost: $3–$8/month.
+
+**Example 2 — Production feature (Claude Code).** Multi-tenant billing flow with row-level security. Loop: interactive coding, test-verified. Default: **tiered routing** — Sonnet 4.5 for routine 80%, Opus 4.8 for the hard sub-tasks. Cost: $30–$80/month.
+
+**Example 3 — One-shot creative brief.** Pitch deck due tomorrow. Loop: single-turn, high-stakes. Default: **Tier 1**, Opus 4.8 or Fable 5. One shot — that shot needs the best model you can buy.
+
+**Example 4 — Long-horizon agent (Hermes over Qwen Max).** Research project running four hours overnight, reading 50 PDFs. Loop: long-running, verification-by-inference. Default: **Tier 2 + agent harness**, Qwen 3.7 Max or MiniMax M3 wrapped in Hermes. Cost: $10–$25/month.
+
+## Try it
+
+### The exercise
+
+Open a text file on your computer. Write down the answer to this in your own words, no copy-paste:
+
+> *"Pick three AI workloads you did this week. For each: name the loop (one-shot / daily Q&A / coding / long-horizon / multimodal), name the default tier (1 / 2 / tiered), and name one specific model. Then write down the trigger that should make you switch tiers."*
+
+A good answer covers three workloads, three tiers, three models, and three triggers. If you can do that without re-reading the framework, you've finished the ai-models module.
+
+### Build your own decision tree
+
+The framework above is the source of truth, but your workload is yours. Fork it — replace the five loops in Q1 with the five you actually run, replace the budgets in Q2 with your real monthly spend. Print the result and tape it above your monitor.
+
+<Callout type="bottom-line">
+**Ron's bottom line:** default to Tier 2. Pick the specialist that matches your workload — Kimi for UI, DeepSeek for tool-call reasoning, Qwen for long-horizon, MiniMax for multimodal, GLM for front-end design. Escalate to Tier 1 only when Tier 2 keeps failing three times in a row. Don't switch tiers weekly — pick a tier and stick with it for a quarter. The harness choice matters as much as the model choice. Match both to the workload.
+</Callout>
+
+### Check your understanding
+
+<Quiz questions={[
+  {
+    q: "Per the channel, you should pick a model by:",
+    choices: ["Price", "Marketing", "The loop your workload runs in", "The most popular model"],
+    answer: 2,
+    explain: "Pick by loop, not by model. A great model inside the wrong loop is still the wrong tool.",
+  },
+  {
+    q: "For coding all day in production, the recommended tier pattern is:",
+    choices: ["Tier 1 only", "Tier 2 only", "Tiered routing — Tier 2 default, Tier 1 on hard sub-tasks", "Tier 3 only"],
+    answer: 2,
+    explain: "Tiered routing: Sonnet default for routine work, Opus escalated for the hardest 10–20% of sub-tasks.",
+  },
+  {
+    q: "Short answer: name one trigger that should make you escalate from Tier 2 to Tier 1.",
+    choices: [],
+    answer: 0,
+    explain: "Any of: three or more retries with the same prompt; the task escalates from routine to novel; production-critical work where reliability outweighs cost.",
+  },
+  {
+    q: "Which benchmark does the channel flag as unreliable?",
+    choices: ["FrontierCoding Diamond", "Artificial Analysis", "SWE-bench Pro", "HumanEval"],
+    answer: 2,
+    explain: "SWE-bench Pro is cherry-picked. Trust FrontierCoding Diamond, Artificial Analysis, and hands-on real-task tests.",
+  },
+  {
+    q: "The biggest mistake beginners make when choosing tiers is:",
+    choices: ["Picking the cheapest tier", "Picking by marketing or popularity instead of workload fit", "Avoiding frontier models entirely", "Reading too many leaderboards"],
+    answer: 1,
+    explain: "Pick by loop, not by hype. Marketing and popularity correlate with capability, not with workload fit.",
+  },
+  {
+    q: "How often does the channel recommend re-evaluating your tier choice?",
+    choices: ["Weekly", "Monthly", "Quarterly, or when a major model release ships", "Never — pick once and stick with it forever"],
+    answer: 2,
+    explain: "Quarterly, or sooner if a major release lands. Tier lists go stale fast — your workload doesn't.",
+  },
+]} />
+
+### What's next
+
+You've finished the ai-models module. To put this framework into practice inside a harness, continue with [Hermes L06 — Model Routing and Tier Orchestration](/lessons/hermes/l06-model-routing-and-tier-orchestration/), which walks through tiered routing end-to-end. For a deeper comparison of harnesses (Claude Code vs Hermes vs Mavis), see [Hermes L09](/lessons/hermes/l09-hermes-vs-alternatives/).

@@ -1,0 +1,199 @@
+---
+title: "Vibe Coding vs Real Coding in 2026: Which One Should You Use?"
+module: ai-projects
+slug: l02-vibe-coding-vs-real-coding
+order: 2
+updatedDate: 2026-06-29
+updatedRaw: "June 2026"
+summary: "Vibe coding is for prototypes you'll throw away. Real coding is for anything that has to keep working. Here's the 2x2 framework for picking which one to use, and when to switch from one to the other mid-project."
+description: "Learn the difference between vibe coding and real coding, why vibe coding breaks on production work, and how to combine them in a single project. Assumes you finished L01 (Claude Code) — start there if you haven't."
+readingMinutes: 8
+accent: "#ea7a3b"
+---
+
+**Last tested and updated:** June 2026
+
+import Quiz from '../../../components/lesson/Quiz.astro';
+import Callout from '../../../components/lesson/Callout.astro';
+import { Picture } from 'astro:assets';
+
+You describe what you want. The AI writes the code. You click "run." It works. You describe the next thing. The AI writes it. You click "run." It works. You feel like a wizard. Then you try to ship the thing and it breaks in three places at once, you can't reproduce the bug, the AI keeps "fixing" it with hallucinated APIs, and you've spent $40 in tokens without ever opening a test runner.
+
+Welcome to **vibe coding**, the practice Andrej Karpathy named in early 2025 that has now swallowed half the internet. Vibe coding is the fastest way to build software that's never supposed to ship, and the slowest way to build software that is. This lesson is the boundary.
+
+If you finished [L01 — Coding with Claude Code](/lessons/ai-projects/l01-coding-with-claude-code/), you already have a coding harness installed. This lesson is the matching "when" — when vibe coding is the right tool, when it isn't, and how the two styles combine.
+
+## The hook
+
+The clearest way to hear the difference is to name the failure mode of each.
+
+**Vibe coding** fails when you ask the AI for a drag-handler, it produces a drag-handler that looks right, and the drop event never fires because nobody specified the drop target. The code "looks right" because nobody ran it. You spend four rounds of "no, the other way" before realising the AI is reasoning about the wrong model of the problem.
+
+**Real coding** fails when you spend eight hours hand-reviewing a 200-line diff for a UI button that could have been generated in 90 seconds, and the prototype was thrown out the next morning anyway. You were right that the code would have bugs. You were wrong that the bugs mattered — nothing was going to ship.
+
+The trade is not "AI vs no AI." The trade is **how much verification the work needs**, and verification is what costs you time. Vibe coding is verification-free by design. Real coding is verification-rich by design. The mistake isn't picking one. The mistake is using one in the wrong quadrant.
+
+<Callout type="tip" title="The slogan">
+**Vibe coding is for prototypes. Real coding is for things that have to keep working.** That's the whole lesson. The rest is just unpacking the two axes.
+</Callout>
+
+## The mental model
+
+The single diagram you need is a 2x2. The x-axis is **how seriously you intend to ship** — from "throwaway" on the left to "long-lived production" on the right. The y-axis is **how strict the quality bar is** — from "looks right" at the bottom to "reviewed and tested" at the top.
+
+<Picture src="/lessons/ai-projects/L02/vibe-vs-real-quadrant.svg" alt="2x2 matrix: shipping intent on the x-axis (throwaway to long-lived), quality bar on the y-axis (looks right to reviewed and tested). Vibe coding wins the bottom-left half. Real coding wins the top-right half. The diagonal between them is the 'ship the real thing' axis." width={920} height={580} formats={["avif", "webp"]} />
+
+The two diagonals on the diagram are the two spectrums most projects actually move along. The **"ship the real thing" axis** runs from a one-off script you'll delete on Friday (bottom-left) to a production codebase with CI, tests, and code review (top-right). The **"kill it on Friday" axis** runs the other way.
+
+A few concrete examples to anchor the quadrants:
+
+- **Bottom-left, "throwaway + looks right":** a one-off script to rename 200 files, a personal cron, a quick HTML mockup. Vibe coding. Run it. Delete it.
+- **Bottom-right, "long-lived + light review":** an internal tool you'll touch for a year. Hermes is excellent here — see [Hermes L01 — What Is Hermes Agent?](/lessons/hermes/l01-what-is-hermes-agent/). Agent harness, scheduled job, light review of what it produced.
+- **Top-left, "shipped + tested":** a SaaS MVP you intend to charge money for. Claude Code or Kilo Code, with a real test suite, and you read every diff before merging.
+- **Top-right, "production + reviewed":** a long-lived web app, a mobile app, a data pipeline, a public library. Real coding, full stop.
+
+<Callout type="gotcha" title="The thing that breaks vibe coding">
+"Vibe coding with intent-free prompts burns tokens and breaks on drag-handlers." The reason isn't that the model is bad. It's that the model is filling in the gaps in your intent with **its own assumptions**, and those assumptions are statistically likely to be wrong. The fix isn't a better model. The fix is a PRD — even a one-paragraph PRD — and a verification loop. Real coding gives you both.
+</Callout>
+
+## Pick your tool
+
+Two questions decide which tool to reach for:
+
+1. **Will this code still be running in three months?**
+2. **Will anyone (including future-you) be debugging it at 2am?**
+
+If both answers are "no" — vibe coding. If either answer is "yes" — real coding. If the first answer flips during the project (you started vibe coding a prototype, then decided to ship it) — switch mid-stream; that's normal and covered below.
+
+### When to vibe code
+
+Vibe coding is right when the cost of a bug is low and the cost of being slow is high. Concrete cases:
+
+- **Exploration.** Trying 5 UI variants before picking one. Trying 3 database schemas. The point is to throw most of them away.
+- **One-off scripts.** Rename 200 files, scrape a page, generate a CSV. Run once, delete.
+- **Throwaway demos.** "Show the team what a Slack-integrated todo app could look like." Will never see production.
+
+For all of these, the cheapest path is vibe coding with a Tier 2 model — DeepSeek V4, Kimi K2.7, or a local Qwen. The speed wins, the quality is "good enough for code you'll throw out," and you keep the expensive models in reserve.
+
+### When to real code
+
+Real coding is right when the cost of a bug is high — including the cost of a bug you'll find in three months when you've forgotten what you wrote. Concrete cases:
+
+- **Anything user-facing that ships.** Web apps, mobile apps, public APIs, public libraries. Use Claude Code or Kilo Code (covered in [L01](/lessons/ai-projects/l01-coding-with-claude-code/)) with a real test suite, a Git workflow, and code review.
+- **Anything that touches money or data.** Payment flows, auth, anything that writes to a database you can't easily roll back.
+- **Anything that has to keep working.** Cron jobs, scheduled tasks, automations that have to wake you up when they break.
+
+For all of these, the right tool is a coding harness — Claude Code, Kilo Code — and the right model tier is Sonnet-class or above. The harness gives you the loop. The tests give you the verification. The review gives you the catch on what the tests miss.
+
+### Combining both (the most common pattern)
+
+Most production work in 2026 follows this pattern, in this order:
+
+1. **Vibe code the prototype.** Try 5 UI variants. Pick the best one. The whole job here is to find out what you actually want.
+2. **Write a one-paragraph PRD.** Inputs, outputs, edge cases. The PRD is the artifact that lets you switch from "AI proposes" to "I direct."
+3. **Switch to a coding harness.** Open Claude Code or Kilo Code on the prototype. Tell it the PRD, point it at the code, let it write the production version with tests.
+4. **Read every diff.** You, not the harness. The harness proposes; you decide.
+5. **Run the tests.** If they fail, the harness iterates. If they pass, you merge.
+
+This is the **"vibe for exploration, real for production"** pattern. The vibe phase is fast and loose. The real phase is slow and verified. The boundary between them is the PRD.
+
+<Callout type="tip" title="Hermes is a third option">
+If the "thing that has to keep working" is an internal tool, a scheduled job, or a long-running personal automation, you may not need a coding harness at all. An agent harness — Hermes, covered in [Hermes L01](/lessons/hermes/l01-what-is-hermes-agent/) — runs the thing for you in the background and persists across sessions. Vibe coding + Hermes is a perfectly fine production stack for tools only your team uses.
+</Callout>
+
+### Common failure modes
+
+A few ways this goes wrong, in order of how often beginners hit them:
+
+- **Vibe coding production code.** Ship the prototype. It works for 80% of users and breaks for the other 20%. The fix is the combine pattern above.
+- **Real coding a prototype.** Spend a day on test coverage for code you're going to throw out. Fix: commit to vibe coding for exploration, switch to real coding after the PRD.
+- **Skipping the PRD.** Vibe code, the AI fills in the gaps with assumptions, the result "looks right" but doesn't match your actual intent, you spend four rounds fixing it. Fix: one paragraph is enough.
+- **Burning tokens on iteration.** Ask the AI to fix a bug. The fix introduces a new bug. 20 iterations, $50 gone. Fix: a coding harness with a test suite catches the regression in round one.
+
+## Try it
+
+### The exercise
+
+Pick a small project on your machine — a CLI tool, a single-page app, a script, anything that fits in an afternoon. Spend **one hour** vibe coding it. Don't write a PRD. Don't run the tests. Just describe what you want and ship it.
+
+Then open Claude Code (or Kilo Code, from [L01](/lessons/ai-projects/l01-coding-with-claude-code/)) on the same project. Spend **one hour** rebuilding it the "real coding" way: PRD first, harness writes code with tests, you read every diff, you run the test suite after each change.
+
+At the end, write down in your own words:
+
+- What was easier about the vibe-coding hour?
+- What was easier about the real-coding hour?
+- Which version would you actually ship?
+- Where did the PRD change what the AI produced?
+
+If your answer to question 3 is "the vibe-coded one" and you can articulate why, you've correctly identified a throwaway prototype. If your answer is "the real-coded one" and you can articulate why, you've correctly identified a thing that has to keep working. Either answer is fine — the point is to feel the difference.
+
+### Check your understanding
+
+<Quiz questions={[
+  {
+    q: "You spend an hour vibe coding a personal cron that scrapes a weather page every morning. Is that the right tool?",
+    choices: [
+      "No — vibe coding is always wrong.",
+      "Yes — it's a personal tool, low stakes, you'll throw it away if it breaks.",
+      "No — anything automated should be built with Claude Code.",
+      "It depends on which model you used.",
+    ],
+    answer: 1,
+    explain: "Vibe coding is exactly right for low-stakes personal automations you'll throw away. The bar is \"looks right, runs once, don't care if it breaks.\" Real coding would be overkill.",
+  },
+  {
+    q: "Short answer: what is the single artifact that lets you switch from vibe coding to real coding mid-project?",
+    choices: [],
+    answer: 0,
+    explain: "A PRD (Product Requirements Document) — even a one-paragraph PRD. It captures intent so the harness can build against something specific instead of filling in gaps with its own assumptions.",
+  },
+  {
+    q: "You vibe coded a feature, it works on your machine, and the team wants to ship it next week. What is the right next step?",
+    choices: [
+      "Ship the vibe-coded version as-is.",
+      "Open Claude Code or Kilo Code, write a one-paragraph PRD, rebuild the feature with tests, read every diff.",
+      "Just deploy the prototype and see if anyone complains.",
+      "Rewrite the whole project from scratch in a different language.",
+    ],
+    answer: 1,
+    explain: "The vibe-then-real pattern: keep the prototype as exploration, then rebuild the production version with a coding harness, a PRD, and tests. This is the most common shipping pattern in 2026.",
+  },
+  {
+    q: "Per the source quote, why does vibe coding break on drag-handlers?",
+    choices: [
+      "Models don't understand drag-and-drop.",
+      "Vibe coding with intent-free prompts fills in gaps with assumptions, and those assumptions are often wrong on edge cases.",
+      "Drag-handlers require a coding harness.",
+      "Models can't generate event handlers at all.",
+    ],
+    answer: 1,
+    explain: "Vibe coding produces code that \"looks right\" but reasons about the wrong model of the problem. Drag-handlers are full of edge cases the AI fills in with guesses if you don't specify them in a PRD.",
+  },
+  {
+    q: "True or false: real coding means writing the code by hand without AI help.",
+    choices: [],
+    answer: 0,
+    explain: "False. Real coding means using AI as a tool — usually a coding harness — while you drive the verification (PRD, tests, code review). The AI still writes most of the code. You just run the loop.",
+  },
+  {
+    q: "Which is the better production stack for an internal tool that only your team uses: a coding harness with tests, or Hermes with a vibe-coded skill?",
+    choices: [
+      "Always the coding harness.",
+      "Always Hermes.",
+      "Either is fine, depending on the team — both can be production-grade for internal tools.",
+      "Neither — internal tools should be hand-coded.",
+    ],
+    answer: 2,
+    explain: "Internal tools have low blast radius. A Hermes-scheduled vibe-coded skill is often the right answer (see Hermes L01). A coding-harness version with tests is also fine. The wrong answer is the one that costs more than the tool is worth.",
+  },
+]} />
+
+### What's next
+
+- **Want the coding harness deep-dive?** Go back to [L01 — Coding with Claude Code](/lessons/ai-projects/l01-coding-with-claude-code/) and finish the loop-pattern exercises.
+- **Want to see the vibe-then-real pattern on a real project?** → [L03 — Building Real Projects with Hermes](/lessons/ai-projects/l03-building-with-hermes/) applies this framework end-to-end.
+- **Want the agent-harness side of the same idea?** → [Hermes L01 — What Is Hermes Agent?](/lessons/hermes/l01-what-is-hermes-agent/) explains when Hermes beats Claude Code for internal tools.
+
+<Callout type="bottom-line">
+**Ron's bottom line:** vibe for exploration, real for shipping, PRD as the switch. Use a coding harness with tests for anything that has to keep working. Use Hermes for internal tools and long-running automations. Use a Tier 2 model for the prototype, a Tier 1 model for the production version. Read every diff. Run the tests. That's the whole game.
+</Callout>

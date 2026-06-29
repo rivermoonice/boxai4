@@ -1,0 +1,153 @@
+---
+title: "What Is an AI Model Tier List? A Beginner's Guide to Comparing LLMs (2026)"
+module: ai-models
+slug: l01-what-is-an-ai-model-tier-list
+order: 1
+updatedDate: 2026-06-29
+updatedRaw: "June 2026"
+summary: "Why 'best model' is the wrong question — and a 4-tier mental model that maps any workload to the cheapest model that will actually handle it."
+description: "You'll learn why the 'best AI model' is the wrong question for most users, what the 4 real tiers are in 2026, and how to pick a tier from your workload instead of from a leaderboard."
+readingMinutes: 9
+accent: "#0ea5a4"
+---
+
+**Last tested and updated:** June 2026
+
+import Quiz from '../../../components/lesson/Quiz.astro';
+import Callout from '../../../components/lesson/Callout.astro';
+import { Picture } from 'astro:assets';
+
+There are dozens of AI models you can use right now — Claude, GPT, Gemini, DeepSeek, Kimi, Qwen, MiniMax, GLM, Grok. Picking one feels like collecting infinity stones: lots of options, no clear winner, and the wrong pick quietly costs you hours every week.
+
+Most guides answer this with a **leaderboard** — a ranked list, S through D. Leaderboards are a starting point. They're dangerous if you treat them as ground truth. The right question isn't "which model is best?" but "**which tier fits the work I'm actually doing?**"
+
+This is the first lesson in the AI models module. **No setup yet** — pure concept. L02 dives into the Anthropic family.
+
+## The hook
+
+Pick a task you did this week. "**Summarise today's top 3 AI news stories.**" Could the most expensive model on Earth do that better than a cheap one? Marginally. The cheap one does it 95% as well for 1/20th the cost.
+
+Now a harder task: "**Refactor the auth layer of my production app, write the migration, run the tests, fix anything that breaks.**" Same two models. Now the cheap one fails half the time and the expensive one succeeds 80% of the time. The tier gap is real — but it's not "model A is smarter." It's "model A is more reliable on this **specific** shape of work."
+
+That's the gap. **The model that wins a leaderboard isn't the model that wins your week.** The work you do, the cost you can absorb, and your tolerance for "almost right" answers decide which tier you actually belong in.
+
+## The mental model
+
+The single most important idea in this module: **AI models exist in 4 tiers, and each tier is a different answer to a different question.** This is not a leaderboard. It's a routing chart for your workload.
+
+<Picture src="/lessons/ai-models/L01/tier-pyramid.svg" alt="Tier pyramid: Tier 1 (Claude Opus 4.8 / Claude Max), Tier 2 (GPT 5.4 / Gemini 3 Pro / Sonnet 4.7), Tier 3 (Kimi K2.7 / Qwen 3.5 / MiniMax M3 / Grok 4), Tier 4 (DeepSeek V4 Flash / GLM 5 / local 7B-20B)" width={900} height={520} formats={["avif", "webp"]} />
+
+**Tier 1 — Frontier.** Claude Opus 4.8 and Claude Max. Mythos-class on hard reasoning. The most expensive models per token and the most capable on multi-step work. Use them when the task is genuinely hard and "almost right" is unacceptable.
+
+**Tier 2 — Frontier-Strong.** GPT 5.4, Gemini 3 Pro, Claude Sonnet 4.7. Within a few points of Tier 1, often at a fraction of the cost. The agentic-coding sweet spot.
+
+**Tier 3 — Daily-Driver.** Kimi K2.7, Qwen 3.5, MiniMax M3, Grok 4. Handles the 80% that isn't hard — summarisation, drafting, Q&A, extraction, code review, meeting notes. Cheaper than Tier 2 by 3–10×. Where you'll spend the most tokens if you're cost-conscious, because the model-quality gap on routine work is much smaller than the price gap.
+
+**Tier 4 — Cost-Efficient.** DeepSeek V4 Flash, GLM 5, and open-weight 7B-20B you can run locally. Bulk, high-volume, background jobs: translation, classification, extraction, batch summarisation. Also the fallback when you don't want to send sensitive data to a frontier API.
+
+<Callout type="tip" title="The 80/20 of token spend">
+Teams who optimise their model spend discover that 80% of tokens go to Tier 3 and Tier 4. The frontier tier looks impressive on a leaderboard, but on a P&L it's a small share of usage. Pick the highest tier that fits the work, not the highest tier that exists.
+</Callout>
+
+**If you take away one thing from this lesson, take this: "best model" is a workload question, not a leaderboard question.** Frontier models aren't "smarter" than daily-driver models in any absolute sense — they're tuned for a different shape of problem. The mistake is paying frontier prices for daily-driver work, or running critical work on cost-efficient models and wondering why it fails.
+
+## Pick your tool
+
+Getting the tier right saves real money. Here's a rough mapping from workload to tier:
+
+| Workload | Pick | Why |
+|---|---|---|
+| Multi-day research synthesis, novel architecture decisions | Tier 1 (Opus 4.8, Claude Max) | Needs depth, long-context retention, willingness to pay $20+ per task. |
+| Hard agentic coding, complex refactors, multi-file migrations | Tier 2 (Sonnet 4.7, GPT 5.4, Gemini 3 Pro) | Near-frontier at 1/3 to 1/5 the cost. Agentic-coding sweet spot. |
+| Daily Q&A, drafting, code review, meeting notes | Tier 3 (Kimi K2.7, Qwen 3.5, MiniMax M3) | Handles 80% of work for a fraction of the cost. See [L03 — Chinese Open-Weight Models](/lessons/ai-models/l03-chinese-open-weight/). |
+| Bulk extraction, translation, classification, batch jobs | Tier 4 (DeepSeek V4 Flash, GLM 5, local 7B-20B) | Designed for volume. Quality is "good enough," not "frontier." See [L04 — Cost-Efficient Tier](/lessons/ai-models/l04-cost-efficient-tier/). |
+| Privacy-sensitive data you don't want leaving your laptop | Tier 4 (local open-weight) | Nothing leaves your machine. Lower capability ceiling. |
+| One-off "I just need a really smart model for this" task | Tier 2 | Don't reach for Tier 1 unless the task genuinely needs it. |
+
+**Rule of thumb:** high cost of being wrong → go up a tier. Low cost of being wrong → go down. Most users run Tier 3 daily, Tier 1 or 2 for hard stuff, Tier 4 in the background.
+
+<Callout type="gotcha" title="The S-tier trap">
+The biggest mistake beginners make is to read "Claude Opus is S-tier" and assume Opus is always the answer. S-tier means **"best for the workload the tier-list creator tested."** It does **not** mean "best for your workload." A daily-driver model on a daily-driver task often beats a frontier model on a budget — you can afford to run it ten times longer, iterate more, try again. The tier label is a starting point, not a destination.
+</Callout>
+
+For a deeper comparison once you've tried the tiers, see [L05 — Frontier vs Open-Weight: Decision Framework](/lessons/ai-models/l05-frontier-vs-open-weight-decisions/). For the Anthropic family specifically, [L02 — The Anthropic Family](/lessons/ai-models/l02-the-anthropic-family/) walks through Opus, Sonnet, and the rest of the lineup.
+
+## Try it
+
+### The exercise
+
+Open a text file. Write down the answer to this in your own words, no copy-paste:
+
+> *"Pick three tasks you do every week. For each one, name the tier it belongs to and one model from that tier. Then estimate how many tokens per week that tier costs you at current pricing."*
+
+A good answer names a tier per task, a specific model per tier, and a rough token count. If you can do that without re-reading the lesson, you have the core idea. If not, re-read the **mental model** section.
+
+### A sneak peek at what's coming
+
+The workload-to-tier mapping above is the spine of every other lesson in this module:
+
+- [L02 — The Anthropic Family](/lessons/ai-models/l02-the-anthropic-family/) — Tier 1 / Tier 2 picks from one lab: Opus 4.8, Sonnet 4.7, Haiku 4.6, plus Claude Max.
+- [L03 — Chinese Open-Weight Models](/lessons/ai-models/l03-chinese-open-weight/) — Kimi K2.7, DeepSeek V4, Qwen 3.5; the daily-driver and cost-efficient workhorses.
+- [L04 — Cost-Efficient Tier](/lessons/ai-models/l04-cost-efficient-tier/) — Qwen, MiniMax, GLM, plus how to run 7B-20B locally.
+- [L05 — Frontier vs Open-Weight: Decision Framework](/lessons/ai-models/l05-frontier-vs-open-weight-decisions/) — the synthesis: one tool for any workload.
+
+### Check your understanding
+
+<Quiz questions={[
+  {
+    q: "The question 'which AI model is best?' is best reframed as:",
+    choices: [
+      "Which model is cheapest?",
+      "Which tier fits the workload I'm doing?",
+      "Which model has the highest benchmark score?",
+      "Which model did a YouTuber rank highest?",
+    ],
+    answer: 1,
+    explain: "Capability is workload-relative. The 'best' model for a hard multi-step refactor is different from the 'best' model for summarising 10,000 customer reviews. Tier mapping beats leaderboard chasing.",
+  },
+  {
+    q: "Which tier is the right default for 'daily Q&A, drafting, code review, meeting notes'?",
+    choices: ["Tier 1 (Frontier)", "Tier 2 (Frontier-Strong)", "Tier 3 (Daily-Driver)", "Tier 4 (Cost-Efficient)"],
+    answer: 2,
+    explain: "Tier 3 — Daily-Driver. Models like Kimi K2.7, Qwen 3.5, and MiniMax M3 handle 80% of routine work for a fraction of frontier cost.",
+  },
+  {
+    q: "You need to refactor a multi-file migration in production, with tests. Which tier should you reach for first?",
+    choices: ["Tier 1 (Frontier)", "Tier 2 (Frontier-Strong)", "Tier 3 (Daily-Driver)", "Tier 4 (Cost-Efficient)"],
+    answer: 1,
+    explain: "Hard agentic coding lives in Tier 2 — Sonnet 4.7, GPT 5.4, Gemini 3 Pro. Near-frontier at 1/3 to 1/5 the cost of Opus. Only escalate to Tier 1 if Tier 2 fails the task.",
+  },
+  {
+    q: "Short answer: name one workload that belongs in Tier 4, and why you'd pick Tier 4 over Tier 3 for it.",
+    choices: [],
+    answer: 0,
+    explain: "Any of: bulk translation across thousands of strings; batch extraction from 50,000 customer reviews; classifying a million support tickets; processing sensitive data you don't want leaving your laptop (local 7B-20B). The reason: Tier 4 is designed for volume, not peak quality. At scale, 'good enough' compounds into a real saving — or in the privacy case, it's the only option.",
+  },
+  {
+    q: "Per the source video, what does 'S-tier' actually mean on a model leaderboard?",
+    choices: [
+      "The most expensive model available.",
+      "The best model for the workload the tier-list creator tested.",
+      "The model with the highest context window.",
+      "The model that runs fastest.",
+    ],
+    answer: 1,
+    explain: "S-tier means 'best for what the creator tested.' It does not mean 'best for everything' or 'best for your workload' unless your workload matches the creator's. This is the S-tier trap.",
+  },
+  {
+    q: "True or false: 'Frontier models are smarter than daily-driver models in an absolute sense.' Explain in one sentence.",
+    choices: [],
+    answer: 0,
+    explain: "False. Frontier models are tuned for a different shape of problem — long-horizon reasoning, novel architecture, complex multi-step work. On routine summarisation or extraction, a daily-driver model often matches them. The difference is workload-shape, not absolute IQ.",
+  },
+]} />
+
+### What's next
+
+- **Want to start with the Anthropic family?** → [L02 — The Anthropic Family](/lessons/ai-models/l02-the-anthropic-family/). Opus, Sonnet, Haiku, and Claude Max in one place.
+- **Want the daily-driver and cost-efficient picks?** → [L03 — Chinese Open-Weight Models](/lessons/ai-models/l03-chinese-open-weight/) and [L04 — Cost-Efficient Tier](/lessons/ai-models/l04-cost-efficient-tier/).
+- **Want the synthesis?** → [L05 — Frontier vs Open-Weight: Decision Framework](/lessons/ai-models/l05-frontier-vs-open-weight-decisions/). One tool to apply to any workload.
+
+<Callout type="bottom-line">
+**Ron's bottom line:** stop reading leaderboards. Pick a workload, pick the tier that fits it, pick a model from that tier. Frontier models aren't "smarter" — they're tuned for harder problems. For 80% of what you actually do, a daily-driver model will be 95% as good at 1/10th the cost of frontier.
+</Callout>

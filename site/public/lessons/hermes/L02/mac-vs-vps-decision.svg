@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 480" role="img" aria-labelledby="mvd-title mvd-desc">
+  <title id="mvd-title">Mac vs VPS install paths — decision diagram</title>
+  <desc id="mvd-desc">A top-down decision tree: start with "where will Hermes live?", branch into Mac (local) or VPS (rented server), show the prerequisites and the outcome for each, and converge on a final "verify it works" step.</desc>
+
+  <defs>
+    <linearGradient id="root" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#7c5cff" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#7c5cff" stop-opacity="0.04"/>
+    </linearGradient>
+    <linearGradient id="mac" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0ea5a4" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#0ea5a4" stop-opacity="0.04"/>
+    </linearGradient>
+    <linearGradient id="vps" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ea7a3b" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#ea7a3b" stop-opacity="0.04"/>
+    </linearGradient>
+    <marker id="arrowhead-mvd" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#2b2a36"/>
+    </marker>
+    <style>
+      .root-box { fill: url(#root); stroke: #7c5cff; stroke-width: 1.5; }
+      .mac-box { fill: url(#mac); stroke: #0ea5a4; stroke-width: 1.5; }
+      .vps-box { fill: url(#vps); stroke: #ea7a3b; stroke-width: 1.5; }
+      .verify { fill: #f4f1e8; stroke: #2b2a36; stroke-width: 1.5; }
+      .step { font: 700 11px/1 ui-sans-serif, system-ui, sans-serif; letter-spacing: 0.1em; }
+      .step-root { fill: #7c5cff; }
+      .step-mac { fill: #0ea5a4; }
+      .step-vps { fill: #ea7a3b; }
+      .title { font: 600 16px/1.2 ui-sans-serif, system-ui, sans-serif; fill: #1a1a1a; }
+      .detail { font: 13px/1.45 ui-sans-serif, system-ui, sans-serif; fill: #4a4960; }
+      .arrow { stroke: #2b2a36; stroke-width: 2; fill: none; }
+      .label { font: 11px/1 ui-monospace, monospace; fill: #5a5a5a; }
+      .badge { font: 700 12px/1 ui-sans-serif, system-ui, sans-serif; fill: #fff; }
+      @media (prefers-color-scheme: dark) {
+        .title { fill: #ece8db; }
+        .detail, .label { fill: #a8a395; }
+        .verify { fill: #1f1d29; stroke: #ece8db; }
+        .arrow { stroke: #ece8db; }
+        marker path { fill: #ece8db; }
+      }
+    </style>
+  </defs>
+
+  <!-- Step 0: Question (root) -->
+  <g>
+    <rect class="root-box" x="290" y="24" width="300" height="74" rx="14"/>
+    <text class="step step-root" x="310" y="50">START HERE</text>
+    <text class="title" x="310" y="74">Where will Hermes live?</text>
+    <text class="detail" x="310" y="94">Pick the path that matches your situation today.</text>
+  </g>
+
+  <!-- Branch arrow labels -->
+  <g>
+    <line class="arrow" x1="370" y1="98" x2="170" y2="160" marker-end="url(#arrowhead-mvd)"/>
+    <text class="label" x="240" y="128" text-anchor="middle">learning on a laptop</text>
+
+    <line class="arrow" x1="510" y1="98" x2="710" y2="160" marker-end="url(#arrowhead-mvd)"/>
+    <text class="label" x="640" y="128" text-anchor="middle">want 24/7 or Windows</text>
+  </g>
+
+  <!-- Step 1: Mac path -->
+  <g>
+    <rect class="mac-box" x="40" y="170" width="260" height="220" rx="14"/>
+    <text class="step step-mac" x="60" y="196">PATH A · MAC (LOCAL)</text>
+    <text class="title" x="60" y="222">Free. Runs while awake.</text>
+
+    <text class="detail" x="60" y="252">1. Install Xcode Command Line Tools</text>
+    <text class="detail" x="60" y="272">2. Run one-line installer from</text>
+    <text class="detail" x="76" y="290" font-family="ui-monospace, monospace">hermes-agent.newsresearch.com</text>
+    <text class="detail" x="60" y="316">3. Choose <tspan font-weight="700">quick setup</tspan>, paste API key</text>
+    <text class="detail" x="60" y="336">4. Type <tspan font-family="ui-monospace, monospace">hermes</tspan> in Terminal</text>
+    <text class="label" x="60" y="370">Best for: first 30 days of learning.</text>
+    <text class="label" x="60" y="386">Time: 5–10 minutes.</text>
+  </g>
+
+  <!-- Step 1: VPS path -->
+  <g>
+    <rect class="vps-box" x="580" y="170" width="260" height="220" rx="14"/>
+    <text class="step step-vps" x="600" y="196">PATH B · VPS (RENTED)</text>
+    <text class="title" x="600" y="222">$2–5/month. Always on.</text>
+
+    <text class="detail" x="600" y="252">1. Rent Ubuntu 22/24, 2 GB RAM</text>
+    <text class="detail" x="600" y="272">2. <tspan font-family="ui-monospace, monospace">ssh ubuntu@&lt;ip&gt;</tspan>, paste password</text>
+    <text class="detail" x="600" y="296">3. <tspan font-family="ui-monospace, monospace">apt install -y git curl</tspan>, then installer</text>
+    <text class="detail" x="600" y="316">4. Answer <tspan font-weight="700">No</tspan> to OpenClaw import, paste API key</text>
+    <text class="label" x="600" y="350">Best for: cron jobs, Discord bots, always-on.</text>
+    <text class="label" x="600" y="366">Time: 15–20 minutes.</text>
+  </g>
+
+  <!-- Converge arrow -->
+  <g>
+    <line class="arrow" x1="170" y1="390" x2="380" y2="420" marker-end="url(#arrowhead-mvd)"/>
+    <line class="arrow" x1="710" y1="390" x2="500" y2="420" marker-end="url(#arrowhead-mvd)"/>
+  </g>
+
+  <!-- Verify step -->
+  <g>
+    <rect class="verify" x="380" y="420" width="180" height="44" rx="10"/>
+    <text class="step" x="390" y="438" fill="#2b2a36">VERIFY</text>
+    <text class="title" x="390" y="458" fill="#1a1a1a">Type <tspan font-family="ui-monospace, monospace">hi</tspan> — get a reply.</text>
+  </g>
+</svg>

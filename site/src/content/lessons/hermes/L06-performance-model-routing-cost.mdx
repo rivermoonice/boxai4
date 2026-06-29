@@ -1,0 +1,223 @@
+---
+title: "How to Pick the Cheapest AI Model for Hermes Agent (2026 Cost Guide)"
+module: hermes
+slug: l06-performance-model-routing-cost
+order: 6
+updatedDate: 2026-06-29
+updatedRaw: "June 2026"
+summary: "The model you pick is the single biggest factor in your monthly bill. Here is how to read pricing tables, route cheap tasks to cheap models, and set a $20 budget cap on day one."
+description: "You'll learn how AI model pricing actually works in 2026, which models are cheap vs expensive, and how to set up tiered routing so the right work hits the right model — without ever spending $200 on a $10 job."
+readingMinutes: 11
+accent: "#7c5cff"
+---
+
+**Last tested and updated:** June 2026
+
+import Quiz from '../../../components/lesson/Quiz.astro';
+import VidCard from '../../../components/lesson/VidCard.astro';
+import Callout from '../../../components/lesson/Callout.astro';
+import { Picture } from 'astro:assets';
+
+Hermes doesn't pick your model — you do. And the model you pick is the single biggest factor in your monthly bill, bigger than how many Skills you have, bigger than which interface you use, bigger than almost anything else you can change.
+
+A common beginner mistake: pick the most expensive model because "it's the best," run it for a month, and discover you've spent $200 on what should have been $10 of work. The fix isn't "use a worse model" — it's **route cheap tasks to cheap models and hard tasks to expensive ones**.
+
+This lesson assumes you've completed [L02 — Install & First Run](/lessons/hermes/l02-install-and-first-run/) and have at least one model configured. If you haven't picked a model yet, do that first, then come back.
+
+## The hook
+
+Here's a real cost scenario. A beginner sends 100 messages a day. Average: 500 input tokens, 1,000 output tokens. Same workload, four different models:
+
+- **DeepSeek V4 Flash** → ~$1.20/month
+- **Kimi K2.6** → ~$2/month
+- **Claude Sonnet 4.5** → ~$50/month
+- **Claude Opus 4.8** → ~$250/month
+
+Same questions. Same answers (within 35% of tasks per the source video). Two-hundred-times price difference. The model choice — not the harness, not the interface, not the Skills — drives the bill.
+
+<Callout type="tip" title="Ron's framing">
+"The model is the single biggest factor in your monthly bill. Pick a cheap default, reach for the expensive one only when you actually need it." — Ron, source video `s3Q9hvdlrmo`
+</Callout>
+
+The fix is a one-time mental shift: stop thinking "which model is best?" and start thinking "**which model is cheap *and* good enough for this specific task?**" That's the whole lesson in one sentence. The rest is the mechanics.
+
+## The mental model
+
+Pricing is per million tokens. There are usually three numbers:
+
+- **Input price** — what you pay for tokens you send (prompt + context).
+- **Output price** — what you pay for tokens the model generates. Usually 3–5× more expensive per token than input.
+- **Cached input price** (sometimes) — a discount for repeated context. DeepSeek and OpenAI offer this.
+
+| Model | Input $/1M | Output $/1M | Cached input $/1M | Tier |
+|---|---|---|---|---|
+| DeepSeek V4 Flash | $0.10 | $0.30 | $0.02 | Executor (cheap) |
+| Kimi K2.6 | $0.15 | $0.60 | — | Executor (cheap) |
+| MiniMax M3 | $0.20 | $0.80 | — | Executor (cheap) |
+| Claude Sonnet 4.5 | $3.00 | $15.00 | $0.30 | Reviewer (mid) |
+| Claude Opus 4.8 | $15.00 | $75.00 | $1.50 | Orchestrator (expensive) |
+| Claude Fable 5 | $25.00 | $125.00 | — | Mythos (rare) |
+
+Two things to notice: (1) **output is 3–5× more expensive than input** — a model that writes long answers costs more than its headline input number suggests. (2) **the spread between top and bottom is roughly 250×** for the same workload. The pricing table isn't a rounding error. It's the bill.
+
+### The tier-list pyramid
+
+The way to think about routing: stack models by *how often they should be called*, not by *how good they are*.
+
+<Picture src="/lessons/hermes/L06/model-routing-matrix.svg" alt="Tier-list diagram: orchestrator (Opus-class, rare) hands off to executor pool (V4 Flash, Kimi, M3, frequent) which fans out to refactor, summarise, cron, sub-agent tasks" width={900} height={560} formats={["avif", "webp"]} />
+
+Four tiers, top to bottom:
+
+1. **Orchestrator (rare, expensive).** Opus 4.8, Fable 5. Plans the work, decides when to escalate. Called maybe 1–5 times per task. ~95% of your *cost* if you let it run unbounded.
+2. **Reviewer (occasional, mid-range).** Sonnet 4.5, GPT-5.x. Verifies the executor's output. Spot-checks and polishes. Called when something looks off.
+3. **Executor pool (constant, cheap).** V4 Flash, Kimi K2.6, MiniMax M3. Does the actual work — refactor, summarise, format, run cron. Called 50–500 times per task. This is where ~95% of your *call count* lives.
+4. **Routed outputs.** The concrete tasks: refactor a Python file, summarise 3 PDFs, run a 7am cron, parallel sub-agent research.
+
+The hot path is **tier 1 → tier 3** (orchestrator plans, executors do). The cold path is **tier 2 ↔ tier 3** (reviewer spot-checks the executors). A 7am cron job skips tier 1 entirely and goes straight to tier 3.
+
+<Callout type="tip" title="The shorthand">
+"Smart and expensive for planning, cheap and fast for execution." — that's the entire routing playbook. If you remember nothing else, remember that.
+</Callout>
+
+For the conceptual backdrop on what a model is versus a harness, see [L01 — What Is Hermes Agent?](/lessons/hermes/l01-what-is-hermes-agent/). For model-flavour context, see the [ai-models module](/modules/ai-models/), especially L01 (tier lists), L02 (the Anthropic family), and L04 (cost-efficient tier).
+
+## Pick your tool
+
+Here's the routing table. Match the task to the tier, then to a model in that tier.
+
+| Task | Tier | Pick | Why |
+|---|---|---|---|
+| Refactor / review existing code | Executor | V4 Flash / Kimi | Cheap, fast, good enough |
+| Summarise long documents | Executor | V4 Flash | 1M context, source-tested |
+| Project folder exploration | Executor | V4 Flash | Token-efficient, ranked top-10 globally |
+| Daily cron jobs | Executor | V4 Flash / Kimi | Cost-effective for routine work |
+| One-shot creative writing | Orchestrator | Opus / Sonnet | Polish matters |
+| Hard reasoning / problem-solving | Orchestrator | Opus / Fable 5 | When you genuinely need the best |
+| Vision tasks (images) | Orchestrator | Opus / GPT-5.x | Cheap models are inconsistent on vision |
+| Sub-agent delegation (parallel) | Orchestrator (speed) or Executor (cost) | Opus for time-sensitive, V4 Flash overnight | Speed vs cost trade-off |
+| Plan a multi-step workflow | Orchestrator | Opus | Set up the plan, hand off to cheap |
+
+**Decision guide:**
+
+- **If your main goal is to save money** → start with V4 Flash. Graduate to Opus only when you hit a wall.
+- **If your main goal is quality output** → start with Opus. Watch your bill carefully and graduate to cheap where you can.
+- **If your main goal is balanced** → use tiered routing. V4 Flash by default, Opus for hard stuff.
+
+<Callout type="gotcha" title="Beginner trap">
+Tiered routing is **not** "always use the cheap model." If you find yourself re-prompting the cheap model more than twice to get a usable answer, escalate. Cheap is cheap because it has limits. The pattern is "right tool for the right task," not "downgrade at all costs."
+</Callout>
+
+For the cross-harness pricing comparison (Hermes vs Claude Code vs Mavis), see [L09 — Hermes Agent vs Claude Code vs Mavis](/lessons/hermes/l09-hermes-vs-alternatives/).
+
+### The non-negotiable first step: set a budget cap
+
+Do this today, before your first invoice, before you forget. For each model provider you use:
+
+1. Log in to the provider's dashboard (Anthropic, OpenAI, DeepSeek, etc.).
+2. Find the **Billing** section.
+3. Set a hard monthly cap. **$20 is reasonable for a beginner.** $50 if you're doing heavy cron work.
+4. Set up email alerts at 50%, 80%, and 100% of the cap.
+
+<Callout type="tip" title="The most important defensive habit in this lesson">
+A runaway session at 3am can burn $50 in two hours on Opus. The cap is your only protection. Everything else in this lesson is recoverable; an unbounded agent running all night is not. Set the cap. Today.
+</Callout>
+
+### Real cost per beginner task (worked examples)
+
+**Task 1 — Refactor a 100-line Python script.** V4 Flash: ~$0.02. Opus: ~$0.80. **Use V4 Flash.** The task is well-defined.
+
+**Task 2 — Read three 100-page academic papers and merge the summaries.** V4 Flash: ~$0.30 (source-video tested, all three docs in 2 minutes). Opus: ~$3.00. **Use V4 Flash.** The source video confirmed it works.
+
+**Task 3 — "Solve this logic puzzle."** V4 Flash: passes. Opus: passes. **Use V4 Flash if you trust the answer; Opus if you need to verify.**
+
+**Task 4 — Sub-agent delegation for parallel research.** V4 Flash: 14 minutes, complete output (per source). Opus: ~3–5 minutes for the same work. **For time-sensitive delegation, use Opus. For overnight research, use V4 Flash.**
+
+**Task 5 — One-shot creative writing (a blog post intro).** V4 Flash: inconsistent, verbose, misses the mark. Opus: more polished first drafts. **Use Opus for creative one-shots.** The polish matters.
+
+### Switching models mid-session
+
+Yes, you can switch without losing context. In the TUI, run `hermes model` and pick from the list. In the Desktop App, use the model switcher in the sidebar. V4 Flash is currently free on the Hermes News Portal, which makes the default-route-everything-to-V4-Flash strategy even more attractive.
+
+## Try it
+
+### The exercise
+
+Open your model provider's dashboard. Look at the **last 30 days of usage** and find the single most expensive model you ran. Ask yourself: could V4 Flash have done that work for 1/10th the cost?
+
+Write down two things in a text file:
+
+1. **One task from the last 30 days that should have been routed to a cheap model.** Be specific — "the daily folder summary cron" beats "summarisation work."
+2. **One task that genuinely needed an expensive model.** The polish, the vision, the hard one-shot. This proves you understand the routing rule isn't "always cheap."
+
+If you can do that without re-reading the lesson, you have the core idea. If you can't, re-read **The mental model** section.
+
+### Watch the full breakdown
+
+If you'd rather see the cost numbers in Ron's voice — 22 minutes, the source video this lesson is grounded in:
+
+<VidCard id="s3Q9hvdlrmo" title="DeepSeek V4 Flash + Hermes Agent = Surprisingly STRONG — Ron, May 2026" />
+
+For the broader model tier list (Opus 4.8, Fable 5, GPT 5.4, Gemini 3.1 Pro, GLM 5.1, Kimi 2.5 and the rest):
+
+<VidCard id="Af7Fg1m7hRw" title="Top AI Models for Hermes Agent (Tier List) — Ron, April 2026" />
+
+### Check your understanding
+
+<Quiz questions={[
+  {
+    q: "For a beginner doing 100 messages/day with average 500 input + 1,000 output tokens, the realistic monthly cost of DeepSeek V4 Flash is closest to:",
+    choices: ["$1.20", "$12", "$50", "$200"],
+    answer: 0,
+    explain: "V4 Flash at $0.10/$0.30 per 1M tokens × 100 msgs × 30 days × (500 input + 1000 output) tokens ≈ $1.20. Cheap models at beginner volume are $1–$10/month; expensive models at the same volume are $50–$250/month.",
+  },
+  {
+    q: "In the tier-routing pattern, what percentage of total calls should hit the cheap executor tier?",
+    choices: ["~5%", "~25%", "~95%", "100%"],
+    answer: 2,
+    explain: "The executor pool (V4 Flash, Kimi, M3) handles the bulk — 50 to 500 calls per task. The orchestrator (Opus) is called 1–5 times per task for planning. ~95% of call count lives in the cheap tier.",
+  },
+  {
+    q: "Which task is the WRONG fit for a cheap executor model?",
+    choices: [
+      "Refactoring a 100-line Python file",
+      "Summarising three 100-page academic papers",
+      "A 7am cron job that posts a news digest to Discord",
+      "One-shot creative writing where polish matters",
+    ],
+    answer: 3,
+    explain: "Creative one-shots need polish — V4 Flash tends to be verbose and miss the mark. Use Opus or Sonnet for the first draft, then route follow-ups to cheap.",
+  },
+  {
+    q: "Short answer: name the single most important defensive habit from this lesson.",
+    choices: [],
+    answer: 0,
+    explain: "Set a hard monthly budget cap in your model provider's dashboard on day one. $20 for a beginner, with email alerts at 50%, 80%, 100%. Without it, a runaway session can burn $50+ in two hours.",
+  },
+  {
+    q: "What is \"tiered routing\"?",
+    choices: [
+      "Always use the cheapest model",
+      "Rotate models randomly to spread the load",
+      "Use an expensive orchestrator for planning, a cheap executor pool for bulk work",
+      "Run two models in parallel on every request",
+    ],
+    answer: 2,
+    explain: "Tiered routing = smart/expensive for planning + hard one-shots, cheap/fast for bulk execution. It's \"right tool for the right task,\" not \"always cheap\" or \"always expensive.\"",
+  },
+  {
+    q: "True or false: output tokens cost the same as input tokens, so a model's headline input price tells you the whole story.",
+    choices: [],
+    answer: 0,
+    explain: "False. Output tokens usually cost 3–5× more per token than input. A model that produces verbose output costs more than its headline input number suggests — always check the output price, not just the input.",
+  },
+]} />
+
+### What's next
+
+- **Secure it.** → [L07 — How to Secure Your Hermes Agent](/lessons/hermes/l07-security-essentials/). Once you have a cost-controlled setup, make sure you're not exposing your API keys.
+- **Compare harnesses on cost.** → [L09 — Hermes Agent vs Claude Code vs Mavis](/lessons/hermes/l09-hermes-vs-alternatives/) covers how the harness layer changes your pricing model.
+- **Set up a Skill Bundle that auto-routes.** → [L04 — Hermes Agent Skills and Skill Bundles Explained](/lessons/hermes/l04-skills-and-skill-bundles/) walks through building a Bundle that sends "refactor" tasks to V4 Flash and "create from scratch" tasks to Opus.
+
+<Callout type="bottom-line">
+**Ron's bottom line:** start with DeepSeek V4 Flash as your default. Reach for Opus only when you hit a wall. Set a $20 monthly budget cap on day one. Tiered routing isn't "always cheap" — it's "right tool for the right task." Most of your daily work doesn't need the best. Most of your daily work is exactly what the cheap tier was built for.
+</Callout>

@@ -30,17 +30,22 @@ const TITLE_OVERRIDES = {
   'hermes-status': 'hermes status',
   'hermes-doctor': 'hermes doctor',
   'hermes-skills': 'hermes skills list',
+  'hermes-setup-help': 'hermes setup --help',
+  'cron': 'hermes cron --help',
 };
 
 // Per-capture line budgets. L01 is an intro lesson — these have to be
 // glanceable. Show what's useful, not everything Hermes can print.
-// Each entry is { maxLines, skipTop?, skipBottom?, takeFromEnd? }.
+// Each entry is { maxLines, skipTop?, skipBottom?, takeFromEnd?, dropScriptBookends? }.
 const TRUNCATIONS = {
   'hermes-help': { maxLines: 28 }, // synopsis + first ~24 subcommands
   'hermes-version': { maxLines: 5 },
   'hermes-status': { maxLines: 26, skipTop: 1 }, // drop blank line 1, keep banner + Environment + API Keys
   'hermes-doctor': { maxLines: 22 }, // banner + security/python/ssl summary
   'hermes-skills': { maxLines: 28 }, // header + 25 skill rows
+  'hermes-setup-help': { maxLines: 18 }, // intro + positional + options block
+  // cron capture is from `script`, so it has banner/trailer lines we strip.
+  'cron': { maxLines: 20, dropScriptBookends: true },
 };
 
 const INPUT = process.argv[2] || '/tmp/hermes-captures';
@@ -115,11 +120,20 @@ async function renderOne(name, raw) {
   // Apply per-capture truncation. Truncations are tuned for L01 brevity.
   const trunc = TRUNCATIONS[name];
   if (trunc) {
+    // Drop `script` bookend lines (e.g. "Script started on ..." / "Script done on ...").
+    if (trunc.dropScriptBookends) {
+      lines = lines.filter(
+        (l) => !/^Script (started|done) on /.test(l) && !/\[COMMAND(_EXIT_CODE)?=/.test(l),
+      );
+    }
     if (trunc.skipTop) lines = lines.slice(trunc.skipTop);
     if (trunc.maxLines && lines.length > trunc.maxLines) {
       lines = lines.slice(0, trunc.maxLines);
-      // Add a faint "…" indicator line so readers know it's clipped.
-      lines.push('…  (output continues — see L02 for the full install walkthrough)');
+      // Add a faint "…" indicator line so readers know it's clipped — but
+      // only when the clip is significant (more than 4 lines dropped).
+      if (lines.length - trunc.maxLines < 0) {
+        lines.push('…  (output continues — see L02 for the full install walkthrough)');
+      }
     }
   }
 

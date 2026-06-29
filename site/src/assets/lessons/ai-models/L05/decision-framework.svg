@@ -1,0 +1,195 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 620" role="img" aria-labelledby="df-title df-desc">
+  <title id="df-title">Frontier vs open-weight decision framework flowchart</title>
+  <desc id="df-desc">Top-down decision tree. Start: "Given a task, what type of model do you choose?" The first branch asks what kind of loop the workload runs in (one-shot, daily Q&amp;A, coding, long-horizon agent, multimodal). Each loop routes to one of three tiers: Tier 1 frontier for one-shots, Tier 2 cost-efficient for daily work, coding, and long-horizon, Tier 3 niche when a specialist is required.</desc>
+
+  <defs>
+    <style>
+      .title { font: 700 18px/1 ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif; fill: #2b2a36; }
+      .subtitle { font: italic 13px/1.4 ui-sans-serif, system-ui, sans-serif; fill: #5a5a5a; }
+
+      .root-bg { fill: #0ea5a4; fill-opacity: 0.10; stroke: #0ea5a4; stroke-width: 2; }
+      .root-text { font: 700 16px/1.3 ui-sans-serif, system-ui, sans-serif; fill: #0a6b6a; }
+
+      .q-bg { fill: #fafaf6; stroke: #5a5a5a; stroke-width: 1.5; }
+      .q-num { font: 700 11px/1 ui-sans-serif, system-ui, sans-serif; fill: #5a5a5a; letter-spacing: 0.08em; text-transform: uppercase; }
+      .q-text { font: 700 14px/1.3 ui-sans-serif, system-ui, sans-serif; fill: #2b2a36; }
+      .q-sub { font: 12px/1.4 ui-sans-serif, system-ui, sans-serif; fill: #4a4960; }
+
+      .tier1-bg { fill: #d97706; fill-opacity: 0.10; stroke: #d97706; stroke-width: 1.5; }
+      .tier1-text { font: 700 13px/1.3 ui-sans-serif, system-ui, sans-serif; fill: #b45309; }
+      .tier1-tag { font: 600 11px/1 ui-sans-serif, system-ui, sans-serif; fill: #d97706; letter-spacing: 0.06em; text-transform: uppercase; }
+      .tier1-model { font: 12px/1.4 ui-monospace, "SF Mono", Menlo, monospace; fill: #4a4960; }
+
+      .tier2-bg { fill: #0ea5a4; fill-opacity: 0.10; stroke: #0ea5a4; stroke-width: 1.5; }
+      .tier2-text { font: 700 13px/1.3 ui-sans-serif, system-ui, sans-serif; fill: #0a6b6a; }
+      .tier2-tag { font: 600 11px/1 ui-sans-serif, system-ui, sans-serif; fill: #0ea5a4; letter-spacing: 0.06em; text-transform: uppercase; }
+      .tier2-model { font: 12px/1.4 ui-monospace, "SF Mono", Menlo, monospace; fill: #4a4960; }
+
+      .tier3-bg { fill: #6d28d9; fill-opacity: 0.10; stroke: #6d28d9; stroke-width: 1.5; }
+      .tier3-text { font: 700 13px/1.3 ui-sans-serif, system-ui, sans-serif; fill: #5b21b6; }
+      .tier3-tag { font: 600 11px/1 ui-sans-serif, system-ui, sans-serif; fill: #6d28d9; letter-spacing: 0.06em; text-transform: uppercase; }
+      .tier3-model { font: 12px/1.4 ui-monospace, "SF Mono", Menlo, monospace; fill: #4a4960; }
+
+      .arrow { stroke: #5a5a5a; stroke-width: 1.6; fill: none; }
+      .arrow-head { fill: #5a5a5a; }
+      .arrow-label { font: 600 11px/1 ui-sans-serif, system-ui, sans-serif; fill: #4a4960; }
+
+      .summary { font: 600 14px/1.4 ui-sans-serif, system-ui, sans-serif; fill: #1a1a1a; }
+      .caption { font: italic 13px/1.4 ui-sans-serif, system-ui, sans-serif; fill: #5a5a5a; }
+
+      @media (prefers-color-scheme: dark) {
+        .title, .q-text, .summary { fill: #ece8db; }
+        .root-text { fill: #5eead4; }
+        .tier1-text { fill: #fbbf24; }
+        .tier1-model, .tier2-model, .tier3-model { fill: #a8a395; }
+        .tier2-text { fill: #5eead4; }
+        .tier3-text { fill: #c4b5fd; }
+        .q-sub, .arrow-label { fill: #a8a395; }
+        .subtitle, .caption { fill: #a8a395; }
+        .q-bg { fill: #1a1a22; stroke: #a8a395; }
+        .arrow, .arrow-head { stroke: #a8a395; fill: #a8a395; }
+      }
+    </style>
+
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0 0 L10 5 L0 10 z" class="arrow-head"/>
+    </marker>
+  </defs>
+
+  <!-- Title block -->
+  <text class="title" x="450" y="30" text-anchor="middle">Pick by loop, not by model — the decision framework</text>
+  <text class="subtitle" x="450" y="50" text-anchor="middle">Given a task, route to the right tier. Default to Tier 2. Escalate to Tier 1 only when Tier 2 keeps failing.</text>
+
+  <!-- ROOT: "Given a task" -->
+  <g>
+    <rect class="root-bg" x="310" y="76" width="280" height="60" rx="12"/>
+    <text class="root-text" x="450" y="100" text-anchor="middle">Given a task, what loop does</text>
+    <text class="root-text" x="450" y="120" text-anchor="middle">the workload run in?</text>
+  </g>
+
+  <!-- Branch arrow down -->
+  <path class="arrow" d="M450 136 L450 162" marker-end="url(#arrow)"/>
+
+  <!-- Q1: What's the loop? -->
+  <g>
+    <rect class="q-bg" x="240" y="170" width="420" height="50" rx="10"/>
+    <text class="q-num" x="258" y="190">Q1</text>
+    <text class="q-text" x="258" y="208">What loop does the workload run in?</text>
+  </g>
+
+  <!-- Five branches fanning out from Q1 -->
+  <!-- Branch centers: y = 260, columns: 100, 260, 420, 580, 740 -->
+
+  <!-- Branch labels (on arrows) -->
+  <text class="arrow-label" x="115" y="248" text-anchor="middle">One-shot</text>
+  <text class="arrow-label" x="280" y="248" text-anchor="middle">Daily Q&amp;A</text>
+  <text class="arrow-label" x="445" y="248" text-anchor="middle">Coding</text>
+  <text class="arrow-label" x="610" y="248" text-anchor="middle">Long-horizon</text>
+  <text class="arrow-label" x="785" y="248" text-anchor="middle">Multimodal</text>
+
+  <!-- Arrow from Q1 down to branch line -->
+  <path class="arrow" d="M450 220 L450 240 L450 240"/>
+  <!-- Horizontal trunk across all 5 branches -->
+  <path class="arrow" d="M115 240 L785 240"/>
+  <path class="arrow" d="M115 240 L115 270" marker-end="url(#arrow)"/>
+  <path class="arrow" d="M280 240 L280 270" marker-end="url(#arrow)"/>
+  <path class="arrow" d="M445 240 L445 270" marker-end="url(#arrow)"/>
+  <path class="arrow" d="M610 240 L610 270" marker-end="url(#arrow)"/>
+  <path class="arrow" d="M785 240 L785 270" marker-end="url(#arrow)"/>
+
+  <!-- Q2 row: budget + reproducibility + time -->
+  <!-- Column 1: One-shot -->
+  <g>
+    <rect class="q-bg" x="35" y="278" width="160" height="44" rx="8"/>
+    <text class="q-num" x="50" y="296">Q2 — Budget?</text>
+    <text class="q-sub" x="50" y="313">High → Tier 1</text>
+  </g>
+  <g>
+    <rect class="tier1-bg" x="35" y="332" width="160" height="98" rx="10"/>
+    <text class="tier1-tag" x="50" y="350">Tier 1 · Frontier</text>
+    <text class="tier1-text" x="50" y="368">One-shot creative</text>
+    <text class="tier1-model" x="50" y="388">Opus 4.8 / Fable 5</text>
+    <text class="tier1-model" x="50" y="404">GPT 5.5 / Gemini 3.1</text>
+    <text class="q-sub" x="50" y="420">Hard novel work</text>
+  </g>
+
+  <!-- Column 2: Daily Q&A -->
+  <g>
+    <rect class="q-bg" x="200" y="278" width="160" height="44" rx="8"/>
+    <text class="q-num" x="215" y="296">Q2 — Reproducible?</text>
+    <text class="q-sub" x="215" y="313">Yes → Tier 2</text>
+  </g>
+  <g>
+    <rect class="tier2-bg" x="200" y="332" width="160" height="98" rx="10"/>
+    <text class="tier2-tag" x="215" y="350">Tier 2 · Cost-eff.</text>
+    <text class="tier2-text" x="215" y="368">Daily Q&amp;A</text>
+    <text class="tier2-model" x="215" y="388">Sonnet 4.5 / Kimi K2.7</text>
+    <text class="tier2-model" x="215" y="404">DeepSeek V4 Flash</text>
+    <text class="q-sub" x="215" y="420">Optimise for cost</text>
+  </g>
+
+  <!-- Column 3: Coding -->
+  <g>
+    <rect class="q-bg" x="365" y="278" width="160" height="44" rx="8"/>
+    <text class="q-num" x="380" y="296">Q2 — Trusted harness?</text>
+    <text class="q-sub" x="380" y="313">Yes → tiered</text>
+  </g>
+  <g>
+    <rect class="tier2-bg" x="365" y="332" width="160" height="98" rx="10"/>
+    <text class="tier2-tag" x="380" y="350">Tiered routing</text>
+    <text class="tier2-text" x="380" y="368">Coding harness</text>
+    <text class="tier2-model" x="380" y="388">Sonnet default</text>
+    <text class="tier2-model" x="380" y="404">Opus on hard tasks</text>
+    <text class="q-sub" x="380" y="420">Claude Code / Kilo</text>
+  </g>
+
+  <!-- Column 4: Long-horizon -->
+  <g>
+    <rect class="q-bg" x="530" y="278" width="160" height="44" rx="8"/>
+    <text class="q-num" x="545" y="296">Q2 — Hours long?</text>
+    <text class="q-sub" x="545" y="313">Yes → Tier 2 + agent</text>
+  </g>
+  <g>
+    <rect class="tier2-bg" x="530" y="332" width="160" height="98" rx="10"/>
+    <text class="tier2-tag" x="545" y="350">Tier 2 · Long-running</text>
+    <text class="tier2-text" x="545" y="368">Long-horizon agent</text>
+    <text class="tier2-model" x="545" y="388">Qwen 3.7 Max</text>
+    <text class="tier2-model" x="545" y="404">MiniMax M3 / Kimi</text>
+    <text class="q-sub" x="545" y="420">Hermes harness</text>
+  </g>
+
+  <!-- Column 5: Multimodal -->
+  <g>
+    <rect class="q-bg" x="695" y="278" width="160" height="44" rx="8"/>
+    <text class="q-num" x="710" y="296">Q2 — Vision heavy?</text>
+    <text class="q-sub" x="710" y="313">Yes → Tier 2 specialist</text>
+  </g>
+  <g>
+    <rect class="tier2-bg" x="695" y="332" width="160" height="98" rx="10"/>
+    <text class="tier2-tag" x="710" y="350">Tier 2 · Multimodal</text>
+    <text class="tier2-text" x="710" y="368">Vision / UI / images</text>
+    <text class="tier2-model" x="710" y="388">MiniMax M3</text>
+    <text class="tier2-model" x="710" y="404">Kimi K2.7 / GLM 5.2</text>
+    <text class="q-sub" x="710" y="420">Escalate to Opus</text>
+  </g>
+
+  <!-- Q3 row: trust + tier 3 escape hatch -->
+  <g>
+    <rect class="q-bg" x="240" y="450" width="420" height="44" rx="8"/>
+    <text class="q-num" x="258" y="468">Q3 — Did Tier 2 fail 3+ times?</text>
+    <text class="q-sub" x="258" y="485">Yes → escalate to Tier 1.  Tier 2 stable → ship it.</text>
+  </g>
+
+  <!-- Q3 escape hatch arrow + Tier 3 -->
+  <path class="arrow" d="M450 494 L450 514" marker-end="url(#arrow)"/>
+  <g>
+    <rect class="tier3-bg" x="240" y="522" width="420" height="50" rx="10"/>
+    <text class="tier3-tag" x="258" y="542">Tier 3 · Niche</text>
+    <text class="tier3-text" x="350" y="542">Specialist only when the niche matches your workload exactly (Sakana Fugu, agent-tuned).</text>
+    <text class="q-sub" x="258" y="562">Don't generalise out of a Tier 3 model. Pick the niche on purpose, not by accident.</text>
+  </g>
+
+  <!-- Bottom summary -->
+  <text class="summary" x="450" y="595" text-anchor="middle">Default Tier 2 → escalate Tier 1 on 3+ failures → Tier 3 only on purpose.</text>
+  <text class="caption" x="450" y="613" text-anchor="middle">Re-evaluate every quarter. The model market moves fast.</text>
+</svg>

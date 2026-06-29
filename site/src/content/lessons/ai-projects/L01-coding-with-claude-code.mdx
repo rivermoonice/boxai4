@@ -1,0 +1,199 @@
+---
+title: "What Is Claude Code? A Beginner's Guide to Coding Harnesses (2026)"
+module: ai-projects
+slug: l01-coding-with-claude-code
+order: 1
+updatedDate: 2026-06-29
+updatedRaw: "June 2026"
+summary: "What a coding harness is, where Claude Code sits in your dev loop, and when to use it instead of Hermes or Cursor."
+description: "You'll learn what a coding harness actually is, where Claude Code lives in your repo, how it differs from a chat interface and from an agent harness, and how to run a tight write-test-fix loop on a real side project."
+readingMinutes: 9
+accent: "#ea7a3b"
+---
+
+**Last tested and updated:** June 2026
+
+import Quiz from '../../../components/lesson/Quiz.astro';
+import Callout from '../../../components/lesson/Callout.astro';
+import { Picture } from 'astro:assets';
+
+You've written code. You've pasted a function into ChatGPT and asked "what's wrong with this?" You got an answer that *looked* right, and twenty minutes later you realised it wasn't. That gap — between **an AI that can chat** and **an AI that can actually ship code in your repo** — is exactly what a **coding harness** exists to close. Claude Code is Anthropic's coding harness, and the one we'll use throughout this course.
+
+This is the first lesson in the AI Projects module. **No install yet** — this is pure concept. The first hands-on is in [L02 — Vibe Coding vs Real Coding](/lessons/ai-projects/l02-vibe-coding-vs-real-coding/).
+
+## The hook
+
+Pick a real task from your last sprint. *"Add a `?since=` filter to the user list endpoint, and update the tests."* Could a chatbot do that? Not really. A chatbot doesn't know your routes, your ORM, your test fixtures, or the fact that the existing `UserList` serializer is broken in a way you only discover at 11pm. A coding harness does. It lives in your repo. It runs the tests. It fixes what fails. That's the gap.
+
+A **coding harness** turns an AI from a thing you ask questions of into a thing that *works inside your project* — reading the codebase, running commands, proposing diffs, and looping on test output until the work is done. Claude Code is the polished, Anthropic-native version of that idea. By the end of this module you'll be running it on a real side project.
+
+## The mental model
+
+The single most important idea in this lesson: **Claude Code is an engineering shell that wraps a model and lives in your repo.** A chat interface is a slot machine. Claude Code is a teammate.
+
+<Picture src="/lessons/ai-projects/L01/claude-code-in-dev-loop.svg" alt="Diagram: Claude Code in the dev loop — editor, harness, test runner, pull request" width={900} height={360} formats={["avif", "webp"]} />
+
+The diagram above is the shape of a real session. The cycle is:
+
+1. **You** open Claude Code in your repo and describe a task in plain English.
+2. **Claude Code** reads the relevant files, proposes a diff, and runs the test runner.
+3. **The test runner** either goes green — done — or returns an error. On error, the cycle loops.
+4. When the suite is green, Claude Code commits and opens a **pull request** for human review.
+
+The point isn't that Claude Code is "smarter" than a chat model. The point is that it **owns the engineering shell**: the file system, the shell, the test runner, and the Git workflow. The model is the brain. The harness is the body that lets the brain *touch your code*.
+
+<Callout type="tip" title="Why this matters in 2026">
+The 2026 default for shipping with agents is no longer "a saved prompt list" — it's a **loop with a validation harness**. Claude Code runs the loop. Your test suite *is* the validation harness. That combination is the differentiator.
+</Callout>
+
+**If you take away one thing from this lesson, take this:** Claude Code doesn't replace the engineering shell. *It is* the engineering shell. The model inside it is interchangeable; the loop around it is the product.
+
+## Pick your tool
+
+Claude Code is not the only way to use AI in 2026. The choice you make in the first week often determines whether you ship in the first month. Here is the honest split.
+
+**Coding harnesses** verify by **running**. They live in your repo, run your test suite, and iterate on the result. Claude Code, Kilo Code, and the agent mode in Cursor are the three that matter in 2026. They're built to be the *engineering shell* of an agent.
+
+**Agent harnesses** verify by **inferring**. They live outside any one codebase, persist across sessions, run on schedules, and integrate with chat channels. Hermes is the flagship. They're built to be the *autonomous shell* of an agent — see [L01 — What Is Hermes Agent?](/lessons/hermes/l01-what-is-hermes-agent/) for the full mental model.
+
+**Chat interfaces** are the third category. They're a tab you open, a question you type, an answer you copy-paste. Useful for one-shot research, useless for shipping software.
+
+<Callout type="tip" title="The shorthand">
+Coding harnesses verify by **running**. Agent harnesses verify by **inferring**. Chat interfaces verify by **hope**.
+</Callout>
+
+### When to pick which
+
+| Goal | Pick | Why |
+|---|---|---|
+| Ship a feature in a real repo | Claude Code or Kilo Code | Test-driven loop, diff review, Git workflow. |
+| Hard refactor across hundreds of files | Claude Code | Polished harness, long context, the best at "really big problems." |
+| Daily incremental work on a budget | Kilo Code + a cheap model | Open-source, BYOK, $15–$30/mo instead of $200/mo. |
+| 7am Discord summary from RSS feeds | Hermes | Long-running, multi-channel, persistent — see [L09 — Hermes vs Claude Code vs Mavis](/lessons/hermes/l09-hermes-vs-alternatives/). |
+| Visual / IDE-first workflow | Cursor with agent mode | Editor-native, less test-loop, more "show me the file." |
+| One-off "what does this regex mean?" | Chat interface | Single question, no repo context needed. |
+
+**Rule of thumb:** if the work lives inside a codebase, open a coding harness. If the work lives outside one, open Hermes. If the work is a one-shot question, a chat tab is fine. If you do both kinds of work (most of us do), run both — they don't conflict.
+
+<Callout type="gotcha" title="Beginner trap">
+Beginners sometimes pick Cursor's agent mode because the marketing is loud, and then wonder why it doesn't iterate well on a failing test. Cursor is an IDE with an agent feature. Claude Code is a coding harness first. If your work is test-driven, reach for the harness.
+</Callout>
+
+For a deeper comparison once you've tried both — pricing tiers, BYOK tradeoffs, when to pay for the Max plan — see [L09 — Hermes vs Claude Code vs Mavis](/lessons/hermes/l09-hermes-vs-alternatives/).
+
+### What Claude Code specifically is
+
+Claude Code is Anthropic's coding harness. It is a terminal-native program (also packaged as an IDE plugin) that:
+
+- Reads and writes files in the repo you launch it from.
+- Runs shell commands — `npm test`, `pytest`, `go test`, `make`, whatever your project uses.
+- Proposes diffs before applying them, so you can review.
+- Commits, pushes, and opens pull requests on GitHub.
+- Works with any model Anthropic ships (Sonnet for daily, Opus for hard), but you don't bring your own key.
+
+What Claude Code is **not**:
+
+- **Not a chat app.** The interface is a terminal session, not a web tab. There's a desktop wrapper, but the underlying model is CLI.
+- **Not a model.** Claude Code ships with Anthropic's models baked in. Pricing is a flat subscription: Pro ($20/mo) for Sonnet, Max ($200/mo) for heavy Opus use.
+- **Not magic.** Claude Code is best at well-bounded, well-tested work. Vague prompts on a sprawling codebase still go sideways — that's the topic of [L02 — Vibe Coding vs Real Coding](/lessons/ai-projects/l02-vibe-coding-vs-real-coding/).
+
+### A side-by-side: Claude Code vs Cursor
+
+The two are the most-confused tools in 2026, and they're not the same thing.
+
+| Dimension | Claude Code | Cursor (agent mode) |
+|---|---|---|
+| Where it lives | Terminal (CLI) + IDE plugin | IDE first, chat panel inside |
+| Test loop | Yes — runs your suite, iterates | Partial — better for visual diffs |
+| Best for | Hard refactors, multi-file work, shipping | Visual refactors, single-file edits, exploration |
+| Pricing | $20 / $200 per month | ~$20 per month |
+| Open source | No | No |
+| Diff review | First-class | Good |
+| Beginner-friendly | Moderate (terminal) | Easy (IDE) |
+
+**The honest answer:** if your work is "I need to ship a feature in my repo this week," Claude Code. If your work is "I need to fiddle with a component and see the preview live," Cursor.
+
+## Try it
+
+### The exercise
+
+You don't need to install anything for this lesson. The exercise is conceptual — but it forces the right mental model.
+
+Open a text file on your computer. Write down the answer to this in your own words, no copy-paste:
+
+> *"Pick a real task from your last week of coding — a bug, a refactor, a feature. Walk it through the loop: editor → harness → test runner → pull request. Where would Claude Code have helped? Where would you still need to be the engineer?"*
+
+A good answer names at least one place where Claude Code would have run the test suite and caught a regression you missed, and at least one place where you would still need to be in the loop — design decisions, ambiguous requirements, review of the diff. If you can do that without re-reading the lesson, you have the core idea. If you can't, re-read the **mental model** section.
+
+### A sneak peek at what's coming
+
+In [L02 — Vibe Coding vs Real Coding](/lessons/ai-projects/l02-vibe-coding-vs-real-coding/), you'll install Claude Code (or Kilo Code) on a real side-project repo and run the loop on a bug you actually care about. The shape of that lesson:
+
+1. Install the harness.
+2. Open it in your project root.
+3. Pick a real bug or small feature.
+4. Run the loop: harness writes → harness tests → fix → re-run.
+5. Commit, push, and review the diff yourself.
+
+That's the whole game. Everything after L02 is variations on that pattern.
+
+### Check your understanding
+
+<Quiz questions={[
+  {
+    q: "Claude Code is best described as a:",
+    choices: ["Chat interface", "Coding harness", "Agent harness", "Standalone AI model"],
+    answer: 1,
+    explain: "Claude Code wraps a model and gives it the ability to read your repo, run shell commands, and iterate on test output. That's the definition of a coding harness.",
+  },
+  {
+    q: "Short answer: name one thing Claude Code can do that a regular chat interface cannot.",
+    choices: [],
+    answer: 0,
+    explain: "Any of: read the full repo context, run `npm test` / `pytest` and read the output, propose a diff before applying, commit and open a pull request. Free response — pick one.",
+  },
+  {
+    q: "You want to ship a feature in a real repo this week. Which should you reach for first?",
+    choices: ["Chat interface", "Claude Code or Kilo Code", "Hermes", "Cursor with no agent mode"],
+    answer: 1,
+    explain: "Coding harnesses verify by running your test suite, which is exactly what shipping software needs. A chat interface has no repo context, and Hermes is for work outside any one codebase.",
+  },
+  {
+    q: "True or false: Claude Code replaces the engineering shell. Explain in one sentence.",
+    choices: [],
+    answer: 0,
+    explain: "False. Claude Code *is* the engineering shell — it owns the file system, the shell, the test runner, and the Git workflow. The model inside it is interchangeable; the harness is the product.",
+  },
+  {
+    q: "In the Claude Code dev loop, what role does the test runner play?",
+    choices: [
+      "It is optional and can be skipped.",
+      "It is the validation harness — green means the loop stops, red means the loop continues.",
+      "It runs only at the end after you commit.",
+      "It only works for Python projects.",
+    ],
+    answer: 1,
+    explain: "The test runner is the validation harness. Green output ends the loop. Red output feeds back into Claude Code, which reads the error, fixes the code, and re-runs.",
+  },
+  {
+    q: "When should you switch from Claude Code to Hermes?",
+    choices: [
+      "When the project is a real codebase.",
+      "When you want a visual IDE workflow.",
+      "When the work is long-running, multi-channel, and lives outside any one repo (e.g. a 7am Discord summary).",
+      "Never — Claude Code can do everything Hermes can.",
+    ],
+    answer: 2,
+    explain: "Hermes is the agent harness for work that lives outside a single codebase — scheduled jobs, multi-channel automation, persistent memory. For code in a repo, Claude Code is the right tool. See the hermes module L01 for the full split.",
+  },
+]} />
+
+### What's next
+
+- **Install it and run the loop on a real bug.** → [L02 — Vibe Coding vs Real Coding](/lessons/ai-projects/l02-vibe-coding-vs-real-coding/).
+- **Not sure Claude Code is for you?** → [L09 — Hermes vs Claude Code vs Mavis](/lessons/hermes/l09-hermes-vs-alternatives/) compares pricing tiers, BYOK tradeoffs, and when to reach for a different tool.
+- **New to the harness concept entirely?** → [L01 — What Is Hermes Agent?](/lessons/hermes/l01-what-is-hermes-agent/) walks through the model-vs-harness split in more depth.
+
+<Callout type="bottom-line">
+**Ron's bottom line:** if you write code for a living in 2026 and you aren't using a coding harness, you're leaving hours on the table every week. The model gets you the draft. The harness gets you the merge. Start with Claude Code if you can afford $20/mo; start with Kilo Code + a cheap model key if you can't. The loop is the lesson, not the brand.
+</Callout>

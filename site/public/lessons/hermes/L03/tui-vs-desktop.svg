@@ -1,0 +1,121 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 480" role="img" aria-labelledby="tvd-title tvd-desc">
+  <title id="tvd-title">Hermes Agent TUI vs Desktop App</title>
+  <desc id="tvd-desc">Side-by-side comparison of the Hermes Terminal User Interface (TUI) and the Desktop App. Both are two windows into the same Hermes agent; the TUI is keyboard-driven, token-efficient, and best for coding, while the Desktop App is visual, orchestration-friendly, and best for human-in-the-loop and project overviews.</desc>
+
+  <defs>
+    <linearGradient id="tui" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#7c5cff" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#7c5cff" stop-opacity="0.04"/>
+    </linearGradient>
+    <linearGradient id="desktop" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0ea5a4" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#0ea5a4" stop-opacity="0.04"/>
+    </linearGradient>
+    <style>
+      .panel { fill: url(#tui); stroke: #7c5cff; stroke-width: 1.5; }
+      .panel-d { fill: url(#desktop); stroke: #0ea5a4; stroke-width: 1.5; }
+      .label { font: 700 18px/1 ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif; fill: #2b2a36; }
+      .label-d { fill: #064e4d; }
+      .head { font: 600 14px/1 ui-sans-serif, system-ui, sans-serif; fill: #4a4960; letter-spacing: 0.06em; text-transform: uppercase; }
+      .body { font: 14px/1.55 ui-sans-serif, system-ui, -apple-system, sans-serif; fill: #2b2a36; }
+      .arrow { stroke: #2b2a36; stroke-width: 1.5; fill: none; }
+      .summary { font: 600 16px/1.4 ui-sans-serif, system-ui, sans-serif; fill: #1a1a1a; }
+      .arrow-text { font: 12px/1 ui-monospace, monospace; fill: #5a5a5a; }
+      .footer { font: 13px/1.4 ui-sans-serif, system-ui, sans-serif; fill: #5a5a5a; }
+      .badge-tui { fill: #7c5cff; }
+      .badge-desk { fill: #0ea5a4; }
+      .badge-text { font: 700 12px/1 ui-monospace, monospace; fill: #ffffff; letter-spacing: 0.08em; }
+      @media (prefers-color-scheme: dark) {
+        .label, .body, .summary { fill: #ece8db; }
+        .label-d { fill: #7cd9d8; }
+        .head, .arrow-text, .footer { fill: #a8a395; }
+        .arrow { stroke: #ece8db; }
+      }
+    </style>
+  </defs>
+
+  <!-- Center spine: same agent -->
+  <g>
+    <rect x="380" y="36" width="140" height="48" rx="10" fill="#1a1a1a" fill-opacity="0.06" stroke="#1a1a1a" stroke-opacity="0.25"/>
+    <text class="head" x="450" y="58" text-anchor="middle">Same Hermes</text>
+    <text class="head" x="450" y="76" text-anchor="middle">Agent</text>
+  </g>
+
+  <!-- LEFT PANEL: TUI -->
+  <g>
+    <rect class="panel" x="24" y="110" width="380" height="290" rx="16"/>
+
+    <!-- Header row: badge + title -->
+    <rect class="badge-tui" x="44" y="130" width="56" height="22" rx="4"/>
+    <text class="badge-text" x="72" y="146" text-anchor="middle">TUI</text>
+    <text class="head" x="112" y="146">Terminal User Interface</text>
+
+    <!-- Terminal icon -->
+    <g transform="translate(44, 168)">
+      <rect x="0" y="0" width="70" height="46" rx="6" fill="#1a1a1a"/>
+      <rect x="0" y="0" width="70" height="12" rx="6" fill="#1a1a1a"/>
+      <circle cx="6" cy="6" r="2" fill="#ff5f56"/>
+      <circle cx="14" cy="6" r="2" fill="#ffbd2e"/>
+      <circle cx="22" cy="6" r="2" fill="#27c93f"/>
+      <text x="6" y="28" font-family="ui-monospace, monospace" font-size="9" fill="#7cd9d8">~/hermes</text>
+      <text x="6" y="40" font-family="ui-monospace, monospace" font-size="9" fill="#ece8db">&gt; _</text>
+    </g>
+
+    <text class="label" x="130" y="186">Best for: coding,</text>
+    <text class="label" x="130" y="208">shipping, scripting.</text>
+
+    <!-- Bullets -->
+    <text class="body" x="44" y="248">• Non-blocking input — fire commands fast</text>
+    <text class="body" x="44" y="272">• Live Git branch in status line</text>
+    <text class="body" x="44" y="296">• Thin-client mode for VPS work</text>
+    <text class="body" x="44" y="320">• Keyboard-driven, zero scrollback clutter</text>
+    <text class="body" x="44" y="344">• Lowest token overhead (~1× baseline)</text>
+    <text class="body" x="44" y="376" font-style="italic" fill="#5a5a5a">Cost example: $0.50 / 50-message research session.</text>
+  </g>
+
+  <!-- RIGHT PANEL: Desktop App -->
+  <g>
+    <rect class="panel-d" x="496" y="110" width="380" height="290" rx="16"/>
+
+    <!-- Header row: badge + title -->
+    <rect class="badge-desk" x="516" y="130" width="78" height="22" rx="4"/>
+    <text class="badge-text" x="555" y="146" text-anchor="middle">DESKTOP</text>
+    <text class="head label-d" x="606" y="146">Native macOS / Win / Linux</text>
+
+    <!-- Window icon -->
+    <g transform="translate(516, 168)">
+      <rect x="0" y="0" width="70" height="46" rx="6" fill="#0ea5a4" fill-opacity="0.15" stroke="#0ea5a4" stroke-width="1.5"/>
+      <rect x="4" y="4" width="20" height="38" rx="3" fill="#0ea5a4" fill-opacity="0.45"/>
+      <rect x="28" y="4" width="38" height="14" rx="2" fill="#0ea5a4" fill-opacity="0.3"/>
+      <rect x="28" y="22" width="38" height="6" rx="2" fill="#0ea5a4" fill-opacity="0.2"/>
+      <rect x="28" y="32" width="38" height="6" rx="2" fill="#0ea5a4" fill-opacity="0.2"/>
+    </g>
+
+    <text class="label label-d" x="602" y="186">Best for: orchestration,</text>
+    <text class="label label-d" x="602" y="208">human-in-the-loop, overviews.</text>
+
+    <!-- Bullets -->
+    <text class="body" x="516" y="248">• File browser sidebar + drag-and-drop</text>
+    <text class="body" x="516" y="272">• Side-by-side previews of generated files</text>
+    <text class="body" x="516" y="296">• One-click model &amp; profile switching</text>
+    <text class="body" x="516" y="320">• Visual skill &amp; MCP toggles</text>
+    <text class="body" x="516" y="344">• Gateway status + remote back-end panel</text>
+    <text class="body" x="516" y="376" font-style="italic" fill="#5a5a5a">Cost example: $1.00 / 50-message research session.</text>
+  </g>
+
+  <!-- Connection arrows from agent to each panel -->
+  <g>
+    <!-- TUI arrow -->
+    <path class="arrow" d="M404 84 L304 110" stroke-dasharray="4 3"/>
+    <path class="arrow" d="M310 106 L302 110 L308 116 Z" fill="#5a5a5a"/>
+    <!-- Desktop arrow -->
+    <path class="arrow" d="M496 84 L596 110" stroke-dasharray="4 3"/>
+    <path class="arrow" d="M590 106 L598 110 L592 116 Z" fill="#5a5a5a"/>
+  </g>
+
+  <!-- Bottom summary -->
+  <g>
+    <text class="summary" x="450" y="436" text-anchor="middle">Two windows into the same Hermes instance.</text>
+    <text class="footer" x="450" y="460" text-anchor="middle">Most power users run both — Desktop on the right for navigation, TUI on the left for actual coding.</text>
+  </g>
+</svg>

@@ -1,0 +1,141 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 420" role="img" aria-labelledby="wbf-title wbf-desc">
+  <title id="wbf-title">Weekend build flow: sketch, spec, code, review</title>
+  <desc id="wbf-desc">Four-step horizontal flow for shipping a side project in a weekend. Hermes drafts the sketch and the spec; Claude Code writes and iterates the code; both share the review.</desc>
+
+  <defs>
+    <linearGradient id="wbf-step" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ea7a3b" stop-opacity="0.16"/>
+      <stop offset="100%" stop-color="#ea7a3b" stop-opacity="0.04"/>
+    </linearGradient>
+    <linearGradient id="wbf-step-code" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#7c5cff" stop-opacity="0.16"/>
+      <stop offset="100%" stop-color="#7c5cff" stop-opacity="0.04"/>
+    </linearGradient>
+    <style>
+      .panel { fill: url(#wbf-step); stroke: #ea7a3b; stroke-width: 1.5; }
+      .panel-code { fill: url(#wbf-step-code); stroke: #7c5cff; stroke-width: 1.5; }
+      .step-num { font: 700 13px/1 ui-sans-serif, system-ui, sans-serif; letter-spacing: 0.06em; text-transform: uppercase; }
+      .step-num-h { fill: #c2501a; }
+      .step-num-c { fill: #4a3eb0; }
+      .step-title { font: 700 18px/1 ui-sans-serif, system-ui, sans-serif; fill: #2b2a36; }
+      .body { font: 13px/1.5 ui-sans-serif, system-ui, -apple-system, sans-serif; fill: #2b2a36; }
+      .mono { font: 12px/1.4 ui-monospace, "SF Mono", Menlo, monospace; fill: #2b2a36; }
+      .tool { font: 700 12px/1 ui-sans-serif, system-ui, sans-serif; }
+      .tool-h { fill: #c2501a; }
+      .tool-c { fill: #4a3eb0; }
+      .arrow { stroke: #5a5a5a; stroke-width: 1.6; fill: none; }
+      .arrow-head { fill: #5a5a5a; }
+      .pill { fill: #fff; stroke: #ea7a3b; stroke-width: 1.5; }
+      .pill-text { font: 600 12px/1 ui-sans-serif, system-ui, sans-serif; fill: #c2501a; }
+      .caption { font: italic 13px/1.4 ui-sans-serif, system-ui, sans-serif; fill: #5a5a5a; }
+      .summary { font: 600 14px/1.4 ui-sans-serif, system-ui, sans-serif; fill: #1a1a1a; }
+      .summary-strong { font: 700 14px/1.4 ui-sans-serif, system-ui, sans-serif; fill: #1a1a1a; }
+      .underline { fill: none; stroke: #ea7a3b; stroke-width: 2; stroke-dasharray: 3 3; }
+      @media (prefers-color-scheme: dark) {
+        .body, .mono, .step-title { fill: #ece8db; }
+        .pill { fill: #1a1a22; }
+        .pill-text { fill: #ffb088; }
+        .caption { fill: #a8a395; }
+        .arrow { stroke: #a8a395; }
+        .arrow-head { fill: #a8a395; }
+        .summary, .summary-strong { fill: #ece8db; }
+      }
+    </style>
+  </defs>
+
+  <text class="step-num step-num-h" x="490" y="28" text-anchor="middle">Weekend side-project flow</text>
+
+  <!-- STEP 1: Sketch (Hermes) -->
+  <g>
+    <rect class="panel" x="20" y="56" width="220" height="260" rx="16"/>
+    <text class="step-num step-num-h" x="40" y="84">Step 1</text>
+    <text class="step-title" x="40" y="110">Sketch</text>
+    <text class="tool tool-h" x="40" y="132">Hermes</text>
+    <text class="body" x="40" y="156">Brainstorm 3 product</text>
+    <text class="body" x="40" y="172">angles, pick the one</text>
+    <text class="body" x="40" y="188">that ships in a weekend.</text>
+
+    <rect class="pill" x="40" y="206" width="180" height="26" rx="13"/>
+    <text class="pill-text" x="130" y="224" text-anchor="middle">/brainstorm-angles</text>
+
+    <text class="caption" x="40" y="254">You bring the niche</text>
+    <text class="caption" x="40" y="270">knowledge. Hermes brings</text>
+    <text class="caption" x="40" y="286">the structured comparison.</text>
+  </g>
+
+  <!-- Arrow 1->2 -->
+  <path class="arrow" d="M246 186 L294 186"/>
+  <path class="arrow-head" d="M288 181 L298 186 L288 191 Z"/>
+
+  <!-- STEP 2: Spec (Hermes) -->
+  <g>
+    <rect class="panel" x="300" y="56" width="220" height="260" rx="16"/>
+    <text class="step-num step-num-h" x="320" y="84">Step 2</text>
+    <text class="step-title" x="320" y="110">Spec</text>
+    <text class="tool tool-h" x="320" y="132">Hermes</text>
+    <text class="body" x="320" y="156">Write the spec: features,</text>
+    <text class="body" x="320" y="172">data model, edge cases,</text>
+    <text class="body" x="320" y="188">test plan. Save to file.</text>
+
+    <rect class="pill" x="320" y="206" width="180" height="26" rx="13"/>
+    <text class="pill-text" x="410" y="224" text-anchor="middle">/write-spec</text>
+
+    <text class="caption" x="320" y="254">A spec you can hand to</text>
+    <text class="caption" x="320" y="270">yourself or Claude Code</text>
+    <text class="caption" x="320" y="286">on Monday morning.</text>
+  </g>
+
+  <!-- Arrow 2->3 (HANDOFF) -->
+  <path class="arrow" d="M526 186 L574 186"/>
+  <path class="arrow-head" d="M568 181 L578 186 L568 191 Z"/>
+  <text class="tool tool-h" x="552" y="172" text-anchor="middle">handoff</text>
+
+  <!-- STEP 3: Code (Claude Code) -->
+  <g>
+    <rect class="panel-code" x="580" y="56" width="220" height="260" rx="16"/>
+    <text class="step-num step-num-c" x="600" y="84">Step 3</text>
+    <text class="step-title" x="600" y="110">Code</text>
+    <text class="tool tool-c" x="600" y="132">Claude Code</text>
+    <text class="body" x="600" y="156">Implement the spec,</text>
+    <text class="body" x="600" y="172">run the test suite,</text>
+    <text class="body" x="600" y="188">iterate until green.</text>
+
+    <rect x="600" y="206" width="180" height="26" rx="13" fill="#fff" stroke="#7c5cff" stroke-width="1.5"/>
+    <text class="pill-text" x="690" y="224" text-anchor="middle" fill="#4a3eb0">loop: spec -&gt; test -&gt; fix</text>
+
+    <text class="caption" x="600" y="254">Coding harness verifies</text>
+    <text class="caption" x="600" y="270">by running. That is what</text>
+    <text class="caption" x="600" y="286">shipping requires.</text>
+  </g>
+
+  <!-- Arrow 3->4 -->
+  <path class="arrow" d="M806 186 L854 186"/>
+  <path class="arrow-head" d="M848 181 L858 186 L848 191 Z"/>
+
+  <!-- STEP 4: Review (Hermes) -->
+  <g>
+    <rect class="panel" x="860" y="56" width="100" height="260" rx="16"/>
+    <text class="step-num step-num-h" x="876" y="84" font-size="11">Step 4</text>
+    <text class="step-title" x="876" y="110">Review</text>
+    <text class="tool tool-h" x="876" y="132">Hermes</text>
+
+    <text class="body" x="876" y="156">Check the</text>
+    <text class="body" x="876" y="172">build against</text>
+    <text class="body" x="876" y="188">the spec.</text>
+
+    <rect class="pill" x="866" y="206" width="80" height="26" rx="13"/>
+    <text class="pill-text" x="906" y="224" text-anchor="middle" font-size="10">/verify</text>
+
+    <text class="caption" x="876" y="254" font-size="11">Did we</text>
+    <text class="caption" x="876" y="270" font-size="11">ship what</text>
+    <text class="caption" x="876" y="286" font-size="11">we said?</text>
+  </g>
+
+  <!-- Bottom legend / summary -->
+  <line class="underline" x1="60" y1="356" x2="600" y2="356"/>
+  <line class="underline" x1="620" y1="356" x2="780" y2="356" stroke="#7c5cff"/>
+  <line class="underline" x1="880" y1="356" x2="940" y2="356"/>
+
+  <text class="summary-strong" x="490" y="380" text-anchor="middle">Hermes: spec &amp; shape. Claude Code: build &amp; verify.</text>
+  <text class="caption" x="490" y="402" text-anchor="middle">One human weekend. Two harnesses, one handoff file.</text>
+</svg>

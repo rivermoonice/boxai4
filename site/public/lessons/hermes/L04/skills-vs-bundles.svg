@@ -1,0 +1,149 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 480" role="img" aria-labelledby="svb-title svb-desc">
+  <title id="svb-title">Single skill vs skill bundle</title>
+  <desc id="svb-desc">Side-by-side diagram. On the left: a single skill is a markdown file that does one job, triggered by a slash command. On the right: a skill bundle is a named group of skills that loads together with a single slash command, with an instruction field that sets the workflow order.</desc>
+
+  <defs>
+    <linearGradient id="single" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#7c5cff" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#7c5cff" stop-opacity="0.04"/>
+    </linearGradient>
+    <linearGradient id="bundle" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0ea5a4" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#0ea5a4" stop-opacity="0.04"/>
+    </linearGradient>
+    <style>
+      .panel-s { fill: url(#single); stroke: #7c5cff; stroke-width: 1.5; }
+      .panel-b { fill: url(#bundle); stroke: #0ea5a4; stroke-width: 1.5; }
+      .label { font: 700 18px/1 ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif; fill: #2b2a36; }
+      .label-b { fill: #064e4d; }
+      .head { font: 600 13px/1 ui-sans-serif, system-ui, sans-serif; fill: #4a4960; letter-spacing: 0.06em; text-transform: uppercase; }
+      .body { font: 13px/1.5 ui-sans-serif, system-ui, -apple-system, sans-serif; fill: #2b2a36; }
+      .mono { font: 12px/1.4 ui-monospace, "SF Mono", Menlo, monospace; fill: #2b2a36; }
+      .skill-pill { fill: #fff; stroke: #0ea5a4; stroke-width: 1.5; }
+      .skill-pill-text { font: 600 12px/1 ui-sans-serif, system-ui, sans-serif; fill: #064e4d; }
+      .arrow { stroke: #5a5a5a; stroke-width: 1.5; fill: none; }
+      .arrow-head { fill: #5a5a5a; }
+      .arrow-coord { stroke: #0ea5a4; stroke-width: 1.6; fill: none; stroke-dasharray: 4 3; }
+      .arrow-head-coord { fill: #0ea5a4; }
+      .cmd { font: 700 13px/1 ui-monospace, monospace; fill: #7c5cff; }
+      .cmd-b { fill: #0ea5a4; }
+      .caption { font: italic 13px/1.4 ui-sans-serif, system-ui, sans-serif; fill: #5a5a5a; }
+      .summary { font: 600 15px/1.4 ui-sans-serif, system-ui, sans-serif; fill: #1a1a1a; }
+      @media (prefers-color-scheme: dark) {
+        .label, .body, .mono, .summary { fill: #ece8db; }
+        .label-b { fill: #7cd9d8; }
+        .skill-pill { fill: #1a1a22; }
+        .skill-pill-text { fill: #7cd9d8; }
+        .head, .caption { fill: #a8a395; }
+        .arrow { stroke: #a8a395; }
+        .arrow-head { fill: #a8a395; }
+        .arrow-coord { stroke: #7cd9d8; }
+        .arrow-head-coord { fill: #7cd9d8; }
+        .cmd { fill: #b3a3ff; }
+        .cmd-b { fill: #7cd9d8; }
+      }
+    </style>
+  </defs>
+
+  <!-- Title -->
+  <text class="head" x="450" y="28" text-anchor="middle" fill="#2b2a36">Skills vs Skill Bundles</text>
+
+  <!-- LEFT PANEL: Single Skill -->
+  <g>
+    <rect class="panel-s" x="24" y="56" width="380" height="380" rx="16"/>
+    <text class="head" x="44" y="82">Single Skill</text>
+    <text class="label" x="44" y="112">One file, one job.</text>
+
+    <!-- Slash command callout -->
+    <g>
+      <rect x="44" y="132" width="160" height="32" rx="8" fill="#fff" stroke="#7c5cff" stroke-width="1.5"/>
+      <text class="cmd" x="124" y="153" text-anchor="middle">/standup</text>
+    </g>
+    <path class="arrow" d="M124 168 L124 192"/>
+    <path class="arrow-head" d="M120 188 L124 196 L128 188 Z"/>
+
+    <!-- Skill file box -->
+    <g>
+      <rect x="64" y="200" width="180" height="110" rx="10" fill="#fff" stroke="#7c5cff" stroke-width="1.5"/>
+      <text class="mono" x="76" y="222" fill="#7c5cff" font-weight="700">~/.hermes/skills/</text>
+      <text class="mono" x="76" y="240" fill="#7c5cff" font-weight="700">standup.md</text>
+      <line x1="76" y1="252" x2="232" y2="252" stroke="#e2dfd2" stroke-width="1"/>
+      <text class="body" x="76" y="270">Summarise last 24h of</text>
+      <text class="body" x="76" y="286">Discord activity as</text>
+      <text class="body" x="76" y="302">three bullets.</text>
+    </g>
+
+    <text class="caption" x="44" y="350">"Standup" knows one job.</text>
+    <text class="body" x="44" y="380">• A markdown file</text>
+    <text class="body" x="44" y="400">• One slash command</text>
+    <text class="body" x="44" y="420">• Triggered by name</text>
+  </g>
+
+  <!-- RIGHT PANEL: Skill Bundle -->
+  <g>
+    <rect class="panel-b" x="424" y="56" width="452" height="380" rx="16"/>
+    <text class="head label-b" x="444" y="82">Skill Bundle</text>
+    <text class="label label-b" x="444" y="112">Many skills, one command.</text>
+
+    <!-- Bundle slash command -->
+    <g>
+      <rect x="444" y="132" width="200" height="32" rx="8" fill="#fff" stroke="#0ea5a4" stroke-width="1.5"/>
+      <text class="cmd cmd-b" x="544" y="153" text-anchor="middle">/research &lt;topic&gt;</text>
+    </g>
+    <path class="arrow" d="M544 168 L544 192"/>
+    <path class="arrow-head" d="M540 188 L544 196 L548 188 Z"/>
+
+    <!-- Bundle YAML box -->
+    <g>
+      <rect x="464" y="200" width="200" height="32" rx="8" fill="#fff" stroke="#0ea5a4" stroke-width="1.5"/>
+      <text class="mono" x="476" y="221" fill="#064e4d" font-weight="700">~/.hermes/skill-bundles/</text>
+    </g>
+    <rect x="464" y="232" width="200" height="78" rx="8" fill="#fff" stroke="#0ea5a4" stroke-width="1.5"/>
+    <text class="mono" x="476" y="252" fill="#0ea5a4" font-weight="700">research.yaml</text>
+    <line x1="476" y1="262" x2="652" y2="262" stroke="#e2dfd2" stroke-width="1"/>
+    <text class="mono" x="476" y="278">name: research</text>
+    <text class="mono" x="476" y="294">skills: [5]</text>
+    <text class="mono" x="476" y="310">instruction: |</text>
+
+    <!-- Coordination arrows from bundle to skill pills -->
+    <path class="arrow-coord" d="M664 244 L720 158"/>
+    <path class="arrow-coord" d="M664 254 L720 218"/>
+    <path class="arrow-coord" d="M664 264 L720 278"/>
+    <path class="arrow-coord" d="M664 274 L720 338"/>
+    <path class="arrow-coord" d="M664 284 L720 398"/>
+    <path class="arrow-head-coord" d="M716 154 L724 156 L722 164 Z"/>
+    <path class="arrow-head-coord" d="M716 214 L724 216 L722 224 Z"/>
+    <path class="arrow-head-coord" d="M716 274 L724 276 L722 284 Z"/>
+    <path class="arrow-head-coord" d="M716 334 L724 336 L722 344 Z"/>
+    <path class="arrow-head-coord" d="M716 394 L724 396 L722 404 Z"/>
+
+    <!-- Skill pills (right column) -->
+    <g>
+      <rect class="skill-pill" x="720" y="140" width="142" height="36" rx="18"/>
+      <text class="skill-pill-text" x="791" y="162" text-anchor="middle">/web-discovery</text>
+    </g>
+    <g>
+      <rect class="skill-pill" x="720" y="200" width="142" height="36" rx="18"/>
+      <text class="skill-pill-text" x="791" y="222" text-anchor="middle">/article-extract</text>
+    </g>
+    <g>
+      <rect class="skill-pill" x="720" y="260" width="142" height="36" rx="18"/>
+      <text class="skill-pill-text" x="791" y="282" text-anchor="middle">/organise</text>
+    </g>
+    <g>
+      <rect class="skill-pill" x="720" y="320" width="142" height="36" rx="18"/>
+      <text class="skill-pill-text" x="791" y="342" text-anchor="middle">/analyse</text>
+    </g>
+    <g>
+      <rect class="skill-pill" x="720" y="380" width="142" height="36" rx="18"/>
+      <text class="skill-pill-text" x="791" y="402" text-anchor="middle">/report-output</text>
+    </g>
+
+    <text class="caption" x="444" y="450">"Research" loads all five at once, in the order you specify.</text>
+  </g>
+
+  <!-- Bottom summary -->
+  <g>
+    <text class="summary" x="450" y="462" text-anchor="middle">A skill is one file. A bundle is many skills, loaded together by one command.</text>
+  </g>
+</svg>

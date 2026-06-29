@@ -1,0 +1,105 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 520" role="img" aria-labelledby="pyr-title pyr-desc">
+  <title id="pyr-title">The 2026 AI model tier pyramid</title>
+  <desc id="pyr-desc">A four-tier pyramid. Tier 1 (frontier) holds Claude Opus 4.8 and Claude Max at the top. Tier 2 (frontier-strong) holds GPT 5.4 and Gemini 3 Pro. Tier 3 (daily-driver) holds Kimi K2.7, Qwen 3.5, and MiniMax M3. Tier 4 (cost-efficient) at the wide base holds DeepSeek V4 Flash, GLM 5, and open-weight 7B-20B variants.</desc>
+
+  <defs>
+    <linearGradient id="tier1" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0ea5a4" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#0ea5a4" stop-opacity="0.75"/>
+    </linearGradient>
+    <linearGradient id="tier2" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0ea5a4" stop-opacity="0.65"/>
+      <stop offset="100%" stop-color="#0ea5a4" stop-opacity="0.45"/>
+    </linearGradient>
+    <linearGradient id="tier3" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0ea5a4" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#0ea5a4" stop-opacity="0.20"/>
+    </linearGradient>
+    <linearGradient id="tier4" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0ea5a4" stop-opacity="0.16"/>
+      <stop offset="100%" stop-color="#0ea5a4" stop-opacity="0.06"/>
+    </linearGradient>
+    <style>
+      .tier-1 { fill: url(#tier1); stroke: #0ea5a4; stroke-width: 1.5; }
+      .tier-2 { fill: url(#tier2); stroke: #0ea5a4; stroke-width: 1.5; }
+      .tier-3 { fill: url(#tier3); stroke: #0ea5a4; stroke-width: 1.5; }
+      .tier-4 { fill: url(#tier4); stroke: #0ea5a4; stroke-width: 1.5; }
+      .tier-label { font: 700 14px/1 ui-sans-serif, system-ui, sans-serif; fill: #ffffff; letter-spacing: 0.06em; text-transform: uppercase; }
+      .tier-label-dark { fill: #064e4d; }
+      .tier-sub { font: 600 12px/1 ui-sans-serif, system-ui, sans-serif; fill: #064e4d; }
+      .model { font: 600 13px/1 ui-sans-serif, system-ui, sans-serif; fill: #1a1a1a; }
+      .model-light { fill: #ffffff; }
+      .axis { font: 11px/1 ui-monospace, monospace; fill: #5a5a5a; }
+      .axis-strong { font: 600 12px/1 ui-monospace, monospace; fill: #2b2a36; }
+      .axis-arrow { stroke: #5a5a5a; stroke-width: 1.2; fill: none; }
+      .caption { font: 12px/1.4 ui-sans-serif, system-ui, sans-serif; fill: #5a5a5a; }
+      @media (prefers-color-scheme: dark) {
+        .model { fill: #ece8db; }
+        .model-light { fill: #ffffff; }
+        .tier-sub { fill: #7cd9d8; }
+        .axis-strong { fill: #ece8db; }
+        .axis, .caption { fill: #a8a395; }
+        .axis-arrow { stroke: #a8a395; }
+      }
+    </style>
+  </defs>
+
+  <!-- Tier 1: Frontier (top, narrowest) -->
+  <g>
+    <path class="tier-1" d="M 350 30 L 550 30 L 590 110 L 310 110 Z"/>
+    <text class="tier-label model-light" x="450" y="58" text-anchor="middle">Tier 1 — Frontier</text>
+    <text class="tier-label model-light" x="450" y="76" text-anchor="middle" font-size="11" font-weight="500">Mythos-class. Highest cost. Use sparingly.</text>
+    <text class="model model-light" x="450" y="98" text-anchor="middle">Claude Opus 4.8 · Claude Max</text>
+  </g>
+
+  <!-- Tier 2: Frontier-Strong -->
+  <g>
+    <path class="tier-2" d="M 310 110 L 590 110 L 640 200 L 260 200 Z"/>
+    <text class="tier-label model-light" x="450" y="140" text-anchor="middle">Tier 2 — Frontier-Strong</text>
+    <text class="tier-label model-light" x="450" y="158" text-anchor="middle" font-size="11" font-weight="500">Near-frontier at lower price. The agentic sweet spot.</text>
+    <text class="model model-light" x="450" y="182" text-anchor="middle">GPT 5.4 · Gemini 3 Pro · Claude Sonnet 4.7</text>
+  </g>
+
+  <!-- Tier 3: Daily-Driver -->
+  <g>
+    <path class="tier-3" d="M 260 200 L 640 200 L 690 290 L 210 290 Z"/>
+    <text class="tier-label tier-label-dark" x="450" y="232" text-anchor="middle">Tier 3 — Daily-Driver</text>
+    <text class="tier-sub" x="450" y="250" text-anchor="middle">Handles 80% of work for a fraction of the cost.</text>
+    <text class="model" x="450" y="274" text-anchor="middle">Kimi K2.7 · Qwen 3.5 · MiniMax M3 · Grok 4</text>
+  </g>
+
+  <!-- Tier 4: Cost-Efficient (wide base) -->
+  <g>
+    <path class="tier-4" d="M 210 290 L 690 290 L 740 380 L 160 380 Z"/>
+    <text class="tier-label tier-label-dark" x="450" y="322" text-anchor="middle">Tier 4 — Cost-Efficient</text>
+    <text class="tier-sub" x="450" y="340" text-anchor="middle">Bulk, high-volume, background jobs. Open-weight friendly.</text>
+    <text class="model" x="450" y="362" text-anchor="middle">DeepSeek V4 Flash · GLM 5 · Qwen 3 7B-20B (local)</text>
+  </g>
+
+  <!-- Left axis: capability ↑ -->
+  <g>
+    <text class="axis-strong" x="40" y="48">Capability</text>
+    <line class="axis-arrow" x1="40" y1="60" x2="40" y2="370"/>
+    <path class="axis-arrow" d="M 36 66 L 40 58 L 44 66 Z" fill="#5a5a5a"/>
+    <text class="axis" x="20" y="80" transform="rotate(-90 20 80)">higher ↑</text>
+  </g>
+
+  <!-- Bottom axis: cost ↓ -->
+  <g>
+    <line class="axis-arrow" x1="60" y1="430" x2="840" y2="430"/>
+    <path class="axis-arrow" d="M 834 426 L 842 430 L 834 434 Z" fill="#5a5a5a"/>
+    <text class="axis-strong" x="450" y="460" text-anchor="middle">Cost per million tokens  →</text>
+    <text class="axis" x="450" y="476" text-anchor="middle">higher spend on the left, cheap on the right</text>
+  </g>
+
+  <!-- Volume axis (right side) -->
+  <g>
+    <text class="axis" x="780" y="80">Volume</text>
+    <text class="axis" x="780" y="96">of usage</text>
+    <text class="axis" x="780" y="332" text-anchor="start">low</text>
+    <text class="axis" x="780" y="380" text-anchor="start">high</text>
+  </g>
+
+  <!-- Caption -->
+  <text class="caption" x="450" y="500" text-anchor="middle">Read this as: pay more per call up top, run more calls down low. Most teams spend 80% of tokens on Tier 3 and Tier 4.</text>
+</svg>

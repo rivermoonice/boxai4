@@ -1,0 +1,177 @@
+---
+title: "The Online Business Stack for 2026: A Small Operator's Field Guide"
+module: ai-projects
+slug: l05-the-online-business-stack
+order: 5
+updatedDate: 2026-06-29
+updatedRaw: "June 2026"
+summary: "A small online business in 2026 is mostly automated scripts. Here is the stack — landing page, product, email, monetization, analytics — and which pieces to automate first."
+description: "You don't need a team, a fundraise, or a co-founder to run an online business in 2026. You need a landing page, a product, an email list, a way to take money, and a way to see what's working. Most of it should be automated scripts by week two."
+readingMinutes: 9
+accent: "#ea7a3b"
+---
+
+**Last tested and updated:** June 2026
+
+import Quiz from '../../../components/lesson/Quiz.astro';
+import Callout from '../../../components/lesson/Callout.astro';
+import { Picture } from 'astro:assets';
+
+A friend asked me last month what it takes to run a one-person online business in 2026. The boring answer: a landing page, a product, an email list, a payment link, and a dashboard. The less-boring answer: **by week three, four of those five should be running on their own** — scripts that fire on sign-up, post a weekly digest, and ping you when traffic drops.
+
+This is the capstone lesson of the AI Projects module. By now you've installed [Hermes](/lessons/hermes/l02-install-and-first-run/), built a [niche directory site](/lessons/ai-projects/l04-niche-directory-sites/), and shipped at least one automation in [L03](/lessons/ai-projects/l03-building-with-hermes/). Now we close the loop: what does the *whole* stack look like, and which piece do you automate first.
+
+## The hook
+
+A friend runs a small business that's been going for about four months. He works on it roughly six hours a week and makes more than his last salary.
+
+What does he actually do in those six hours?
+
+- **Monday:** review the weekly digest his Hermes agent sends. Approve three draft posts the agent queued.
+- **Wednesday:** ship one improvement to the directory, prompted by a user email.
+- **Friday:** record a 10-minute Loom for the email list. The transcript gets transcribed and summarised by an automated skill before the week is out.
+- **Ad-hoc:** reply to a few customer emails. Anything that looks like a recurring question becomes a Skill, not a personal reply.
+
+That's it. The landing page, the listings scraper, the welcome sequence, the paid placement pipeline, the analytics digest — all of it runs on cron jobs and skills. The owner's job is to make judgement calls, not to push buttons.
+
+<Callout type="tip" title="The mental flip">
+The shift in 2026 isn't "AI does your work." It's "your work is *defining* what the scripts do, then reviewing what they did." Everything else is automated.
+</Callout>
+
+If you can name one routine task you do more than once a week, you can replace it with a script by this time next month. That's the whole game.
+
+## The mental model
+
+A real online business in 2026 has five layers. Each depends on the one below it, and each has a different automation profile.
+
+<Picture src="/lessons/ai-projects/L05/automate-first-matrix.svg" alt="Diagram: a 2x2 priority matrix of effort vs. recurring payoff, showing which business tasks to automate first" width={900} height={600} formats={["avif", "webp"]} />
+
+**Layer 1 — Landing.** The page that captures an email. Static site, Carrd, or one Next.js route. Cost $0–$10/mo. **Automation potential: low** — write the copy once, hook the form to your list.
+
+**Layer 2 — Product.** What you deliver. The directory, the newsletter, the app. **Automation potential: medium** — Claude Code shines here; the work lives in a repo and needs test verification (see [L01](/lessons/ai-projects/l01-coding-with-claude-code/)).
+
+**Layer 3 — Email.** The list, welcome sequence, weekly digest. The *highest-leverage* layer — every other layer funnels back into it. **Automation potential: very high** — a welcome is a trigger; a digest is a cron.
+
+**Layer 4 — Monetization.** Stripe links, Substack, paid placements. **Automation potential: medium** — webhooks fire scripts ("send receipt," "add to premium list"). You never manually invoice.
+
+**Layer 5 — Analytics.** Plausible, Umami, or a cron-driven report. **Automation potential: very high** — the dashboard updates itself; the only automation worth building is the *alert*. A Hermes cron that scans the dashboard daily and pings Discord if traffic drops 30% week-over-week has saved this business twice.
+
+<Callout type="gotcha" title="The wrong order">
+The most common beginner mistake is automating the wrong layer first: a "smart" landing page (Layer 1) before you have anyone to email (Layer 3), or a custom analytics dashboard (Layer 5) before you have any analytics worth showing.
+
+**The correct order is: product → email → monetization → analytics → landing.** You can re-do your landing page in an afternoon once you know who it's for. You can't re-do your email list.
+</Callout>
+
+### Where the time goes
+
+| Activity | Hours/week | Automated? |
+|---|---|---|
+| Writing / recording | 3 | No |
+| Reviewing agent output | 1.5 | Partially |
+| Customer email replies | 1 | Partially |
+| Strategic decisions | 0.5 | No |
+| Everything else | 0 | Yes |
+
+The "everything else" row is the win. If your week has any row that isn't *writing*, *deciding*, or *reviewing agent output*, you're doing something a script should be doing.
+
+## Pick your tool
+
+Here's the stack I'd actually build this week, in order.
+
+**Week 1: The minimum.** Set up Layers 1, 3, and 4 with [Hostinger Horizons](https://www.hostinger.com/) (or Carrd for free), [Buttondown](https://buttondown.email/) or [ConvertKit](https://convertkit.com/) for email, and [Stripe Payment Links](https://stripe.com/payment-links) for monetization. Roughly $0–$15/mo. No automation yet — just the bones.
+
+**Week 2: Add a coding harness.** Use [Claude Code](/lessons/ai-projects/l01-coding-with-claude-code/) to build Layer 2 — the directory MVP from [L04](/lessons/ai-projects/l04-niche-directory-sites/), newsletter archive, or SaaS dashboard. Hermes is the wrong tool here; the work lives in a repo and needs test verification.
+
+**Week 3: Add an agent harness.** Install [Hermes](/lessons/hermes/l02-install-and-first-run/) and automate Layers 3 and 5: tag new sign-ups by source; a Monday-morning cron (see [Hermes L08](/lessons/hermes/l08-automation-cron-kanban-sub-agents/)) that posts a digest to Discord; a daily analytics scan that pings only on anomalies.
+
+**Week 4: Wire it together.** Stripe webhooks fire Skills. New customers get personalised welcome emails. The directory auto-updates with listings scraped from a niche subreddit. You stop opening the dashboard unless the agent pings you.
+
+<Callout type="tip" title="The cheap version">
+The whole stack runs under $30/mo: $5 Hostinger + free email + free Stripe + free Plausible + Hermes + a Tier 2 model. The "$3/month" headline refers to *infrastructure*, not the total.
+</Callout>
+
+### What you should NOT build first
+
+Most beginners jump to *AVOID* or *SKIP* quadrants: a chatbot for support (high effort, low payoff — a better welcome email usually solves it), daily LinkedIn posts (audience isn't yours), or a custom CRM (buy one — the directory *is* your CRM). The bottom-right quadrant is where your week-one budget goes: welcome sequence, payment receipt, weekly digest. Cheap to build, runs forever.
+
+| Layer | Tool | Cost | Time to automate |
+|---|---|---|---|
+| Landing | Hostinger Horizons | $5/mo | 2 hours |
+| Product | Claude Code + your stack | BYOK model | 1–2 weeks |
+| Email | Buttondown / ConvertKit | Free–$15/mo | 1 day |
+| Monetization | Stripe Payment Links | 2.9% + 30¢ | 30 min |
+| Analytics | Plausible + Hermes cron | $0–$9/mo | 2 hours |
+| Orchestration | Hermes on a small VPS | $3–$5/mo | Ongoing |
+
+Total: **$15–$35/mo + model API costs**. Models and your time are the real cost.
+
+## Try it
+
+### The exercise
+
+Pick ONE thing from the **DO FIRST** quadrant and ship it by Sunday. Not all four. One.
+
+The easiest first automation is a **welcome email sequence**: sign up for Buttondown, write three emails (intro, best work, a question), and set a trigger — email 1 immediately, email 2 after 48 hours, email 3 after 7 days. **Bonus:** install [Hermes](/lessons/hermes/l02-install-and-first-run/) and write a Skill that tags each subscriber by source.
+
+If you can ship this by Sunday — even a crude version — you have the foundation for everything else. Every other automation follows the same shape: a trigger, a sequence of steps, and a log.
+
+<Callout type="tip" title="Ron on starting small">
+"If you can't ship the welcome sequence this week, you can't ship the business this year. Start with the boring automation. The fancy ones come later."
+</Callout>
+
+### Watch the full picture
+
+For the longer version — 90-day timeline, cost breakdown, "AI demo vs real business" — the source videos are linked in the description.
+
+### Check your understanding
+
+<Quiz questions={[
+  {
+    q: "What are the five layers of a small online business in 2026?",
+    choices: ["Idea, code, design, marketing, sales", "Landing, product, email, monetization, analytics", "Website, social media, ads, SEO, content", "Founder, team, investors, customers, product"],
+    answer: 1,
+    explain: "Landing, product, email, monetization, analytics — each with its own automation profile.",
+  },
+  {
+    q: "Short answer: which layer has the highest leverage in a small online business, and why?",
+    choices: [],
+    answer: 0,
+    explain: "Email. Every other layer funnels back into the list — sign-ups, customers, monetisation, and the analytics that tell you what to email next. Pick one layer and justify it.",
+  },
+  {
+    q: "Which of these should you automate FIRST?",
+    choices: ["A custom CRM", "A chatbot for support", "A welcome email sequence", "Daily LinkedIn posts"],
+    answer: 2,
+    explain: "The welcome sequence is in DO FIRST: cheap to build, high recurring payoff, foundation for everything else. CRM and chatbot are AVOID; LinkedIn is SKIP.",
+  },
+  {
+    q: "You're building a niche directory. Which layer should Claude Code own, and which should Hermes own?",
+    choices: ["Claude Code: directory listings scraping. Hermes: landing page copy.", "Claude Code: directory MVP build. Hermes: weekly digest + analytics cron.", "Claude Code: Stripe webhooks. Hermes: payment receipts.", "Both harnesses should do the same work — pick one."],
+    answer: 1,
+    explain: "Claude Code ships the directory MVP (Layer 2 — work lives in a repo, needs test verification). Hermes runs the weekly digest cron and the analytics alert (Layers 3 and 5 — long-running, outside a codebase).",
+  },
+  {
+    q: "Per the source videos, what does the '$3/month business' headline actually refer to?",
+    choices: ["Total business cost including models and time", "Infrastructure cost only", "Stripe fees", "The cost of running Hermes"],
+    answer: 1,
+    explain: "Infrastructure only — Hostinger VPS + domain. Realistic total cash is $15–$35/mo once you add email, analytics, and model API costs. Time is the biggest cost of all.",
+  },
+  {
+    q: "Short answer: name ONE thing from the SKIP or AVOID quadrant and explain why it doesn't belong in a week-one stack.",
+    choices: [],
+    answer: 0,
+    explain: "Free response. Good answers: a custom CRM (buy, don't build), a chatbot for support (high effort, low payoff — a welcome email usually solves it), daily LinkedIn posts (audience isn't yours), or any AI wrapper demo (no defensibility).",
+  },
+]} />
+
+### What's next
+
+You've completed the AI Projects module. To go deeper:
+
+- **Product layer** → [L01 — Coding with Claude Code](/lessons/ai-projects/l01-coding-with-claude-code/), [L02 — Vibe Coding vs Real Coding](/lessons/ai-projects/l02-vibe-coding-vs-real-coding/).
+- **Directory case study** → [L04 — Niche Directory Sites](/lessons/ai-projects/l04-niche-directory-sites/).
+- **Orchestration layer** → [Hermes L08 — Automation: cron, kanban, sub-agents](/lessons/hermes/l08-automation-cron-kanban-sub-agents/), [Hermes L01 — What Is Hermes Agent?](/lessons/hermes/l01-what-is-hermes-agent/).
+
+<Callout type="bottom-line">
+**Ron's bottom line:** the "$3/month business" is real, but it's *infrastructure*. The real cost is your time and your model tokens. Automate the boring stuff first — welcome sequence, payment receipts, weekly digest. Ship the welcome email by Sunday. Everything else comes after.
+</Callout>

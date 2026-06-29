@@ -1,0 +1,148 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 560" role="img" aria-labelledby="rm-title rm-desc">
+  <title id="rm-title">Model routing matrix: orchestrator tier routes requests to executor tier</title>
+  <desc id="rm-desc">A four-tier diagram. Top: a user request arrives. Tier 1 is the orchestrator (Opus-class, plans and decides, called rarely). Tier 2 is mid-range (Sonnet-class, reviews and verifies, called when needed). Tier 3 is the executor pool (V4 Flash, Kimi, M3, cheap and fast, called many times). Tier 4 is the routed outputs: refactor, summarise, run cron, research. Arrows show how a single request fans out across the cheap tier.</desc>
+
+  <defs>
+    <linearGradient id="tier1" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#7c5cff" stop-opacity="0.22"/>
+      <stop offset="100%" stop-color="#7c5cff" stop-opacity="0.04"/>
+    </linearGradient>
+    <linearGradient id="tier2" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0ea5a4" stop-opacity="0.22"/>
+      <stop offset="100%" stop-color="#0ea5a4" stop-opacity="0.04"/>
+    </linearGradient>
+    <linearGradient id="tier3" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#2da44e" stop-opacity="0.22"/>
+      <stop offset="100%" stop-color="#2da44e" stop-opacity="0.04"/>
+    </linearGradient>
+    <linearGradient id="tier4" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#fb8500" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#fb8500" stop-opacity="0.04"/>
+    </linearGradient>
+    <style>
+      .row { stroke-width: 1.5; }
+      .row1 { fill: url(#tier1); stroke: #7c5cff; }
+      .row2 { fill: url(#tier2); stroke: #0ea5a4; }
+      .row3 { fill: url(#tier3); stroke: #2da44e; }
+      .row4 { fill: url(#tier4); stroke: #fb8500; }
+      .head { font: 700 12px/1 ui-sans-serif, system-ui, sans-serif; letter-spacing: 0.08em; text-transform: uppercase; fill: #4a4960; }
+      .head-1 { fill: #5a3fd6; }
+      .head-2 { fill: #064e4d; }
+      .head-3 { fill: #1d6f3a; }
+      .head-4 { fill: #b35900; }
+      .label { font: 700 16px/1 ui-sans-serif, system-ui, sans-serif; fill: #2b2a36; }
+      .body { font: 13px/1.4 ui-sans-serif, system-ui, sans-serif; fill: #2b2a36; }
+      .muted { font: 12px/1.3 ui-sans-serif, system-ui, sans-serif; fill: #5a5a6e; }
+      .price { font: 700 14px/1 ui-monospace, monospace; fill: #2b2a36; }
+      .arrow { stroke: #5a5a6e; stroke-width: 1.5; fill: none; }
+      .arrow-hot { stroke: #b35900; stroke-width: 1.8; fill: none; }
+      .arrow-cold { stroke: #5a5a6e; stroke-width: 1.2; fill: none; stroke-dasharray: 4 3; }
+      .arrow-text { font: 11px/1 ui-monospace, monospace; fill: #5a5a6e; }
+      .pill { fill: #fff; stroke: #2b2a36; stroke-width: 1; }
+      .summary { font: 600 14px/1.4 ui-sans-serif, system-ui, sans-serif; fill: #1a1a1a; }
+      @media (prefers-color-scheme: dark) {
+        .label, .body, .price, .summary { fill: #ece8db; }
+        .muted, .arrow-text { fill: #a8a395; }
+        .arrow { stroke: #a8a395; }
+        .arrow-hot { stroke: #fb8500; }
+        .head { fill: #a8a395; }
+        .pill { fill: #1a1a22; stroke: #ece8db; }
+      }
+    </style>
+    <marker id="arrowhead" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#5a5a6e"/>
+    </marker>
+    <marker id="arrowhead-hot" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#b35900"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text class="head" x="450" y="30" text-anchor="middle">Tiered model routing</text>
+  <text class="muted" x="450" y="48" text-anchor="middle">One user request fans out across cheap executors, called rarely on smart orchestrators.</text>
+
+  <!-- Tier 1: Orchestrator -->
+  <g>
+    <rect class="row row1" x="40" y="70" width="820" height="100" rx="12"/>
+    <text class="head head-1" x="60" y="94">Tier 1 &#8212; Orchestrator (rare, expensive)</text>
+    <text class="label" x="60" y="120">Claude Opus 4.8 &#183; Fable 5 &#183; GPT-5.x</text>
+    <text class="body" x="60" y="142">Plans the work, breaks it into steps, decides when to escalate.</text>
+    <text class="body" x="60" y="158">Called maybe 1&#8211;5 times per task.</text>
+    <text class="price" x="800" y="120" text-anchor="end">$15 / $75 per 1M tokens</text>
+    <text class="muted" x="800" y="138" text-anchor="end">input / output</text>
+    <text class="muted" x="800" y="156" text-anchor="end">~50&#215; the cheap tier</text>
+  </g>
+
+  <!-- Tier 2: Reviewer -->
+  <g>
+    <rect class="row row2" x="40" y="190" width="820" height="84" rx="12"/>
+    <text class="head head-2" x="60" y="214">Tier 2 &#8212; Reviewer (occasional, mid-range)</text>
+    <text class="label" x="60" y="238">Claude Sonnet 4.5 &#183; GPT-5.x</text>
+    <text class="body" x="60" y="258">Verifies the executor's output. Spot-checks, polishes, escalates anomalies.</text>
+    <text class="price" x="800" y="238" text-anchor="end">$3 / $15 per 1M tokens</text>
+    <text class="muted" x="800" y="256" text-anchor="end">~10&#215; the cheap tier</text>
+  </g>
+
+  <!-- Tier 3: Executor pool -->
+  <g>
+    <rect class="row row3" x="40" y="294" width="820" height="108" rx="12"/>
+    <text class="head head-3" x="60" y="318">Tier 3 &#8212; Executor pool (constant, cheap)</text>
+    <text class="label" x="60" y="342">DeepSeek V4 Flash &#183; Kimi K2.6 &#183; MiniMax M3</text>
+    <text class="body" x="60" y="362">Does the actual work. Summarise, refactor, format, run cron tasks, write boilerplate.</text>
+    <text class="body" x="60" y="378">Called 50&#8211;500 times per task. This is where most of your tokens are spent.</text>
+    <text class="price" x="800" y="342" text-anchor="end">$0.10 &#8211; $0.15 / $0.30 &#8211; $0.60 per 1M</text>
+    <text class="muted" x="800" y="360" text-anchor="end">the daily-driver tier</text>
+    <text class="muted" x="800" y="378" text-anchor="end">free on Hermes News Portal (V4 Flash)</text>
+  </g>
+
+  <!-- Tier 4: Outputs -->
+  <g>
+    <rect class="row row4" x="40" y="422" width="820" height="98" rx="12"/>
+    <text class="head head-4" x="60" y="446">Tier 4 &#8212; Routed outputs</text>
+    <g font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" fill="#2b2a36">
+      <g><rect class="pill" x="60" y="460" width="170" height="36" rx="6"/><text x="145" y="483" text-anchor="middle">Refactor a Python file</text></g>
+      <g><rect class="pill" x="244" y="460" width="170" height="36" rx="6"/><text x="329" y="483" text-anchor="middle">Summarise 3 PDFs</text></g>
+      <g><rect class="pill" x="428" y="460" width="170" height="36" rx="6"/><text x="513" y="483" text-anchor="middle">Run 7am cron job</text></g>
+      <g><rect class="pill" x="612" y="460" width="170" height="36" rx="6"/><text x="697" y="483" text-anchor="middle">Sub-agent research</text></g>
+    </g>
+  </g>
+
+  <!-- Routing arrows -->
+  <!-- User request entering tier 1 -->
+  <g>
+    <path class="arrow" d="M 450 60 L 450 70" marker-end="url(#arrowhead)"/>
+    <text class="arrow-text" x="460" y="68">user request</text>
+  </g>
+
+  <!-- Tier 1 -> Tier 2 (review handoff) -->
+  <g>
+    <path class="arrow-cold" d="M 760 170 L 760 190" marker-end="url(#arrowhead)"/>
+    <text class="arrow-text" x="770" y="184">review handoff</text>
+  </g>
+
+  <!-- Tier 1 -> Tier 3 (main fan-out, HOT path) -->
+  <g>
+    <path class="arrow-hot" d="M 200 170 L 200 294" marker-end="url(#arrowhead-hot)"/>
+    <text class="arrow-text" x="124" y="232" fill="#b35900">plan &#8594; execute</text>
+    <text class="arrow-text" x="124" y="248" fill="#b35900">~95% of calls</text>
+  </g>
+
+  <!-- Tier 2 -> Tier 3 (verify handoff) -->
+  <g>
+    <path class="arrow-cold" d="M 620 274 L 620 294" marker-end="url(#arrowhead)"/>
+    <text class="arrow-text" x="630" y="288">verify</text>
+  </g>
+
+  <!-- Tier 3 -> Tier 4 (fan-out to outputs) -->
+  <g>
+    <path class="arrow" d="M 145 402 L 145 460" marker-end="url(#arrowhead)"/>
+    <path class="arrow" d="M 329 402 L 329 460" marker-end="url(#arrowhead)"/>
+    <path class="arrow" d="M 513 402 L 513 460" marker-end="url(#arrowhead)"/>
+    <path class="arrow" d="M 697 402 L 697 460" marker-end="url(#arrowhead)"/>
+  </g>
+
+  <!-- Bottom-line callout -->
+  <g>
+    <rect x="40" y="535" width="820" height="0" fill="none"/>
+  </g>
+</svg>

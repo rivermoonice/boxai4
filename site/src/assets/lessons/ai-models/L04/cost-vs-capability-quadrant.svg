@@ -1,0 +1,138 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 560" role="img" aria-labelledby="cvq-title cvq-desc">
+  <title id="cvq-title">Cost versus capability quadrant for 2026 LLMs</title>
+  <desc id="cvq-desc">Two-axis chart plotting AI models by monthly cost on the horizontal axis (low to high, $0 to $200) and capability on the vertical axis (low to high, C-tier to S-tier). Qwen Plus, Qwen Max, MiniMax M3, GLM 5.2, Kimi K2.7, DeepSeek V4 Pro, Claude Sonnet 4.5, and Claude Opus 4.8 are plotted as labelled dots in their respective quadrants.</desc>
+
+  <defs>
+    <linearGradient id="cvq-bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0ea5a4" stop-opacity="0.06"/>
+      <stop offset="100%" stop-color="#0ea5a4" stop-opacity="0.02"/>
+    </linearGradient>
+    <linearGradient id="cvq-cheap" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#0ea5a4" stop-opacity="0.10"/>
+      <stop offset="100%" stop-color="#0ea5a4" stop-opacity="0.04"/>
+    </linearGradient>
+    <style>
+      .frame { fill: url(#cvq-bg); stroke: #0ea5a4; stroke-width: 1.5; }
+      .cheap-zone { fill: url(#cvq-cheap); stroke: #0ea5a4; stroke-width: 1; stroke-dasharray: 4 4; opacity: 0.7; }
+      .axis { stroke: #2b2a36; stroke-width: 1.5; }
+      .grid { stroke: #2b2a36; stroke-width: 0.5; stroke-dasharray: 2 4; opacity: 0.35; }
+      .axis-label { font: 600 13px/1 ui-sans-serif, system-ui, sans-serif; fill: #2b2a36; }
+      .axis-title { font: 700 13px/1 ui-sans-serif, system-ui, sans-serif; fill: #2b2a36; letter-spacing: 0.04em; text-transform: uppercase; }
+      .quadrant-label { font: 700 11px/1 ui-sans-serif, system-ui, sans-serif; fill: #0ea5a4; letter-spacing: 0.08em; text-transform: uppercase; }
+      .quadrant-label-west { fill: #b06a00; }
+      .dot-cheap { fill: #0ea5a4; stroke: #fff; stroke-width: 2; }
+      .dot-frontier { fill: #7c5cff; stroke: #fff; stroke-width: 2; }
+      .dot-mid { fill: #ea7a3b; stroke: #fff; stroke-width: 2; }
+      .dot-label { font: 700 12px/1 ui-sans-serif, system-ui, sans-serif; fill: #1a1a1a; }
+      .dot-sub { font: 11px/1 ui-sans-serif, system-ui, sans-serif; fill: #5a5a5a; }
+      .title { font: 700 18px/1 ui-sans-serif, system-ui, sans-serif; fill: #1a1a1a; }
+      .caption { font: italic 12px/1.4 ui-sans-serif, system-ui, sans-serif; fill: #5a5a5a; }
+      .tick { font: 11px/1 ui-sans-serif, system-ui, sans-serif; fill: #5a5a5a; }
+      @media (prefers-color-scheme: dark) {
+        .frame { stroke: #4dd6d4; }
+        .axis { stroke: #ece8db; }
+        .axis-label, .axis-title { fill: #ece8db; }
+        .dot-label { fill: #ece8db; }
+        .dot-sub, .caption, .tick { fill: #a8a395; }
+        .grid { stroke: #ece8db; }
+      }
+    </style>
+  </defs>
+
+  <!-- Title -->
+  <text class="title" x="450" y="28" text-anchor="middle">Cost versus capability (50 messages per day, June 2026)</text>
+  <text class="caption" x="450" y="48" text-anchor="middle">The cheap top-left zone is where most daily work belongs.</text>
+
+  <!-- Plot area frame -->
+  <rect class="frame" x="80" y="80" width="800" height="400" rx="12"/>
+
+  <!-- Cheap-best quadrant highlight (top-left) -->
+  <rect class="cheap-zone" x="80" y="80" width="400" height="200" rx="12"/>
+  <text class="quadrant-label" x="100" y="100">The sweet spot</text>
+
+  <!-- Grid lines -->
+  <line class="grid" x1="80" y1="180" x2="880" y2="180"/>
+  <line class="grid" x1="80" y1="280" x2="880" y2="280"/>
+  <line class="grid" x1="80" y1="380" x2="880" y2="380"/>
+  <line class="grid" x1="280" y1="80" x2="280" y2="480"/>
+  <line class="grid" x1="480" y1="80" x2="480" y2="480"/>
+  <line class="grid" x1="680" y1="80" x2="680" y2="480"/>
+
+  <!-- Axes -->
+  <line class="axis" x1="80" y1="480" x2="880" y2="480"/>
+  <line class="axis" x1="80" y1="80" x2="80" y2="480"/>
+
+  <!-- Axis ticks -->
+  <text class="tick" x="80" y="498" text-anchor="middle">$0</text>
+  <text class="tick" x="280" y="498" text-anchor="middle">$25</text>
+  <text class="tick" x="480" y="498" text-anchor="middle">$50</text>
+  <text class="tick" x="680" y="498" text-anchor="middle">$100</text>
+  <text class="tick" x="880" y="498" text-anchor="middle">$200</text>
+  <text class="tick" x="68" y="384" text-anchor="end">B-tier</text>
+  <text class="tick" x="68" y="284" text-anchor="end">A-tier</text>
+  <text class="tick" x="68" y="184" text-anchor="end">S-tier</text>
+  <text class="tick" x="68" y="100" text-anchor="end">Mythos</text>
+
+  <!-- Axis titles -->
+  <text class="axis-title" x="480" y="528" text-anchor="middle">Monthly cost (50 messages/day) — low to high</text>
+  <text class="axis-title" x="20" y="280" text-anchor="middle" transform="rotate(-90 20 280)">Capability — low to high</text>
+
+  <!-- Quadrant labels (corners) -->
+  <text class="quadrant-label" x="100" y="120">Cheap + strong (pick this)</text>
+  <text class="quadrant-label quadrant-label-west" x="860" y="120" text-anchor="end">Expensive + strong (frontier)</text>
+  <text class="quadrant-label" x="100" y="464">Cheap + weak (avoid for serious work)</text>
+  <text class="quadrant-label quadrant-label-west" x="860" y="464" text-anchor="end">Expensive + weak (don't do this)</text>
+
+  <!-- MODELS -->
+  <!-- Qwen Plus (cheap, A-tier) -->
+  <circle class="dot-cheap" cx="200" cy="300" r="9"/>
+  <text class="dot-label" x="216" y="298">Qwen Plus</text>
+  <text class="dot-sub" x="216" y="314">~$15/mo · daily driver</text>
+
+  <!-- MiniMax M3 (cheap, A-tier) -->
+  <circle class="dot-cheap" cx="160" cy="270" r="9"/>
+  <text class="dot-label" x="176" y="268">MiniMax M3</text>
+  <text class="dot-sub" x="176" y="284">~$8/mo · multimodal</text>
+
+  <!-- GLM 5.2 (cheap, A-tier, UI specialist) -->
+  <circle class="dot-cheap" cx="220" cy="248" r="9"/>
+  <text class="dot-label" x="236" y="246">GLM 5.2</text>
+  <text class="dot-sub" x="236" y="262">~$10/mo · UI design</text>
+
+  <!-- Qwen 3.7 Max (cheap-ish, S-tier for long-horizon) -->
+  <circle class="dot-cheap" cx="320" cy="200" r="9"/>
+  <text class="dot-label" x="336" y="198">Qwen 3.7 Max</text>
+  <text class="dot-sub" x="336" y="214">~$30/mo · long-horizon</text>
+
+  <!-- Kimi K2.7 (cheap, S-tier sweet spot) -->
+  <circle class="dot-cheap" cx="240" cy="180" r="10"/>
+  <text class="dot-label" x="256" y="178" font-weight="700">Kimi K2.7</text>
+  <text class="dot-sub" x="256" y="194">~$15/mo · daily S-tier</text>
+
+  <!-- DeepSeek V4 Pro (cheap, A-tier) -->
+  <circle class="dot-cheap" cx="180" cy="240" r="9"/>
+  <text class="dot-label" x="196" y="238">DeepSeek V4</text>
+  <text class="dot-sub" x="196" y="254">~$10/mo · tool calls</text>
+
+  <!-- Claude Sonnet 4.5 (mid, A-tier) -->
+  <circle class="dot-mid" cx="420" cy="280" r="9"/>
+  <text class="dot-label" x="436" y="278">Claude Sonnet 4.5</text>
+  <text class="dot-sub" x="436" y="294">~$25/mo · daily Q&amp;A</text>
+
+  <!-- Claude Opus 4.8 (expensive, Mythos) -->
+  <circle class="dot-frontier" cx="780" cy="120" r="11"/>
+  <text class="dot-label" x="752" y="118" text-anchor="end" fill="#7c5cff">Claude Opus 4.8</text>
+  <text class="dot-sub" x="752" y="134" text-anchor="end">~$120/mo · hard reasoning</text>
+
+  <!-- Legend -->
+  <g transform="translate(80,540)">
+    <circle class="dot-cheap" cx="6" cy="0" r="6"/>
+    <text class="dot-sub" x="18" y="4">Cost-efficient tier (Qwen / MiniMax / GLM / Kimi / DeepSeek)</text>
+
+    <circle class="dot-mid" cx="430" cy="0" r="6"/>
+    <text class="dot-sub" x="442" y="4">Mid-tier (Sonnet)</text>
+
+    <circle class="dot-frontier" cx="600" cy="0" r="6"/>
+    <text class="dot-sub" x="612" y="4">Frontier (Opus)</text>
+  </g>
+</svg>

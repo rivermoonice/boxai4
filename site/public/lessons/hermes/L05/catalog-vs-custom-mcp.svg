@@ -1,0 +1,149 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 480" role="img" aria-labelledby="cv-title cv-desc">
+  <title id="cv-title">Catalog MCP vs Custom MCP</title>
+  <desc id="cv-desc">Side-by-side flow diagram. The catalog path: Hermes update, browse the reviewed catalog, one command installs Linear with a tool whitelist. The custom path: find a random GitHub repo, copy command and env, paste into mcp.yaml, manage API keys yourself, hope the code is safe.</desc>
+
+  <defs>
+    <linearGradient id="catalog" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#2da44e" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#2da44e" stop-opacity="0.04"/>
+    </linearGradient>
+    <linearGradient id="custom" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#fb8500" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#fb8500" stop-opacity="0.04"/>
+    </linearGradient>
+    <style>
+      .panel-cat { fill: url(#catalog); stroke: #2da44e; stroke-width: 1.5; }
+      .panel-cus { fill: url(#custom); stroke: #fb8500; stroke-width: 1.5; }
+      .head { font: 600 14px/1 ui-sans-serif, system-ui, sans-serif; fill: #4a4960; letter-spacing: 0.06em; text-transform: uppercase; }
+      .head-cat { fill: #1a6b34; }
+      .head-cus { fill: #b35d00; }
+      .label { font: 700 16px/1.2 ui-sans-serif, system-ui, sans-serif; fill: #2b2a36; }
+      .body { font: 13px/1.5 ui-sans-serif, system-ui, sans-serif; fill: #2b2a36; }
+      .muted { fill: #5a5a5a; }
+      .step-box { fill: #fff; stroke: #2b2a36; stroke-width: 1; }
+      .step-box-cat { fill: #fff; stroke: #2da44e; stroke-width: 1.2; }
+      .step-box-cus { fill: #fff; stroke: #fb8500; stroke-width: 1.2; }
+      .arrow { stroke: #2b2a36; stroke-width: 1.5; fill: none; }
+      .arrow-cat { stroke: #2da44e; stroke-width: 1.6; fill: none; }
+      .arrow-cus { stroke: #fb8500; stroke-width: 1.6; fill: none; }
+      .arrow-text { font: 11px/1 ui-monospace, monospace; fill: #5a5a5a; }
+      .badge { font: 700 11px/1 ui-sans-serif, system-ui, sans-serif; fill: #fff; }
+      .summary { font: 600 15px/1.4 ui-sans-serif, system-ui, sans-serif; fill: #1a1a1a; }
+      code { font: 12px/1 ui-monospace, monospace; }
+      @media (prefers-color-scheme: dark) {
+        .label, .body, .summary { fill: #ece8db; }
+        .head, .arrow-text, .muted { fill: #a8a395; }
+        .arrow { stroke: #ece8db; }
+        .arrow-cat { stroke: #58c479; }
+        .arrow-cus { stroke: #fbb86b; }
+        .step-box { fill: #1a1a26; stroke: #ece8db; }
+        .step-box-cat { fill: #1a1a26; stroke: #58c479; }
+        .step-box-cus { fill: #1a1a26; stroke: #fbb86b; }
+      }
+    </style>
+  </defs>
+
+  <!-- Title -->
+  <text class="head" x="450" y="28" text-anchor="middle">Two ways to give Hermes new tools</text>
+
+  <!-- Left panel: CATALOG PATH -->
+  <g>
+    <rect class="panel-cat" x="24" y="48" width="416" height="384" rx="16"/>
+    <text class="head head-cat" x="44" y="74">Catalog MCP</text>
+    <text class="label" x="44" y="98">Reviewed. Curated. One command.</text>
+
+    <!-- Step 1 -->
+    <g>
+      <rect class="step-box-cat" x="48" y="116" width="372" height="44" rx="6"/>
+      <text class="body" x="60" y="134"><tspan font-weight="700" fill="#1a6b34">1.</tspan>  <tspan font-family="ui-monospace,monospace">hermes update</tspan></text>
+      <text class="body muted" x="60" y="150">Pulls the latest reviewed catalog.</text>
+    </g>
+    <path class="arrow-cat" d="M234 162 L234 174"/>
+    <path class="arrow-cat" d="M230 170 L234 178 L238 170 Z" fill="#2da44e"/>
+
+    <!-- Step 2 -->
+    <g>
+      <rect class="step-box-cat" x="48" y="180" width="372" height="44" rx="6"/>
+      <text class="body" x="60" y="198"><tspan font-weight="700" fill="#1a6b34">2.</tspan>  <tspan font-family="ui-monospace,monospace">hermes mcp</tspan></text>
+      <text class="body muted" x="60" y="214">Browse Linear, n8n, and other approved servers.</text>
+    </g>
+    <path class="arrow-cat" d="M234 226 L234 238"/>
+    <path class="arrow-cat" d="M230 234 L234 242 L238 234 Z" fill="#2da44e"/>
+
+    <!-- Step 3 -->
+    <g>
+      <rect class="step-box-cat" x="48" y="244" width="372" height="44" rx="6"/>
+      <text class="body" x="60" y="262"><tspan font-weight="700" fill="#1a6b34">3.</tspan>  <tspan font-family="ui-monospace,monospace">hermes mcp install linear</tspan></text>
+      <text class="body muted" x="60" y="278">OAuth flow. Tool whitelist. Done in minutes.</text>
+    </g>
+    <path class="arrow-cat" d="M234 290 L234 302"/>
+    <path class="arrow-cat" d="M230 298 L234 306 L238 298 Z" fill="#2da44e"/>
+
+    <!-- Result -->
+    <g>
+      <rect class="step-box-cat" x="48" y="308" width="372" height="64" rx="6" fill="#2da44e" fill-opacity="0.10"/>
+      <text class="label" x="60" y="332" fill="#1a6b34">Result</text>
+      <text class="body" x="60" y="352">Code the Hermes team has personally audited.</text>
+      <text class="body" x="60" y="368">Scoped tools. Cached tokens. Reversible.</text>
+    </g>
+
+    <!-- Badge -->
+    <g transform="translate(380, 50)">
+      <rect x="0" y="0" width="48" height="22" rx="11" fill="#2da44e"/>
+      <text class="badge" x="24" y="15" text-anchor="middle">SAFE</text>
+    </g>
+  </g>
+
+  <!-- Right panel: CUSTOM PATH -->
+  <g>
+    <rect class="panel-cus" x="460" y="48" width="416" height="384" rx="16"/>
+    <text class="head head-cus" x="480" y="74">Custom MCP</text>
+    <text class="label" x="480" y="98">Random repo. Manual config. You audit.</text>
+
+    <!-- Step 1 -->
+    <g>
+      <rect class="step-box-cus" x="484" y="116" width="372" height="44" rx="6"/>
+      <text class="body" x="496" y="134"><tspan font-weight="700" fill="#b35d00">1.</tspan>  Find an MCP on GitHub</text>
+      <text class="body muted" x="496" y="150">Hope the author is reputable. Read the source.</text>
+    </g>
+    <path class="arrow-cus" d="M670 162 L670 174"/>
+    <path class="arrow-cus" d="M666 170 L670 178 L674 170 Z" fill="#fb8500"/>
+
+    <!-- Step 2 -->
+    <g>
+      <rect class="step-box-cus" x="484" y="180" width="372" height="44" rx="6"/>
+      <text class="body" x="496" y="198"><tspan font-weight="700" fill="#b35d00">2.</tspan>  Copy <tspan font-family="ui-monospace,monospace">command</tspan> and <tspan font-family="ui-monospace,monospace">env</tspan> from README</text>
+      <text class="body muted" x="496" y="214">Get the args right or the server won't start.</text>
+    </g>
+    <path class="arrow-cus" d="M670 226 L670 238"/>
+    <path class="arrow-cus" d="M666 234 L670 242 L674 234 Z" fill="#fb8500"/>
+
+    <!-- Step 3 -->
+    <g>
+      <rect class="step-box-cus" x="484" y="244" width="372" height="44" rx="6"/>
+      <text class="body" x="496" y="262"><tspan font-weight="700" fill="#b35d00">3.</tspan>  Paste into <tspan font-family="ui-monospace,monospace">~/.hermes/mcp.yaml</tspan></text>
+      <text class="body muted" x="496" y="278">Add API key to <tspan font-family="ui-monospace,monospace">~/.hermes/.env</tspan>. Run <tspan font-family="ui-monospace,monospace">hermes mcp reload</tspan>.</text>
+    </g>
+    <path class="arrow-cus" d="M670 290 L670 302"/>
+    <path class="arrow-cus" d="M666 298 L670 306 L674 298 Z" fill="#fb8500"/>
+
+    <!-- Result -->
+    <g>
+      <rect class="step-box-cus" x="484" y="308" width="372" height="64" rx="6" fill="#fb8500" fill-opacity="0.10"/>
+      <text class="label" x="496" y="332" fill="#b35d00">Result</text>
+      <text class="body" x="496" y="352">Code the author wrote. Your API key, your risk.</text>
+      <text class="body" x="496" y="368">More apps, more responsibility.</text>
+    </g>
+
+    <!-- Badge -->
+    <g transform="translate(816, 50)">
+      <rect x="0" y="0" width="48" height="22" rx="11" fill="#fb8500"/>
+      <text class="badge" x="24" y="15" text-anchor="middle">DIY</text>
+    </g>
+  </g>
+
+  <!-- Bottom summary -->
+  <g>
+    <text class="summary" x="450" y="458" text-anchor="middle">Beginner path: catalog. Power-user path: custom, once you know what you're running.</text>
+  </g>
+</svg>

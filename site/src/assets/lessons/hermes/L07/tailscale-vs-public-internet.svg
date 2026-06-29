@@ -1,0 +1,204 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 560" role="img" aria-labelledby="tvpi-title tvpi-desc">
+  <title id="tvpi-title">Tailscale vs Public Internet — what your dashboard looks like in each</title>
+  <desc id="tvpi-desc">Side-by-side comparison. Left: without Tailscale, the Hermes dashboard binds to 0.0.0.0:919 on a public IP and is reachable by any scanner on the internet; an attacker probes the port, brute-forces the password, and runs commands as the agent. Right: with Tailscale, the dashboard binds only to a 100.x private address that doesn't exist on the public internet; there is nothing for an attacker to scan, and traffic is encrypted end to end.</desc>
+
+  <defs>
+    <linearGradient id="bad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#cf222e" stop-opacity="0.16"/>
+      <stop offset="100%" stop-color="#cf222e" stop-opacity="0.04"/>
+    </linearGradient>
+    <linearGradient id="good" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#2da44e" stop-opacity="0.16"/>
+      <stop offset="100%" stop-color="#2da44e" stop-opacity="0.04"/>
+    </linearGradient>
+    <style>
+      .panel-bad { fill: url(#bad); stroke: #cf222e; stroke-width: 1.5; }
+      .panel-good { fill: url(#good); stroke: #2da44e; stroke-width: 1.5; }
+      .label { font: 700 18px/1 ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif; fill: #2b2a36; }
+      .head { font: 600 13px/1 ui-sans-serif, system-ui, sans-serif; fill: #4a4960; letter-spacing: 0.06em; text-transform: uppercase; }
+      .body { font: 13px/1.5 ui-sans-serif, system-ui, -apple-system, sans-serif; fill: #2b2a36; }
+      .mono { font: 12px/1.4 ui-monospace, "SF Mono", Menlo, monospace; fill: #2b2a36; }
+      .server { fill: #fff; stroke: #5a5a5a; stroke-width: 1.5; }
+      .server-bad { stroke: #cf222e; }
+      .server-good { stroke: #2da44e; }
+      .laptop { fill: #fff; stroke: #5a5a5a; stroke-width: 1.5; }
+      .attacker { fill: #cf222e; }
+      .attacker-stroke { stroke: #cf222e; stroke-width: 1.5; }
+      .attacker-text { font: 700 12px/1 ui-sans-serif, sans-serif; fill: #cf222e; }
+      .net { fill: #fff; stroke: #5a5a5a; stroke-width: 1.2; stroke-dasharray: 5 4; }
+      .priv-net { fill: #fff; stroke: #2da44e; stroke-width: 1.5; stroke-dasharray: none; }
+      .arrow { stroke: #5a5a5a; stroke-width: 1.5; fill: none; }
+      .arrow-bad { stroke: #cf222e; stroke-width: 1.6; fill: none; }
+      .arrow-good { stroke: #2da44e; stroke-width: 1.6; fill: none; }
+      .arrow-head { fill: #5a5a5a; }
+      .arrow-head-bad { fill: #cf222e; }
+      .arrow-head-good { fill: #2da44e; }
+      .cmd { font: 700 12px/1 ui-monospace, monospace; fill: #2b2a36; }
+      .port { font: 700 11px/1 ui-monospace, monospace; fill: #cf222e; }
+      .port-good { fill: #2da44e; }
+      .caption { font: italic 13px/1.4 ui-sans-serif, system-ui, sans-serif; fill: #5a5a5a; }
+      .summary { font: 600 15px/1.4 ui-sans-serif, system-ui, sans-serif; fill: #1a1a1a; }
+      .badge-bad { font: 700 11px/1 ui-sans-serif, sans-serif; fill: #fff; letter-spacing: 0.05em; text-transform: uppercase; }
+      .badge-good { font: 700 11px/1 ui-sans-serif, sans-serif; fill: #fff; letter-spacing: 0.05em; text-transform: uppercase; }
+      @media (prefers-color-scheme: dark) {
+        .label, .body, .mono, .summary, .cmd { fill: #ece8db; }
+        .head, .caption { fill: #a8a395; }
+        .arrow, .arrow-head { stroke: #a8a395; fill: #a8a395; }
+        .net { fill: #1a1a22; stroke: #a8a395; }
+        .priv-net { fill: #1a1a22; stroke: #2da44e; }
+        .server, .laptop { fill: #1a1a22; }
+      }
+    </style>
+  </defs>
+
+  <!-- Title -->
+  <text class="head" x="500" y="28" text-anchor="middle">Tailscale vs Public Internet</text>
+
+  <!-- ============================================================ -->
+  <!-- LEFT PANEL: WITHOUT Tailscale (BAD)                          -->
+  <!-- ============================================================ -->
+  <g>
+    <rect class="panel-bad" x="20" y="56" width="470" height="420" rx="16"/>
+
+    <!-- Header badge -->
+    <rect x="36" y="72" width="120" height="22" rx="11" fill="#cf222e"/>
+    <text class="badge-bad" x="96" y="87" text-anchor="middle">Exposed</text>
+    <text class="head" x="36" y="118">Without Tailscale</text>
+    <text class="label" x="36" y="142">Dashboard binds to 0.0.0.0:919</text>
+
+    <!-- VPS server -->
+    <g>
+      <rect class="server server-bad" x="280" y="170" width="160" height="78" rx="8"/>
+      <text class="body" x="360" y="194" text-anchor="middle" font-weight="700">VPS</text>
+      <line x1="294" y1="202" x2="426" y2="202" stroke="#e2dfd2" stroke-width="1"/>
+      <text class="mono" x="294" y="220">hermes dashboard</text>
+      <text class="mono" x="294" y="236" font-weight="700" fill="#cf222e">--bind 0.0.0.0</text>
+    </g>
+
+    <!-- Public internet cloud -->
+    <g>
+      <rect class="net" x="160" y="200" width="100" height="78" rx="40"/>
+      <text class="body" x="210" y="232" text-anchor="middle" font-style="italic">public</text>
+      <text class="body" x="210" y="250" text-anchor="middle" font-style="italic">internet</text>
+    </g>
+
+    <!-- Laptop on the right -->
+    <g>
+      <rect class="laptop" x="50" y="180" width="80" height="58" rx="6"/>
+      <text class="body" x="90" y="206" text-anchor="middle" font-weight="700">Your</text>
+      <text class="body" x="90" y="222" text-anchor="middle" font-weight="700">Laptop</text>
+    </g>
+
+    <!-- Attacker icon (skull-ish shape via path) -->
+    <g transform="translate(60,360)">
+      <circle class="attacker" cx="0" cy="0" r="14" opacity="0.95"/>
+      <circle fill="#fff" cx="-4" cy="-3" r="2"/>
+      <circle fill="#fff" cx="4" cy="-3" r="2"/>
+      <rect fill="#fff" x="-5" y="3" width="10" height="3" rx="1"/>
+      <text class="attacker-text" x="0" y="32" text-anchor="middle">Attacker</text>
+    </g>
+
+    <!-- Arrows: laptop <-> public <-> VPS (normal) -->
+    <path class="arrow" d="M132 208 L160 230"/>
+    <path class="arrow-head" d="M155 226 L162 230 L156 234 Z"/>
+    <path class="arrow" d="M260 230 L280 208"/>
+    <path class="arrow-head" d="M276 204 L282 208 L276 212 Z"/>
+
+    <!-- Port label on VPS -->
+    <text class="port" x="360" y="262" text-anchor="middle">port 919 public</text>
+
+    <!-- Attack arrow -->
+    <path class="arrow-bad" d="M76 350 C 76 290, 360 290, 360 250"/>
+    <path class="arrow-head-bad" d="M354 252 L360 248 L362 256 Z"/>
+
+    <!-- Sequence of attack labels -->
+    <g>
+      <rect x="120" y="324" width="280" height="130" rx="10" fill="#fff" stroke="#cf222e" stroke-width="1.2" opacity="0.95"/>
+      <text class="body" x="134" y="346" font-weight="700" fill="#cf222e">Attack chain (real, has happened):</text>
+      <text class="body" x="134" y="366">1. Attacker scans for open port 919</text>
+      <text class="body" x="134" y="384">2. Finds your VPS IP</text>
+      <text class="body" x="134" y="402">3. Brute-forces or sniffs dashboard login</text>
+      <text class="body" x="134" y="420">4. Reads API keys, runs commands as you</text>
+      <text class="body" x="134" y="438">5. Your model's bill spikes at 3am</text>
+    </g>
+
+    <text class="caption" x="36" y="466">"Anyone on the network can sniff it." — Ron, source video 5F1hFI2lZCg</text>
+  </g>
+
+  <!-- ============================================================ -->
+  <!-- RIGHT PANEL: WITH Tailscale (GOOD)                           -->
+  <!-- ============================================================ -->
+  <g>
+    <rect class="panel-good" x="510" y="56" width="470" height="420" rx="16"/>
+
+    <!-- Header badge -->
+    <rect x="526" y="72" width="140" height="22" rx="11" fill="#2da44e"/>
+    <text class="badge-good" x="596" y="87" text-anchor="middle">Private</text>
+    <text class="head" x="526" y="118">With Tailscale</text>
+    <text class="label" x="526" y="142">Dashboard binds to 100.x.x.x:919</text>
+
+    <!-- VPS server -->
+    <g>
+      <rect class="server server-good" x="770" y="170" width="160" height="78" rx="8"/>
+      <text class="body" x="850" y="194" text-anchor="middle" font-weight="700">VPS</text>
+      <line x1="784" y1="202" x2="916" y2="202" stroke="#e2dfd2" stroke-width="1"/>
+      <text class="mono" x="784" y="220">hermes dashboard</text>
+      <text class="mono" x="784" y="236" font-weight="700" fill="#2da44e">--bind 100.x.x.x</text>
+    </g>
+
+    <!-- Tailscale private mesh cloud -->
+    <g>
+      <rect class="priv-net" x="650" y="200" width="100" height="78" rx="40"/>
+      <text class="body" x="700" y="228" text-anchor="middle" font-weight="700" fill="#2da44e">Tailscale</text>
+      <text class="body" x="700" y="246" text-anchor="middle" font-style="italic">private mesh</text>
+    </g>
+
+    <!-- Laptop on the right side (mirrored) -->
+    <g>
+      <rect class="laptop" x="540" y="180" width="80" height="58" rx="6"/>
+      <text class="body" x="580" y="206" text-anchor="middle" font-weight="700">Your</text>
+      <text class="body" x="580" y="222" text-anchor="middle" font-weight="700">Laptop</text>
+    </g>
+
+    <!-- Arrows: laptop <-> Tailscale <-> VPS -->
+    <path class="arrow-good" d="M622 208 L650 230"/>
+    <path class="arrow-head-good" d="M645 226 L652 230 L646 234 Z"/>
+    <path class="arrow-good" d="M750 230 L770 208"/>
+    <path class="arrow-head-good" d="M766 204 L772 208 L766 212 Z"/>
+
+    <!-- Port label on VPS -->
+    <text class="port port-good" x="850" y="262" text-anchor="middle">100.x — not routed publicly</text>
+
+    <!-- Attacker (muted) -->
+    <g transform="translate(550,360)" opacity="0.45">
+      <circle class="attacker" cx="0" cy="0" r="14"/>
+      <circle fill="#fff" cx="-4" cy="-3" r="2"/>
+      <circle fill="#fff" cx="4" cy="-3" r="2"/>
+      <rect fill="#fff" x="-5" y="3" width="10" height="3" rx="1"/>
+      <text class="attacker-text" x="0" y="32" text-anchor="middle">Attacker</text>
+    </g>
+
+    <!-- Attack arrow that goes nowhere -->
+    <path class="arrow-bad" stroke-dasharray="4 4" d="M566 350 C 566 290, 850 290, 850 250" opacity="0.5"/>
+    <path class="arrow-head-bad" d="M844 252 L850 248 L852 256 Z" opacity="0.5"/>
+
+    <!-- Why it works panel -->
+    <g>
+      <rect x="610" y="324" width="320" height="130" rx="10" fill="#fff" stroke="#2da44e" stroke-width="1.2" opacity="0.95"/>
+      <text class="body" x="624" y="346" font-weight="700" fill="#2da44e">Why it works:</text>
+      <text class="body" x="624" y="366">• 100.x is a private IP — not on the public internet</text>
+      <text class="body" x="624" y="384">• Nothing for an attacker to scan</text>
+      <text class="body" x="624" y="402">• All traffic encrypted (WireGuard)</text>
+      <text class="body" x="624" y="420">• Only your authenticated devices can route in</text>
+      <text class="body" x="624" y="438">• Free for personal use (up to 100 devices)</text>
+    </g>
+
+    <text class="caption" x="526" y="466">"Replace 0000 with that Tailscale IP." — Ron, source video 5F1hFI2lZCg</text>
+  </g>
+
+  <!-- Bottom summary -->
+  <g>
+    <text class="summary" x="500" y="514" text-anchor="middle">The same dashboard. Two different addresses.</text>
+    <text class="body" x="500" y="538" text-anchor="middle" fill="#5a5a5a">Bind to 0.0.0.0 and the world can find it. Bind to 100.x and it doesn't exist.</text>
+  </g>
+</svg>

@@ -1,0 +1,147 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 540" role="img" aria-labelledby="knb-title knb-desc">
+  <title id="knb-title">Kanban board with named worker agents</title>
+  <desc id="knb-desc">A three-column Kanban board (To do, In progress, Done) with task cards. Each card shows the named worker profile that owns it. Three named profiles are highlighted: researcher, drafter, reviewer.</desc>
+
+  <defs>
+    <linearGradient id="knb-col" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0ea5a4" stop-opacity="0.10"/>
+      <stop offset="100%" stop-color="#0ea5a4" stop-opacity="0.02"/>
+    </linearGradient>
+    <style>
+      .col { fill: url(#knb-col); stroke: #0ea5a4; stroke-width: 1.4; }
+      .col-head { font: 700 13px/1 ui-sans-serif, system-ui, sans-serif; fill: #064e4d; letter-spacing: 0.06em; text-transform: uppercase; }
+      .card { fill: #fff; stroke: #0ea5a4; stroke-width: 1.4; }
+      .card-prio { fill: #0ea5a4; }
+      .card-title { font: 600 13px/1.3 ui-sans-serif, system-ui, sans-serif; fill: #1a1a1a; }
+      .card-meta { font: 12px/1.3 ui-sans-serif, system-ui, sans-serif; fill: #5a5a5a; }
+      .assignee { font: 700 11px/1 ui-monospace, "SF Mono", Menlo, monospace; fill: #064e4d; }
+      .assignee-bg { fill: #fff; stroke: #0ea5a4; stroke-width: 1.2; }
+      .p-arrow { stroke: #5a5a5a; stroke-width: 1.6; fill: none; }
+      .p-arrow-head { fill: #5a5a5a; }
+      .head { font: 700 13px/1 ui-sans-serif, system-ui, sans-serif; fill: #2b2a36; letter-spacing: 0.06em; text-transform: uppercase; }
+      .body { font: 13px/1.5 ui-sans-serif, system-ui, -apple-system, sans-serif; fill: #2b2a36; }
+      .caption { font: italic 13px/1.4 ui-sans-serif, system-ui, sans-serif; fill: #5a5a5a; }
+      .summary { font: 600 14px/1.4 ui-sans-serif, system-ui, sans-serif; fill: #1a1a1a; }
+      @media (prefers-color-scheme: dark) {
+        .col-head { fill: #7cd9d8; }
+        .card { fill: #1a1a22; stroke: #7cd9d8; }
+        .card-title { fill: #ece8db; }
+        .card-meta { fill: #a8a395; }
+        .assignee { fill: #7cd9d8; }
+        .assignee-bg { fill: #1a1a22; stroke: #7cd9d8; }
+        .p-arrow { stroke: #a8a395; }
+        .p-arrow-head { fill: #a8a395; }
+        .head, .body { fill: #ece8db; }
+        .caption { fill: #a8a395; }
+      }
+    </style>
+  </defs>
+
+  <text class="head" x="450" y="28" text-anchor="middle">Kanban: many named workers, one board</text>
+
+  <!-- COLUMN 1: To do -->
+  <g>
+    <rect class="col" x="20" y="56" width="280" height="380" rx="14"/>
+    <text class="col-head" x="40" y="84">To do</text>
+
+    <!-- Card 1 -->
+    <g>
+      <rect class="card" x="36" y="100" width="248" height="92" rx="8"/>
+      <rect class="card-prio" x="36" y="100" width="4" height="92" rx="2"/>
+      <text class="card-title" x="52" y="124">Gather 10 sources on</text>
+      <text class="card-title" x="52" y="140">agent harnesses</text>
+      <text class="card-meta" x="52" y="160">Researcher skill</text>
+      <rect class="assignee-bg" x="52" y="170" width="108" height="18" rx="9"/>
+      <text class="assignee" x="106" y="183" text-anchor="middle">@researcher</text>
+    </g>
+
+    <!-- Card 2 -->
+    <g>
+      <rect class="card" x="36" y="208" width="248" height="92" rx="8"/>
+      <rect class="card-prio" x="36" y="208" width="4" height="92" rx="2"/>
+      <text class="card-title" x="52" y="232">Draft 800-word post</text>
+      <text class="card-title" x="52" y="248">from research notes</text>
+      <text class="card-meta" x="52" y="268">Drafting skill</text>
+      <rect class="assignee-bg" x="52" y="278" width="92" height="18" rx="9"/>
+      <text class="assignee" x="98" y="291" text-anchor="middle">@drafter</text>
+    </g>
+
+    <!-- Card 3 -->
+    <g>
+      <rect class="card" x="36" y="316" width="248" height="92" rx="8"/>
+      <rect class="card-prio" x="36" y="316" width="4" height="92" rx="2"/>
+      <text class="card-title" x="52" y="340">Fact-check + tone pass</text>
+      <text class="card-title" x="52" y="356">on the final draft</text>
+      <text class="card-meta" x="52" y="376">Review skill</text>
+      <rect class="assignee-bg" x="52" y="386" width="94" height="18" rx="9"/>
+      <text class="assignee" x="100" y="399" text-anchor="middle">@reviewer</text>
+    </g>
+  </g>
+
+  <!-- COLUMN 2: In progress -->
+  <g>
+    <rect class="col" x="320" y="56" width="280" height="380" rx="14"/>
+    <text class="col-head" x="340" y="84">In progress</text>
+
+    <g>
+      <rect class="card" x="336" y="100" width="248" height="92" rx="8"/>
+      <rect class="card-prio" x="336" y="100" width="4" height="92" rx="2"/>
+      <text class="card-title" x="352" y="124">Discover top AI news</text>
+      <text class="card-title" x="352" y="140">sites for 2026</text>
+      <text class="card-meta" x="352" y="160">Running...</text>
+      <rect class="assignee-bg" x="352" y="170" width="108" height="18" rx="9"/>
+      <text class="assignee" x="406" y="183" text-anchor="middle">@researcher</text>
+    </g>
+
+    <g>
+      <rect class="card" x="336" y="208" width="248" height="92" rx="8"/>
+      <rect class="card-prio" x="336" y="208" width="4" height="92" rx="2"/>
+      <text class="card-title" x="352" y="232">Outline sections for</text>
+      <text class="card-title" x="352" y="248">"Harnesses vs Models"</text>
+      <text class="card-meta" x="352" y="268">Drafting first pass...</text>
+      <rect class="assignee-bg" x="352" y="278" width="92" height="18" rx="9"/>
+      <text class="assignee" x="398" y="291" text-anchor="middle">@drafter</text>
+    </g>
+  </g>
+
+  <!-- COLUMN 3: Done -->
+  <g>
+    <rect class="col" x="620" y="56" width="260" height="380" rx="14"/>
+    <text class="col-head" x="640" y="84">Done</text>
+
+    <g>
+      <rect class="card" x="636" y="100" width="228" height="92" rx="8"/>
+      <rect class="card-prio" x="636" y="100" width="4" height="92" rx="2"/>
+      <text class="card-title" x="652" y="124">Confirm topic list</text>
+      <text class="card-title" x="652" y="140">with @drafter</text>
+      <text class="card-meta" x="652" y="160">Approved 09:14</text>
+      <rect class="assignee-bg" x="652" y="170" width="108" height="18" rx="9"/>
+      <text class="assignee" x="706" y="183" text-anchor="middle">@reviewer</text>
+    </g>
+
+    <g>
+      <rect class="card" x="636" y="208" width="228" height="92" rx="8"/>
+      <rect class="card-prio" x="636" y="208" width="4" height="92" rx="2"/>
+      <text class="card-title" x="652" y="232">Source list v1</text>
+      <text class="card-title" x="652" y="248">(8 candidate URLs)</text>
+      <text class="card-meta" x="652" y="268">Done 08:47</text>
+      <rect class="assignee-bg" x="652" y="278" width="108" height="18" rx="9"/>
+      <text class="assignee" x="706" y="291" text-anchor="middle">@researcher</text>
+    </g>
+  </g>
+
+  <!-- Progress arrows between columns -->
+  <path class="p-arrow" d="M302 250 L320 250"/>
+  <path class="p-arrow-head" d="M314 245 L324 250 L314 255 Z"/>
+  <path class="p-arrow" d="M602 250 L620 250"/>
+  <path class="p-arrow-head" d="M614 245 L624 250 L614 255 Z"/>
+
+  <!-- Legend / footer -->
+  <g>
+    <text class="body" x="40" y="468"><tspan font-weight="700">@researcher</tspan> &mdash; tuned for source discovery.</text>
+    <text class="body" x="40" y="488"><tspan font-weight="700">@drafter</tspan> &mdash; tuned for long-form writing.</text>
+    <text class="body" x="40" y="508"><tspan font-weight="700">@reviewer</tspan> &mdash; tuned for tone and fact-checks.</text>
+    <text class="summary" x="720" y="488" text-anchor="end">Each profile is a separate Hermes</text>
+    <text class="summary" x="720" y="508" text-anchor="end">instance with its own config.</text>
+  </g>
+</svg>
