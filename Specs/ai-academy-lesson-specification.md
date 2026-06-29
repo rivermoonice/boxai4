@@ -115,11 +115,32 @@
 - Natural keyword placement: Title, intro (first 100 words), subheads, image alt text, conclusion.
 - Internal linking: 3-5 contextual links to other academy lessons/courses.
 - External links: Authoritative sources only, open in new tab, with brief why it’s useful.
-- Images: Descriptive filenames, detailed alt text (include keywords naturally), captions where helpful. Compress all.
+- **Images**: Descriptive filenames, detailed alt text (include keywords naturally), captions where helpful. **Use the Astro image pipeline** — see *Images and interactive widgets* below. Don’t ship raw PNGs out of `site/public/`.
 - Schema markup where platform supports (HowTo, VideoObject, FAQ, Course).
 - FAQ section at bottom (accordion or list) targeting People Also Ask / related searches.
 - Freshness: “Updated [Month Year]” visible. Re-test and update major lessons quarterly or when tools change significantly.
 - Word count target for text component: Enough to be comprehensive (typically 1,800–3,500+ words for strong SEO + value) without filler.
+
+### Images and interactive widgets (Astro image pipeline)
+
+Lessons live as MDX inside the Astro site. Every image goes through Astro’s image pipeline (`astro:assets` + `sharp`) so it ships as WebP/AVIF with a responsive `srcset`. **Don’t put raw PNGs into `site/public/` and reference them as `<img src>`** — that bypasses the optimizer and ships a 200 kB image to mobile users.
+
+**Where assets live.** Source PNGs and SVGs go into `site/src/assets/lessons/<module>/L##/<name>.{png,jpg,svg}`. They’re imported by the lesson MDX file (Vite hashes them at build time) and rendered through `<Image>` or `<Picture>` from `astro:assets`.
+
+**Which component to use.**
+
+- `<Image>` (`import { Image } from ‘astro:assets’;`) — for raster screenshots and photos. Emits a single `<img>` with a multi-width `srcset` in WebP.
+- `<Picture>` — for SVG diagrams you want wrapped in `<picture>` (so a raster fallback exists). Vector at every size, WebP/AVIF sources emitted.
+- `<TerminalScreenshot>` (custom component at `site/src/components/lesson/`) — wraps `<Image>` with macOS-style window chrome (3 traffic-light dots, centered title bar). Use for CLI captures.
+- Plain `<img>` — only for assets that legitimately live in `site/public/` (favicon, OG image). Don’t use in lessons.
+
+**Required props.** `<Image>` and `<Picture>` need `width` and `height` so the optimizer can compute a `srcset` without CLS. Forgetting them produces a build error.
+
+**Terminal screenshots.** Use `scripts/capture-hermes.sh` to capture real CLI output via `script(1)`, then `scripts/render-terminal.mjs` to render each as a styled PNG. Both are wired as `npm run capture:hermes`. Each capture has a per-lesson line budget in the renderer’s `TRUNCATIONS` block — **L01 is an intro lesson: keep screenshots short and focused** (under ~30 lines).
+
+**Lesson components.** The interactive widgets live at `site/src/components/lesson/` — `<Quiz>` (multiple choice with explanations), `<VidCard>` (click-to-play YouTube), `<Callout>` (`tip` / `gotcha` / `bottom-line` asides). All work without a client-side JS framework; they hydrate to add interactivity, but the prose reads correctly with JS off.
+
+**Full reference.** See `site/README.md` § *Adding images to a lesson* for: import paths, prop signatures, when to use SVGs vs PNGs, screenshot generation, and the things-to-never-do list.
 
 ### 11. Accessibility, Tone & Inclusivity
 - Language level: Grade 8-10. Short sentences. Define every technical term on first use.

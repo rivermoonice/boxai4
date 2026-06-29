@@ -26,15 +26,15 @@ git clone https://github.com/rivermoonice/boxai4.git
 cd boxai4
 
 # Browse the lessons
-ls lessons/hermes/      # Hermes module (9 lessons)
-ls lessons/ai-models/   # AI model comparison (5 lessons)
-ls lessons/ai-projects/ # New AI projects (5 lessons)
+ls site/src/content/lessons/hermes/      # Hermes module (9 lessons)
+ls site/src/content/lessons/ai-models/   # AI model comparison (5 lessons)
+ls site/src/content/lessons/ai-projects/ # New AI projects (5 lessons)
 
 # Run the quality gate
-python3 scripts/check-lesson.py lessons/
+python3 scripts/check-lesson.py site/src/content/lessons/
 
 # Or check a single lesson
-python3 scripts/check-lesson.py lessons/hermes/L01-what-is-hermes-agent.md
+python3 scripts/check-lesson.py site/src/content/lessons/hermes/L01-what-is-hermes-agent.mdx
 ```
 
 ## Source data
@@ -57,31 +57,48 @@ All curriculum work is derived from the Supabase project `BoxminingAI` (`public.
 | Layer | Output | Method |
 |---|---|---|
 | 1. Index | `index/`, `index-ai-models/`, `index-ai-projects/` | Deterministic SQL → JSON + transcripts |
-| 1.5. Templates | `templates/lesson.md`, `templates/lesson-skeleton.md` | Fill-in-the-blank scaffolds matching the 12-section spec |
-| 2. Cluster | `lessons/<module>/_skeletons/` | LLM proposes lesson groupings; user reviews |
-| 3. Draft | `lessons/<module>/L##-*.md` | LLM fills in the template from the approved skeleton |
-| 4. Quality gate | `scripts/check-lesson.py` | Deterministic checker for the 12-section spec |
+| 1.5. Templates | `templates/lesson.md`, `templates/lesson-skeleton.md` | Fill-in-the-blank scaffolds matching the lesson spec |
+| 2. Cluster | `site/src/content/lessons/<module>/_skeletons/` | LLM proposes lesson groupings; user reviews |
+| 3. Draft | `site/src/content/lessons/<module>/L##-*.{md,mdx}` | LLM fills in the template from the approved skeleton |
+| 4. Quality gate | `scripts/check-lesson.py` | Deterministic checker (TODO markers + freshness date) |
 
 Every claim in every lesson traces back to a `video_id` in the indexes. The indexes are flat, reproducible, and re-derivable from Supabase.
 
 ## Lesson specification
 
-Every lesson follows [`Specs/ai-academy-lesson-specification.md`](Specs/ai-academy-lesson-specification.md) — 12 required sections:
-
-1. Title, URL & metadata (SEO foundation)
-2. Introduction & Hook
-3. Core Content & Delivery
-4. Comparisons, Tables & Decision Frameworks
-5. Common Pitfalls, Troubleshooting
-6. Key Takeaways & Ron's Bottom Line
-7. Hands-On Practice
-8. Self-Check / Mini-Quiz
-9. Resources, Glossary & Further Learning
-10. SEO & On-Page Optimization
-11. Accessibility, Tone & Inclusivity
-12. Standalone Text Guides
+Lessons follow [`Specs/ai-academy-lesson-specification.md`](Specs/ai-academy-lesson-specification.md) for tone, voice, and content goals. The 12-section structure that used to be enforced by `scripts/check-lesson.py` was dropped in June 2026 — the gate now only blocks on TODOs and missing freshness dates. Lessons are free to use any structure that fits the topic.
 
 Word count target: 1,800–3,500+ words per lesson. Reading level: grade 8–10.
+
+## Adding images and interactive widgets
+
+All lesson images go through Astro's image pipeline (`astro:assets` + `sharp`). SVG diagrams and terminal screenshots are committed into `site/src/assets/lessons/<module>/L##/` and **imported** by the lesson MDX — never referenced as plain `<img src="/...">`.
+
+The interactive widgets (`<Quiz>`, `<TerminalScreenshot>`, `<VidCard>`, `<Callout>`) live at `site/src/components/lesson/`. Use them inside an MDX lesson body:
+
+```mdx
+---
+import Quiz from '../../../components/lesson/Quiz.astro';
+import Callout from '../../../components/lesson/Callout.astro';
+
+import diagram from '../../../assets/lessons/hermes/L01/brain-vs-harness.svg';
+import { Picture } from 'astro:assets';
+
+import hermesHelp from '../../../assets/lessons/hermes/L01/hermes-help.png';
+import TerminalScreenshot from '../../../components/lesson/TerminalScreenshot.astro';
+---
+
+<Picture src={diagram} alt="..." width={800} height={420} formats={["avif", "webp"]} />
+<TerminalScreenshot image={hermesHelp} title="hermes --help" alt="..." />
+<Callout type="tip">One sentence of advice.</Callout>
+<Quiz questions={[
+  { q: "...", choices: ["A", "B", "C"], answer: 1, explain: "..." },
+]} />
+```
+
+For full guidance — when to use `<Image>` vs `<Picture>`, the terminal
+screenshot pipeline, width/height requirements — see
+[`site/README.md`](site/README.md#adding-images-to-a-lesson).
 
 ## File layout
 
@@ -100,7 +117,7 @@ boxai4/
 │   ├── layer-2-log-ai-projects.md
 │   ├── layer-3-log-ai-projects.md
 ├── Specs/
-│   ├── ai-academy-lesson-specification.md   # the 12-section spec
+│   ├── ai-academy-lesson-specification.md   # the lesson spec
 │   └── ChannelIdentity.md                    # channel voice reference
 ├── templates/
 │   ├── lesson.md                    # full lesson scaffold
@@ -109,10 +126,22 @@ boxai4/
 ├── scripts/
 │   └── check-lesson.py              # quality gate (deterministic)
 ├── index*/                           # per-module video indexes + transcripts
-├── lessons/
-│   ├── hermes/                      # 9 lessons (L01–L09)
-│   ├── ai-models/                   # 5 lessons (L01–L05)
-│   └── ai-projects/                 # 5 lessons (L01–L05)
+└── site/                            # ⭐ Astro 7 site — where the lessons live & ship
+    ├── astro.config.mjs
+    ├── package.json
+    ├── public/                       # static assets (favicon, OG image, diagram SVGs)
+    ├── scripts/                      # screenshot pipeline (capture + render)
+    └── src/
+        ├── assets/lessons/           # ⭐ imported images: PNGs, SVGs
+        ├── components/lesson/        # ⭐ interactive widgets (Quiz, TerminalScreenshot, ...)
+        ├── content/lessons/          # ⭐ lesson bodies (.md or .mdx)
+        │   ├── hermes/_skeletons/
+        │   ├── ai-models/_skeletons/
+        │   └── ai-projects/_skeletons/
+        ├── content.config.ts
+        ├── layouts/
+        ├── pages/
+        └── styles/
 ```
 
 ## Conventions
@@ -120,12 +149,14 @@ boxai4/
 - **`video_id`** is the primary key for cross-references between this repo and Supabase. Never use the YouTube URL or title.
 - **No fabrication**: every claim in a lesson must trace back to a `video_id` in `index*/videos.json`. Body content beyond the source is marked "Ron-tested framing" and grounded in `Specs/ChannelIdentity.md`.
 - **Title + summary_verdict filters, never tags alone.** Tags are bundle-polluted.
+- **Lesson images go through the Astro image pipeline.** Source assets live in `site/src/assets/lessons/`, are imported by the lesson MDX, and emitted through `<Image>` / `<Picture>` from `astro:assets`. Don't drop PNGs into `site/public/`.
 - **Tracked in git:** `index*/videos.json`, `index*/INDEX.json`, `index*/README.md`, lessons, templates, scripts, specs, docs.
 - **Gitignored:** `index*/transcripts/*.txt` (large, re-derivable from Supabase), `.env`.
 
 ## What's next
 
-- **CI integration.** The quality gate runs locally. Wire it into GitHub Actions so PRs that break lessons fail CI.
+- **Apply the new pattern to L02–L09.** Only L01 is on MDX today; the other 14 still need the rewrite to match.
+- **CI integration.** Wire `scripts/check-lesson.py` into GitHub Actions.
 - **Quarterly review.** Models and tools ship every few weeks. Re-validate lesson recommendations.
 - **Backlog.** Each module has a "Backlog" of videos that didn't fit cleanly into lessons. Promote as needed.
 - **Cross-module reference audit.** Verify each lesson's "Related" section points to the right other lessons.
