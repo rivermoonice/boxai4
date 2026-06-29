@@ -1,0 +1,42 @@
+{
+  "lesson": "L02-install-and-first-run",
+  "module": "hermes",
+  "questions": [
+    {
+      "q": "The first thing a Mac user should run before the Hermes installer is:",
+      "options": ["Homebrew", "Docker Desktop", "Xcode Command Line Tools", "Node.js"],
+      "answer": 2,
+      "explanation": "`xcode-select --install` provides the build tools the installer needs. Skip it and the installer fails with a misleading error."
+    },
+    {
+      "q": "When the VPS installer asks 'Import from OpenClaw?', a first-time VPS user should answer:",
+      "options": ["Yes — saves time", "Only if they've used OpenClaw", "No — fresh install is more reliable", "It doesn't matter"],
+      "answer": 2,
+      "explanation": "Per the source video, OpenClaw import is buggy. Cron jobs do not migrate cleanly. Fresh install is safer."
+    },
+    {
+      "q": "Short answer: What is the single most important day-one habit in your model provider's dashboard?",
+      "options": [],
+      "answer": 0,
+      "explanation": "Set a hard monthly budget cap. Without it, a 3am runaway session burns real money in minutes."
+    },
+    {
+      "q": "Which model should a beginner pick if cost matters most?",
+      "options": ["Claude Opus 4.8", "MiniMax M3 / Kimi K2.6 / DeepSeek V4 Pro", "Claude Sonnet 4.8", "Whichever is free that day"],
+      "answer": 1,
+      "explanation": "Cheap-tier models (Kimi, DeepSeek, MiniMax) cost $5–$10/month at beginner volume. Opus runs 4–5× that."
+    },
+    {
+      "q": "You're on a Windows PC. Which install path should you pick?",
+      "options": ["The Mac path with WSL", "The VPS path", "Either — Windows install is smooth", "Skip Hermes, Windows is unsupported"],
+      "answer": 1,
+      "explanation": "Local Windows install is rougher than Mac. VPS gives every user the same Linux install via SSH."
+    },
+    {
+      "q": "Which three commands prove Hermes is installed and healthy?",
+      "options": [],
+      "answer": 0,
+      "explanation": "`hermes doctor` (env checks), `hermes status` (config + keys), `hermes skills list` (invocables). All three return cleanly when verified."
+    }
+  ]
+}

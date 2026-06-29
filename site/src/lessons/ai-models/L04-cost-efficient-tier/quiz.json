@@ -1,0 +1,61 @@
+{
+  "lesson": "L04-cost-efficient-tier",
+  "module": "ai-models",
+  "questions": [
+    {
+      "q": "Roughly how much cheaper is a Qwen Plus 50-msg/day workload than a Claude Opus 4.8 workload?",
+      "choices": [
+        "About the same",
+        "About 2x cheaper",
+        "About 5x cheaper",
+        "About 20x cheaper"
+      ],
+      "answer": 2,
+      "explain": "Qwen Plus runs ~$12-$25/mo at 50 msgs/day; Opus 4.8 runs ~$80-$150/mo. Roughly 5x cheaper on average."
+    },
+    {
+      "q": "Per the source video, Qwen 3.7 Max's defining strength is:",
+      "choices": [
+        "Cheapest output token price in the tier",
+        "Native multimodal understanding",
+        "Long-horizon agent workflow speed (hours of tool calls)",
+        "Best front-end design output"
+      ],
+      "answer": 2,
+      "explain": "Qwen 3.7 Max is trained as an agent backbone - runs for hours and hundreds of tool calls without collapsing. Ancient Chinese building test: 8m 53s vs 2-3 hours on Kimi/MiniMax."
+    },
+    {
+      "q": "What is the main gotcha with GLM 5.2?",
+      "choices": [
+        "It refuses to write code",
+        "It is closed-weight with no API",
+        "It is too slow and bug-prone for live agentic work",
+        "It costs more than Claude Opus"
+      ],
+      "answer": 2,
+      "explain": "GLM is 'too slow and bug-prone for live agentic game work.' Use it for one-shot UI and design; do not depend on it for production-critical pipelines."
+    },
+    {
+      "q": "MiniMax M3's MSA architecture gives what advantage?",
+      "choices": [
+        "Cheapest input token price in the tier",
+        "Best front-end design quality",
+        "~9.7x faster pre-fill and 15.6x faster decode at 1M tokens vs M2.7",
+        "Native video generation"
+      ],
+      "answer": 2,
+      "explain": "MSA is the speed play behind MiniMax M3's long-context performance - 9.7x faster pre-fill and 15.6x faster decode at 1M tokens vs M2.7."
+    },
+    {
+      "q": "When does the cost-efficient tier lose to frontier models?",
+      "choices": [
+        "Always - cost-efficient means weaker",
+        "Never - cheap models are strictly better",
+        "On ambiguous, novel, or sustained multi-step reasoning tasks",
+        "Only when the user does not know what they are doing"
+      ],
+      "answer": 2,
+      "explain": "Cost-efficient models win on well-defined tasks with verifiable success criteria. They lose on ambiguous prompts, novel creative work, and multi-hour sustained reasoning."
+    }
+  ]
+}
