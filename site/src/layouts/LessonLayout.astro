@@ -5,12 +5,11 @@
  * Renders:
  *   - Breadcrumbs (Home / Module / Lesson)
  *   - Lesson header (order, title, summary, metadata)
- *   - Lesson body (rendered HTML from the content loader)
+ *   - Lesson body — the slot receives the rendered Content component
+ *     (from `render(lesson)` in the page route). Works for both .md and .mdx
+ *     entries; MDX entries can include interactive components like <Quiz>.
  *   - Footer with prev/next navigation
  *   - Sidebar with reading progress + back-to-module link
- *
- * The slot receives the rendered HTML string. Slot expects a
- * `<Fragment set:html={...} />` from the page that uses this layout.
  */
 import BaseLayout from './BaseLayout.astro';
 
@@ -22,7 +21,6 @@ interface Props {
   title: string;
   summary: string;
   description: string;
-  bodyHtml: string;
   path: string;
   readingMinutes: number;
   updatedDate: Date;
@@ -38,7 +36,6 @@ const {
   title,
   summary,
   description,
-  bodyHtml,
   path,
   readingMinutes,
   updatedDate,
@@ -106,7 +103,7 @@ const jsonLd = {
           </dl>
         </header>
 
-        <div class="lesson__body prose" set:html={bodyHtml} />
+        <div class="lesson__body prose"><slot /></div>
 
         <nav class="lesson__nav" aria-label="Lesson navigation">
           {prev ? (

@@ -1,0 +1,194 @@
+---
+/**
+ * Quiz — interactive multiple-choice questions inside lesson MDX.
+ *
+ * Each question renders as a <details>, so the quiz works without JS.
+ * With JS, the inline script enables the "Check answer" button, highlights
+ * correct/incorrect choices, and reveals the explanation.
+ *
+ * Usage in MDX:
+ *   <Quiz questions={[
+ *     {
+ *       q: "...",
+ *       choices: ["A", "B", "C", "D"],
+ *       answer: 2,
+ *       explain: "..."
+ *     },
+ *   ]} />
+ */
+interface Question {
+  q: string;
+  choices: string[];
+  answer: number;
+  explain?: string;
+}
+interface Props {
+  questions: Question[];
+}
+const { questions } = Astro.props;
+---
+<section class="quiz" data-quiz aria-label="Mini quiz">
+  {questions.map((item, i) => (
+    <details class="quiz__q">
+      <summary>
+        <span class="quiz__num">Q{i + 1}.</span>
+        <span class="quiz__prompt">{item.q}</span>
+      </summary>
+      <form class="quiz__form" data-quiz-q={i} data-answer={item.answer}>
+        <ol class="quiz__choices">
+          {item.choices.map((c, j) => (
+            <li>
+              <label>
+                <input type="radio" name={`q-${i}`} value={j} />
+                <span>{c}</span>
+              </label>
+            </li>
+          ))}
+        </ol>
+        <div class="quiz__actions">
+          <button type="button" class="quiz__check" data-quiz-check>Check answer</button>
+          {item.explain && (
+            <p class="quiz__explain" data-quiz-explain hidden>
+              <strong>Explanation.</strong> {item.explain}
+            </p>
+          )}
+        </div>
+      </form>
+    </details>
+  ))}
+</section>
+
+<style>
+  .quiz {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-3);
+    margin: var(--sp-5) 0;
+  }
+  .quiz__q {
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    background: var(--bg-elev);
+    transition: border-color 0.15s ease;
+  }
+  .quiz__q[open] { border-color: var(--border-strong); }
+  .quiz__q summary {
+    list-style: none;
+    cursor: pointer;
+    padding: var(--sp-3) var(--sp-4);
+    display: flex;
+    gap: var(--sp-3);
+    align-items: baseline;
+    font-weight: 500;
+  }
+  .quiz__q summary::-webkit-details-marker { display: none; }
+  .quiz__num {
+    font-variant-numeric: tabular-nums;
+    color: var(--accent);
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .quiz__form {
+    padding: var(--sp-2) var(--sp-4) var(--sp-4);
+  }
+  .quiz__choices {
+    list-style: upper-alpha;
+    padding-left: var(--sp-5);
+    margin: var(--sp-2) 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-2);
+  }
+  .quiz__choices label {
+    display: flex;
+    gap: var(--sp-2);
+    align-items: flex-start;
+    cursor: pointer;
+    padding: var(--sp-2) var(--sp-3);
+    border-radius: var(--radius-sm);
+    border: 1px solid transparent;
+    transition: background 0.12s ease, border-color 0.12s ease;
+  }
+  .quiz__choices label:hover { background: var(--bg-sunk); }
+  .quiz__choices input[type="radio"] {
+    margin-top: 0.3em;
+    accent-color: var(--accent);
+  }
+  .quiz__choices label[data-state="correct"] {
+    background: color-mix(in srgb, #2da44e 18%, transparent);
+    border-color: #2da44e;
+  }
+  .quiz__choices label[data-state="incorrect"] {
+    background: color-mix(in srgb, #cf222e 18%, transparent);
+    border-color: #cf222e;
+  }
+  .quiz__actions { margin-top: var(--sp-3); }
+  .quiz__check {
+    background: transparent;
+    border: 1px solid var(--border-strong);
+    color: var(--fg-muted);
+    padding: var(--sp-2) var(--sp-3);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    font-size: var(--fs-sm);
+    font-weight: 500;
+    transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+  }
+  .quiz__check:hover {
+    background: var(--accent);
+    color: var(--bg);
+    border-color: var(--accent);
+  }
+  .quiz__explain {
+    margin-top: var(--sp-3);
+    padding: var(--sp-3);
+    background: var(--bg-sunk);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    color: var(--fg-muted);
+    font-size: var(--fs-sm);
+  }
+  .quiz__explain strong { color: var(--fg); }
+</style>
+
+<script>
+  // Wire up the "Check answer" button for each question.
+  function initQuiz() {
+    document.querySelectorAll<HTMLFormElement>('[data-quiz-q]').forEach((form) => {
+      const correct = Number(form.dataset.answer);
+      const btn = form.querySelector<HTMLButtonElement>('[data-quiz-check]');
+      const explain = form.querySelector<HTMLElement>('[data-quiz-explain]');
+      const labels = form.querySelectorAll<HTMLLabelElement>('.quiz__choices label');
+      const radios = form.querySelectorAll<HTMLInputElement>('input[type="radio"]');
+      if (!btn) return;
+
+      btn.addEventListener('click', () => {
+        const checked = form.querySelector<HTMLInputElement>('input[type="radio"]:checked');
+        labels.forEach((l) => l.removeAttribute('data-state'));
+
+        if (!checked) {
+          btn.textContent = 'Pick an option first →';
+          setTimeout(() => { btn.textContent = 'Check answer'; }, 1800);
+          return;
+        }
+
+        const chosen = Number(checked.value);
+        labels.forEach((label, j) => {
+          const radio = label.querySelector<HTMLInputElement>('input[type="radio"]');
+          if (radio) radio.disabled = true;
+          if (j === correct) label.setAttribute('data-state', 'correct');
+          if (j === chosen && chosen !== correct) label.setAttribute('data-state', 'incorrect');
+        });
+
+        btn.textContent = chosen === correct ? '✓ Correct' : '✗ Not quite';
+        btn.setAttribute('disabled', 'true');
+        if (explain) explain.removeAttribute('hidden');
+      });
+    });
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initQuiz);
+  } else {
+    initQuiz();
+  }
+</script>

@@ -1,0 +1,207 @@
+---
+title: "What Is Hermes Agent? A Beginner's Guide to AI Agent Harnesses (2026)"
+module: hermes
+slug: l01-what-is-hermes-agent
+order: 1
+updatedDate: 2026-06-29
+updatedRaw: "June 2026"
+summary: "The difference between a model, a coding harness, and an agent harness — and why that matters more than which model you pick in 2026."
+description: "You'll learn what an AI agent harness is, why it matters more than which model you pick, and whether Hermes is the right starting tool for you. No install required for this first lesson."
+readingMinutes: 8
+accent: "#7c5cff"
+---
+
+**Last tested and updated:** June 2026
+
+import Quiz from '../../../components/lesson/Quiz.astro';
+import TerminalScreenshot from '../../../components/lesson/TerminalScreenshot.astro';
+import VidCard from '../../../components/lesson/VidCard.astro';
+import Callout from '../../../components/lesson/Callout.astro';
+import { Picture } from 'astro:assets';
+
+If you've ever asked ChatGPT a question, watched it give you a confident answer, and then realised the answer was completely wrong — you already know the gap between **"an AI can chat"** and **"an AI can do real work."** That gap is exactly what an **AI agent harness** exists to close. Hermes Agent is one of the most popular open-source harnesses in 2026, and the one we'll use throughout this course.
+
+This is the first lesson in the academy. **No install yet** — this is pure concept. The install lesson is next, in [L02 — How to Install Hermes Agent for Beginners](/lessons/hermes/l02-install-and-first-run/).
+
+## The hook
+
+Pick a task you do every week. **"Summarise today's top 3 AI news stories and post them to my Discord at 7am."** Could a chatbot do that? No. A chatbot waits for you to open a tab, type a question, and copy-paste the answer. The 7am thing is a background job. That's the gap.
+
+A **harness** turns an AI from a thing you chat with into a thing that *works for you in the background* — reading files, running commands, scheduling jobs, talking to other apps, and remembering what it learned last week.
+
+<TerminalScreenshot
+  src="/lessons/hermes/L01/hermes-version.png"
+  title="hermes --version"
+  alt="Output of the hermes --version command on Hermes v0.17.0"
+  caption="Hermes v0.17.0 (verified June 2026) is what we used for every screenshot in this lesson."
+/>
+
+That's what you're about to install. By the end of L02 you'll be running it on your own machine.
+
+## The mental model
+
+The single most important idea in this course: **a model is a brain, a harness is a body**.
+
+<Picture src="/lessons/hermes/L01/brain-vs-harness.svg" alt="Diagram: model is the brain, harness is the body" width={800} height={420} formats={["avif", "webp"]} />
+
+A **model** (Claude, GPT, DeepSeek, Kimi, Qwen) takes text in and returns text out. On its own, it can't read a file on your computer, can't run a command, can't remember what you said yesterday. The model is the *brain*.
+
+A **harness** is the program that wraps the model and gives it those abilities. The harness is what lets the AI *do* work in the world: read your codebase, execute shell commands, post to GitHub, schedule a task for 6am tomorrow, or remember a preference across sessions. The harness is the *body*.
+
+<Callout type="tip" title="Ron on the bottleneck">
+"So, how I've been approaching building stuff for AI has been sort of wrong or rather inaccurate. It's not a model issue, but rather a harness issue." — Ron, source video `GGtmmx0MKCI`
+</Callout>
+
+**If you take away one thing from this lesson, take this: when your AI messes up, the problem is almost always the harness, not the model.** In 2026 the models are good enough. The differentiator is what wraps them.
+
+## Pick your tool
+
+In 2026, harnesses split into two broad categories. The decision is one of the first things you'll make, and getting it right saves you weeks.
+
+**Coding harnesses** are built around a codebase. Claude Code, Kilo Code, and the agent mode in Cursor live here. They start from files, repositories, pull requests, IDEs, and CI pipelines. They run the actual code and check the test output. They are designed to be the *engineering shell* of an agent.
+
+**Agent harnesses** are built around a runtime. Hermes and OpenClaw live here. They start from sessions, tools, memory, scheduled jobs, channels (Discord, Telegram, Notion), and routing rules. They are designed to be the *autonomous shell* of an agent — persistence across sessions, multi-channel operation, gradual improvement as you use them more.
+
+<Callout type="tip" title="The shorthand">
+Coding harnesses verify by **running**. Agent harnesses verify by **inferring**.
+</Callout>
+
+### When to pick which
+
+| Goal | Pick | Why |
+|---|---|---|
+| Build a full-stack app from scratch | Claude Code or Kilo Code | Coding harnesses verify by running tests; the work is inside a codebase. |
+| Refactor an existing codebase | Claude Code | It owns the engineering shell and respects your Git workflow. |
+| Post a 7am news summary to Discord | Hermes | Long-running, persistent, runs without you. |
+| One-off code question | Claude Code | Single-session deliverable; no need for persistence. |
+| Multi-day research project with notes that survive | Hermes | Memory across sessions is the differentiator. |
+| A daily-driver helper that learns your style | Hermes | Gets more capable the longer it runs. |
+
+**Rule of thumb:** if your work is mostly inside a codebase — building, refactoring, testing — open a coding harness. If your work is mostly outside a codebase — research, scheduling, multi-channel automation, long-running personal tasks — open Hermes. If you do both, run both. They don't conflict.
+
+<Callout type="gotcha" title="Beginner trap">
+Beginners sometimes pick Hermes because it's free and open-source and assume it'll do everything. It won't. Hermes is for the *second* category. For shipping software, use a coding harness even if you have to pay for it.
+</Callout>
+
+For a deeper comparison once you've tried both, see [L09 — Hermes Agent vs Claude Code vs Mavis](/lessons/hermes/l09-hermes-vs-alternatives/).
+
+### What Hermes specifically is
+
+Hermes is an open-source agent harness that runs on your laptop or on a small rented server (a VPS). It is one of the most-starred open-source AI projects on GitHub in 2026, with over 200,000 stars. It is not a model — it is the program that *wraps* a model.
+
+From the project's documentation: *"We are not a coding co-pilot tethered to an IDE. We are an autonomous agent that gets more capable the longer it runs."*
+
+In practice, that means Hermes can:
+
+- Read and write files in a working directory you specify.
+- Run shell commands and verify their output.
+- Remember context across sessions, especially things you flag as important.
+- Be scheduled to run tasks at specific times (covered in [L08 — Automation: cron, kanban, sub-agents](/lessons/hermes/l08-automation-cron-kanban-sub-agents/)).
+- Connect to other apps like GitHub, Linear, Notion, and Discord via MCP (covered in [L05 — MCP Catalog and Integrations](/lessons/hermes/l05-mcp-catalog-and-integrations/)).
+
+What Hermes is **not**:
+
+- **Not a chat app.** It's a terminal program. You can wrap it in a desktop UI, but the underlying interface is text.
+- **Not a model.** You bring your own model API key (BYOK) — Anthropic, OpenAI, DeepSeek, Kimi, etc. Cost is whatever you spend on the model.
+- **Not magic.** It improves with use and feedback, but only if you put in the time. The source video puts it bluntly: *"you'd have to imagine you have to spend hundreds or thousands of hours if you have no technical experience on training up your Hermes agent to function as well as if you could put the same model in a coding harness."*
+
+### What you'll see when you install it
+
+When you run `hermes --help` for the first time, you get the full subcommand list. This is what I want you to notice: it's not a chat interface. It's a *toolkit*.
+
+<TerminalScreenshot
+  src="/lessons/hermes/L01/hermes-help.png"
+  title="hermes --help"
+  alt="Output of the hermes --help command showing all subcommands"
+  caption="Every subcommand on this screen is a thing Hermes can do. You don't need to memorise them — L02 walks through the install, L03 covers the daily-driver interface, and L04–L08 cover the most-used ones in depth."
+/>
+
+And once you've run the install, the `hermes status` command gives you a one-screen health check of every component:
+
+<TerminalScreenshot
+  src="/lessons/hermes/L01/hermes-status.png"
+  title="hermes status"
+  alt="Output of the hermes status command on a fresh install"
+  caption="A fresh install looks like this. API keys are all blank — you'll add them during the setup wizard in L02."
+/>
+
+That's what you're working with.
+
+## Try it
+
+### The exercise
+
+Open a text file on your computer. Write down the answer to this in your own words, no copy-paste:
+
+> *"If I want to post a summary of today's top 3 AI news stories to my Discord every morning at 7am, which kind of harness should I use, and why?"*
+
+A good answer names either Hermes (an agent harness) or Claude Code (a coding harness) and gives one concrete reason. If you can do that without re-reading the lesson, you have the core idea. If you can't, re-read the **mental model** section.
+
+### A sneak peek at what's coming
+
+The 7am Discord job above is a real workflow you'll build later in this course. Here's the shape it takes:
+
+<Picture src="/lessons/hermes/L01/discord-cron-flow.svg" alt="Diagram: cron fires at 7am, Hermes runs a skill, Discord webhook delivers" width={900} height={220} formats={["avif", "webp"]} />
+
+You don't write glue code for this. You register a cron entry, point Hermes at a skill, and paste a Discord webhook URL. L08 walks you through it end-to-end.
+
+### Watch the full mental model
+
+If you'd rather hear this from Ron directly — 13 minutes, the same source video this lesson is built on — here's the full clip:
+
+<VidCard id="GGtmmx0MKCI" title="Agent Harness vs Coding Harness (Know the Difference) — Ron, May 2026" />
+
+### Check your understanding
+
+<Quiz questions={[
+  {
+    q: "Hermes Agent is best described as a:",
+    choices: ["Chatbot", "Coding harness", "General-purpose agent harness", "Model"],
+    answer: 2,
+    explain: "Hermes wraps a model and gives it the ability to read files, run commands, and persist across sessions. That's the definition of an agent harness.",
+  },
+  {
+    q: "Short answer: name one thing Hermes can do that a regular chatbot cannot.",
+    choices: [],
+    answer: 0,
+    explain: "Any of: read and write files; run shell commands; remember context across sessions; schedule tasks at specific times; connect to Discord / Linear / Notion via MCP. Free response — pick one.",
+  },
+  {
+    q: "You want to build a full-stack web app from scratch. Which kind of harness should you reach for first?",
+    choices: ["Hermes", "Claude Code or Kilo Code", "Either works equally well", "Neither — you need a no-code tool"],
+    answer: 1,
+    explain: "Coding harnesses verify by running tests, which is what you need for shipping software. Agent harnesses verify by inferring — fine for ongoing automation, but slower for shipping code.",
+  },
+  {
+    q: "True or false: Hermes is an AI model. Explain in one sentence.",
+    choices: [],
+    answer: 0,
+    explain: "False. Hermes is a harness, not a model. You bring your own model (Claude, GPT, DeepSeek, Kimi, etc.) and Hermes is the program that wraps it.",
+  },
+  {
+    q: "Per the source video, what is the trade-off when using an agent harness instead of a coding harness?",
+    choices: [
+      "Agent harnesses are slower at every task.",
+      "Agent harnesses verify by inferring, not by running code.",
+      "Agent harnesses can't use frontier models.",
+      "There is no trade-off; agent harnesses are strictly better.",
+    ],
+    answer: 1,
+    explain: "Agent harnesses verify by inferring (\"does this look right?\") rather than by running tests. More flexible for ongoing work, less reliable for code where you need ground-truth verification.",
+  },
+  {
+    q: "What does BYOK stand for, and why does it matter for Hermes?",
+    choices: [],
+    answer: 0,
+    explain: "\"Bring Your Own Key.\" It means Hermes doesn't bundle model access — you sign up with a model provider (Anthropic, OpenAI, etc.) and paste your own API key. Cost is whatever you spend on the model, not a flat subscription.",
+  },
+]} />
+
+### What's next
+
+- **Install it.** → [L02 — How to Install Hermes Agent for Beginners](/lessons/hermes/l02-install-and-first-run/). The full install takes under 20 minutes on a fresh Mac.
+- **Still not sure Hermes is for you?** → [L09 — Hermes Agent vs Claude Code vs Mavis](/lessons/hermes/l09-hermes-vs-alternatives/) is a deeper comparison once you've tried the basics.
+
+<Callout type="bottom-line">
+**Ron's bottom line:** if your goal is to ship a real product this month, start with Claude Code or Kilo Code. If your goal is to free up time on recurring work you already do, start with Hermes. If you do both, run both — they don't conflict, and the cost of running two is much less than the cost of fighting the wrong tool.
+</Callout>

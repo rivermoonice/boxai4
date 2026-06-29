@@ -1,0 +1,103 @@
+---
+/**
+ * TerminalScreenshot — styled terminal-window wrapper around an <img>.
+ *
+ * Used to embed authentic Hermes CLI output captured via the screenshot
+ * pipeline (site/scripts/capture-hermes.sh + render-terminal.mjs).
+ *
+ * Renders as <figure> with macOS-style chrome (three traffic-light dots and
+ * a centered title bar) wrapping a single <img loading="lazy">.
+ *
+ * Usage in MDX:
+ *   <TerminalScreenshot
+ *     src="/lessons/hermes/L01/hermes-help.png"
+ *     title="hermes --help"
+ *     alt="Output of the hermes --help command"
+ *   />
+ *
+ * Optional props:
+ *   - srcset, sizes: for responsive raster images (defaults to src).
+ *   - width, height: intrinsic dimensions for aspect-ratio reservation.
+ *   - caption: shown below the figure (above the chrome title bar context).
+ */
+interface Props {
+  src: string;
+  title?: string;
+  alt: string;
+  srcset?: string;
+  sizes?: string;
+  width?: number;
+  height?: number;
+  caption?: string;
+}
+const { src, title, alt, srcset, sizes, width, height, caption } = Astro.props;
+---
+<figure class="term">
+  <div class="term__chrome" role="presentation">
+    <span class="term__dot term__dot--r" aria-hidden="true"></span>
+    <span class="term__dot term__dot--y" aria-hidden="true"></span>
+    <span class="term__dot term__dot--g" aria-hidden="true"></span>
+    {title && <span class="term__title">{title}</span>}
+  </div>
+  <img
+    class="term__img"
+    src={src}
+    srcset={srcset}
+    sizes={sizes}
+    alt={alt}
+    width={width}
+    height={height}
+    loading="lazy"
+    decoding="async"
+  />
+  {caption && <figcaption class="term__caption">{caption}</figcaption>}
+</figure>
+
+<style>
+  .term {
+    margin: var(--sp-5) 0;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    border: 1px solid var(--border);
+    background: #0d1117;
+  }
+  .term__chrome {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-2);
+    padding: 10px 14px;
+    background: #161b22;
+    border-bottom: 1px solid #30363d;
+  }
+  .term__dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+  .term__dot--r { background: #ff5f57; }
+  .term__dot--y { background: #febc2e; }
+  .term__dot--g { background: #28c840; }
+  .term__title {
+    flex: 1;
+    text-align: center;
+    color: #8b949e;
+    font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+    font-size: 12px;
+    letter-spacing: 0.02em;
+  }
+  .term__img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 0;
+  }
+  .term__caption {
+    padding: var(--sp-2) var(--sp-4);
+    color: var(--fg-muted);
+    font-size: var(--fs-sm);
+    text-align: center;
+    background: #161b22;
+    border-top: 1px solid #30363d;
+  }
+</style>

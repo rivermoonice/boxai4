@@ -2,13 +2,16 @@
 /**
  * /lessons/[module]/[slug] — individual lesson page.
  *
- * Uses the custom loader (which already renders body to HTML via renderMarkdown).
+ * Uses Astro's standard `render(lesson)` to get a `Content` component for
+ * each lesson entry. Works for both .md and .mdx files in the lessons
+ * collection; .mdx lessons can include interactive components like <Quiz>.
+ *
  * Computes prev/next navigation from the sorted lesson list.
  *
  * Path: /lessons/hermes/L01-what-is-hermes-agent/ → renders that lesson.
  */
 import LessonLayout from '../../../layouts/LessonLayout.astro';
-import { getCollection } from 'astro:content';
+import { getCollection, render } from 'astro:content';
 import { MODULES, moduleMeta, type ModuleName } from '../../../content.config';
 
 export async function getStaticPaths() {
@@ -37,6 +40,7 @@ const { lesson, prev, next } = Astro.props;
 const mod = lesson.data.module as ModuleName;
 const meta = moduleMeta[mod];
 const path = `/lessons/${mod}/${lesson.data.slug}/`;
+const { Content } = await render(lesson);
 ---
 <LessonLayout
   moduleTitle={meta.title}
@@ -46,10 +50,11 @@ const path = `/lessons/${mod}/${lesson.data.slug}/`;
   title={lesson.data.title}
   summary={lesson.data.summary}
   description={lesson.data.description}
-  bodyHtml={lesson.data.bodyHtml}
   path={path}
   readingMinutes={lesson.data.readingMinutes}
   updatedDate={lesson.data.updatedDate}
   prev={prev}
   next={next}
-/>
+>
+  <Content />
+</LessonLayout>

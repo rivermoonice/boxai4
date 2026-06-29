@@ -1,0 +1,64 @@
+---
+/**
+ * Callout — styled aside for tips, gotchas, and "Ron's Bottom Line" notes.
+ *
+ * Usage in MDX:
+ *   <Callout type="tip">Always run the gate before committing.</Callout>
+ *   <Callout type="gotcha" title="Watch out">A longer warning paragraph.</Callout>
+ *   <Callout type="bottom-line">The conclusion in Ron's voice.</Callout>
+ */
+type CalloutType = 'tip' | 'gotcha' | 'bottom-line';
+interface Props {
+  type?: CalloutType;
+  title?: string;
+}
+const { type = 'tip', title } = Astro.props;
+const defaultLabels: Record<CalloutType, string> = {
+  tip: "Pro tip",
+  gotcha: "Gotcha",
+  'bottom-line': "Ron's bottom line",
+};
+const label = title ?? defaultLabels[type];
+---
+<aside class={`callout callout--${type}`} role="note" aria-label={label}>
+  <p class="callout__label">{label}</p>
+  <div class="callout__body"><slot /></div>
+</aside>
+
+<style>
+  .callout {
+    margin: var(--sp-5) 0;
+    padding: var(--sp-4) var(--sp-5);
+    border-radius: var(--radius-md);
+    border-left: 4px solid var(--accent);
+    background: var(--bg-elev);
+  }
+  .callout__label {
+    margin: 0 0 var(--sp-2);
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    font-weight: 700;
+  }
+  .callout__body { color: var(--fg); }
+  .callout__body :global(p:last-child) { margin-bottom: 0; }
+  .callout__body :global(p:first-child) { margin-top: 0; }
+
+  .callout--tip {
+    border-left-color: #2da44e;
+  }
+  .callout--tip .callout__label { color: #2da44e; }
+
+  .callout--gotcha {
+    border-left-color: #fb8500;
+    background: color-mix(in srgb, #fb8500 8%, var(--bg-elev));
+  }
+  .callout--gotcha .callout__label { color: #fb8500; }
+
+  .callout--bottom-line {
+    border-left-width: 6px;
+    background: color-mix(in srgb, var(--accent) 10%, var(--bg-elev));
+    font-size: var(--fs-md);
+  }
+</style>
