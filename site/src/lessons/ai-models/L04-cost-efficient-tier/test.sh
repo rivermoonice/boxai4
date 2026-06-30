@@ -64,11 +64,28 @@ else
   fail=1
 fi
 
-# Quiz component present
-if grep -Eq "<Quiz[[:space:]/>]" "$LESSON"; then
-  echo "  ok    : <Quiz> component"
+# Standalone quiz.json pointer in body (replaces inline <Quiz> after round-1 de-inlining)
+if grep -Fq "L04-cost-efficient-tier/quiz.json" "$LESSON"; then
+  echo "  ok    : quiz.json pointer in body"
 else
-  echo "  MISS  : <Quiz> component"
+  echo "  MISS  : quiz.json pointer in body"
+  fail=1
+fi
+
+# MDX must NOT have orphan 'import Quiz' line (round-1 de-inlining)
+if grep -Eq "^import Quiz from" "$LESSON"; then
+  echo "  MISS  : orphan 'import Quiz' line still in MDX"
+  fail=1
+else
+  echo "  ok    : no orphan 'import Quiz' line"
+fi
+
+# Standalone quiz.json must be valid JSON and have >=1 question
+QUIZ="/home/ubuntu/boxai4/site/src/lessons/ai-models/L04-cost-efficient-tier/quiz.json"
+if [[ -f "$QUIZ" ]] && python3 -c "import json,sys; d=json.load(open('$QUIZ')); n=len(d.get('questions', d)) if isinstance(d, dict) else len(d); assert n>=1" 2>/dev/null; then
+  echo "  ok    : quiz.json valid JSON with >=1 question"
+else
+  echo "  MISS  : quiz.json missing or invalid / empty"
   fail=1
 fi
 

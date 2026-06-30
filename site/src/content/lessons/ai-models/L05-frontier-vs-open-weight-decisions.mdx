@@ -22,7 +22,11 @@ Pick model by loop, not by tier label. Five questions decide the right tier for 
 
 The choice comes down to your **task type**.
 
-**Take a $5/mo Kimi K2.7 and write a thank-you email.** It works. The output matches a $200/mo Claude Max. Now take Kimi on a harder job: **architect a multi-tenant Postgres schema with row-level security.** It can do it. You'll spend three rounds catching edge cases. Opus catches them in one. That gap is exactly what tier choice captures.
+**Take a $5/mo Kimi K2.7 and write a thank-you email.** It works. The output matches a $200/mo Claude Max.
+
+Now take Kimi on a harder job: **architect a multi-tenant Postgres schema with row-level security.** It can do it. You'll spend three rounds catching edge cases. Opus catches them in one.
+
+That gap is exactly what tier choice captures.
 
 ## The mental model
 
@@ -56,15 +60,29 @@ Use this 5-question framework to pick the right tier for any workload. Answer in
 | Long-horizon agent (hours) | Tier 2 + agent harness | Qwen 3.7 Max or MiniMax M3 |
 | Multimodal (vision / UI / images) | Tier 2 specialist | MiniMax M3 or Kimi K2.7 |
 
-The single biggest beginner mistake is treating loop as a synonym for task name. A coding session is a *loop* — interactive, verified, multi-turn. A one-shot creative prompt is a *different loop* — single turn, no test feedback. Match the loop first. The model falls out of that.
+The single biggest beginner mistake: treating loop as a synonym for task name.
 
-**Q2 — What's your monthly budget?** Under $20/mo: Tier 2 only, cheapest specialist that fits. $20–$50/mo: Tier 2 with occasional Tier 1 escalations. $50–$200/mo: Tier 2 default plus Tier 1 routing on the hardest 10–20% of tasks. Over $200/mo: Tier 1 is fine for daily use — audit whether you consume that capability.
+A coding session is a *loop* (interactive, verified, multi-turn). A one-shot creative prompt is a *different loop* (single turn, no test feedback).
 
-**Q3 — How reproducible is the workload?** Daily research summaries, recurring cron jobs, repeated Q&A — Tier 2, full stop. Variable inputs push you toward Tier 1 or tiered routing. One-off creative work for an actual deadline is the one case where Tier 1 wins.
+Match the loop first. The model falls out of that.
 
-**Q4 — How time-sensitive is it?** Days to weeks — Tier 2, take the cheap option. Hours — Tier 2 if Qwen Max or DeepSeek Flash is fast enough; they usually are. Minutes (a one-shot deadline) — Tier 1. Mythos-class intelligence matters when you don't get a second attempt.
+**Q2 — What's your monthly budget?** Under $20/mo: Tier 2 only. $20–$50/mo: Tier 2 with occasional Tier 1 escalations. $50–$200/mo: Tier 2 default plus Tier 1 routing on the hardest 10–20% of tasks.
 
-**Q5 — How much do you trust the harness?** This is the question people forget. A trusted harness (Claude Code for code, [Hermes](/lessons/hermes/l01-what-is-hermes-agent/) for agentic loops) catches Tier 2's mistakes through verification. A new or experimental harness cannot catch them. So you pay the Tier 1 premium as insurance. Tiered routing is covered end-to-end in [Hermes L06](/lessons/hermes/l06-model-routing-and-tier-orchestration/).
+Over $200/mo: Tier 1 is fine for daily use. Audit whether you consume that capability.
+
+**Q3 — How reproducible is the workload?** Daily research summaries, recurring cron jobs, repeated Q&A — Tier 2, full stop.
+
+Variable inputs push you toward Tier 1 or tiered routing. One-off creative work for an actual deadline is the one case where Tier 1 wins.
+
+**Q4 — How time-sensitive is it?** Days to weeks — Tier 2. Hours — Tier 2 if Qwen Max or DeepSeek Flash is fast enough. Minutes (a one-shot deadline) — Tier 1.
+
+Mythos-class intelligence matters when you don't get a second attempt.
+
+**Q5 — How much do you trust the harness?** This is the question people forget.
+
+A trusted harness (Claude Code for code, [Hermes](/lessons/hermes/l01-what-is-hermes-agent/) for agentic loops) catches Tier 2's mistakes through verification.
+
+A new or experimental harness cannot catch them — so you pay the Tier 1 premium as insurance. Tiered routing is in [Hermes L06](/lessons/hermes/l06-model-routing-and-tier-orchestration/).
 
 ### When to switch tiers mid-project
 
@@ -99,7 +117,13 @@ Open a text file on your computer. Write down the answer to this in your own wor
 A good answer covers three workloads, three tiers, three models, and three triggers. To fork the framework for your own workloads, replace the five loops in Q1 with the five you actually run. Replace the budgets in Q2 with your real monthly spend. Print the result and tape it above your monitor.
 
 <Callout type="bottom-line">
-**Ron's bottom line:** default to Tier 2. Pick the specialist that matches your workload. Kimi for UI, DeepSeek for tool-call reasoning, Qwen for long-horizon, MiniMax for multimodal, GLM for design. Escalate to Tier 1 only after three Tier-2 failures. Don't switch tiers weekly — pick a tier and stick with it for a quarter. Harness and model both matter. Match both to the workload.
+**Ron's bottom line:** default to Tier 2. Pick the specialist that matches your workload.
+
+Kimi for UI, DeepSeek for tool-call reasoning, Qwen for long-horizon, MiniMax for multimodal, GLM for design.
+
+Escalate to Tier 1 only after three Tier-2 failures.
+
+Don't switch tiers weekly — pick a tier and stick with it for a quarter. Match both harness and model to the workload.
 </Callout>
 
 ### Check your understanding

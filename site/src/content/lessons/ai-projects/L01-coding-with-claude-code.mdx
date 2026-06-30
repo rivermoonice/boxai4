@@ -44,7 +44,7 @@ The diagram above is the shape of a real session. The cycle is:
 The point isn't that Claude Code is "smarter" than a chat model. It **owns the engineering shell**: the file system, the shell, the test runner, and the Git workflow. The model is the brain. The harness is the body.
 
 <Callout type="tip" title="Why this matters in 2026">
-The 2026 default for shipping with agents is no longer "a saved prompt list" — it's a **loop with a validation harness**. Claude Code runs the loop. Your test suite *is* the validation harness. That combination is the differentiator.
+The 2026 default for shipping with agents is no longer "a saved prompt list" — it's a loop with a validation harness. Claude Code runs the loop. Your test suite *is* the validation harness. That combination is the differentiator.
 </Callout>
 
 **Claude Code doesn't replace the engineering shell. *It is* the engineering shell.** The model inside it is interchangeable; the loop around it is the product.
@@ -69,7 +69,7 @@ Coding harnesses verify by **running**. Agent harnesses verify by **inferring**.
 |---|---|---|
 | Ship a feature in a real repo | Claude Code or Kilo Code | Test-driven loop, diff review, Git workflow. |
 | Hard refactor across hundreds of files | Claude Code | Polished harness, long context, the best at "really big problems." |
-| Daily incremental work on a budget | Kilo Code + a cheap model | Open-source, BYOK (Bring Your Own Key, i.e. you supply the model API key and pay the provider directly), $15–$30/mo instead of $200/mo. |
+| Daily incremental work on a budget | Kilo Code + a cheap model | Open-source, BYOK (Bring Your Own Key) — you supply the model API key. $15–$30/mo instead of $200/mo. |
 | 7am Discord summary from RSS feeds | Hermes | Long-running, multi-channel, persistent — see [L09 — Hermes vs Claude Code vs Mavis](/lessons/hermes/l09-hermes-vs-alternatives/). |
 | Visual / IDE-first workflow | Cursor with agent mode | Editor-native, less test-loop, more "show me the file." |
 | One-off "what does this regex mean?" | Chat interface | Single question, no repo context needed. |
@@ -137,5 +137,5 @@ See the standalone quiz at `/lessons/ai-projects/L01-coding-with-claude-code/qui
 - [L01 — What Is Hermes Agent?](/lessons/hermes/l01-what-is-hermes-agent/)
 
 <Callout type="bottom-line">
-**Ron's bottom line:** if you write code for a living in 2026 and you aren't using a coding harness, you're leaving hours on the table every week. The model gets you the draft. The harness gets you the merge. Start with Claude Code if you can afford $20/mo; start with Kilo Code + a cheap model key if you can't. The loop is the lesson, not the brand.
+**Ron's bottom line:** if you write code for a living in 2026 and you aren't using a coding harness, you're leaving hours on the table every week. Start with Claude Code if you can afford $20/mo. Start with Kilo Code + a cheap model key if you can't. The model gets you the draft. The harness gets you the merge. The loop is the lesson, not the brand.
 </Callout>

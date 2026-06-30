@@ -16,7 +16,7 @@ accent: "#ea7a3b"
 import Callout from '../../../components/lesson/Callout.astro';
 import { Picture } from 'astro:assets';
 
-You describe what you want. The AI writes the code. You click "run." It works. You describe the next thing. The AI writes it. You click "run." It works. You feel like a wizard. Then you ship the thing. It breaks in three places at once. You can't reproduce the bug. The AI keeps "fixing" it with hallucinated APIs. You've spent $40 in tokens without ever opening a test runner.
+Vibe coding: you describe what you want, the AI writes it, you click run, it works. You feel like a wizard — until you try to ship. The thing breaks in three places at once. You can't reproduce the bug. The AI keeps "fixing" it with hallucinated APIs. $40 gone, no test runner ever opened.
 
 Welcome to **vibe coding**, the practice Andrej Karpathy named in early 2025 that has now swallowed half the internet. Vibe coding is the fastest way to build software that's never supposed to ship, and the slowest way to build software that is. This lesson is the boundary.
 
@@ -28,7 +28,7 @@ This lesson is the matching "when" — when vibe coding is the right tool, when 
 
 **Vibe coding** fails when you ask the AI for a drag-handler. It produces a drag-handler that looks right. The drop event never fires because nobody specified the drop target. You spend four rounds of "no, the other way" before realising the AI is reasoning about the wrong model of the problem.
 
-**Real coding** fails when you spend eight hours hand-reviewing a 200-line diff for a UI button. The button could have been generated in 90 seconds. The prototype was thrown out the next morning anyway. You were right about the bugs. You were wrong about whether the bugs mattered. Nothing was going to ship.
+**Real coding** fails when you spend 8 hours reviewing a 200-line diff for a UI button. The prototype was thrown out the next morning. You were right that the code would have bugs. You were wrong that the bugs mattered.
 
 **The trade is verification cost, not AI vs no AI.** Verification is what costs you time. Vibe coding is verification-free by design. Real coding is verification-rich by design. The mistake isn't picking one. The mistake is using one in the wrong quadrant.
 
@@ -42,7 +42,7 @@ This lesson is the matching "when" — when vibe coding is the right tool, when 
 
 <Picture src="/lessons/ai-projects/L02/vibe-vs-real-quadrant.svg" alt="2x2 matrix: shipping intent on the x-axis (throwaway to long-lived), quality bar on the y-axis (looks right to reviewed and tested). Vibe coding wins the bottom-left half. Real coding wins the top-right half. The diagonal between them is the 'ship the real thing' axis." width={920} height={580} formats={["avif", "webp"]} />
 
-The two diagonals on the diagram are the two spectrums most projects actually move along. The **"ship the real thing" axis** runs from a one-off script you'll delete on Friday at bottom-left. It runs to a production codebase with CI, tests, and code review at top-right. The **"kill it on Friday" axis** runs the other way.
+The two diagonals on the diagram are the two spectrums most projects actually move along. The **"ship the real thing" axis**: throwaway script → production codebase with CI. The **"kill it on Friday" axis** runs the other way.
 
 A few concrete examples to anchor the quadrants:
 
@@ -62,7 +62,7 @@ A few concrete examples to anchor the quadrants:
 1. **Will this code still be running in three months?**
 2. **Will anyone (including future-you) be debugging it at 2am?**
 
-If both answers are "no" — vibe coding. If either answer is "yes" — real coding. If the first answer flips during the project (you started vibe coding a prototype, then decided to ship it) — switch mid-stream; that's normal and covered below.
+If both answers are "no" — vibe coding. If either answer is "yes" — real coding. If the first answer flips during the project, switch mid-stream. That's normal and covered below.
 
 ### When to vibe code
 
@@ -72,7 +72,7 @@ Vibe coding is right when the cost of a bug is low and the cost of being slow is
 - **One-off scripts.** Rename 200 files, scrape a page, generate a CSV. Run once, delete.
 - **Throwaway demos.** "Show the team what a Slack-integrated todo app could look like." Will never see production.
 
-**For all of these, the cheapest path is vibe coding with a Tier 2 model.** Use DeepSeek V4, Kimi K2.7, or a local Qwen. The speed wins. The quality is "good enough for code you'll throw out." You keep the expensive models in reserve.
+**For all of these, the cheapest path is vibe coding with a Tier 2 model.** Use DeepSeek V4, Kimi K2.7, or a local Qwen. The speed wins. The quality is "good enough for code you'll throw out." Keep the expensive models in reserve.
 
 ### When to real code
 
@@ -107,7 +107,7 @@ If the "thing that has to keep working" is an internal tool, a scheduled job, or
 - **Vibe coding production code.** Ship the prototype. It works for 80% of users and breaks for the other 20%. The fix is the combine pattern above.
 - **Real coding a prototype.** Spend a day on test coverage for code you're going to throw out. Fix: commit to vibe coding for exploration, switch to real coding after the PRD.
 - **Skipping the PRD.** Vibe code, the AI fills in the gaps with assumptions, the result "looks right" but doesn't match your actual intent, you spend four rounds fixing it. Fix: one paragraph is enough.
-- **Burning tokens on iteration.** Ask the AI to fix a bug. The fix introduces a new bug. 20 iterations, $50 gone. Fix: a coding harness with a test suite catches the regression in round one.
+- **Burning tokens on iteration.** Ask the AI to fix a bug. The fix introduces a new bug. 20 iterations, $50 gone. A coding harness with a test suite catches the regression in round one.
 
 ## Try it
 
@@ -126,7 +126,7 @@ At the end, write down in your own words:
 - Which version would you actually ship?
 - Where did the PRD change what the AI produced?
 
-If your answer to question 3 is "the vibe-coded one" and you can articulate why, you've correctly identified a throwaway prototype. If your answer is "the real-coded one" and you can articulate why, you've correctly identified a thing that has to keep working. Either answer is fine — the point is to feel the difference.
+If your answer to question 3 is "the vibe-coded one" and you can articulate why, you've correctly identified a throwaway prototype. If your answer is "the real-coded one" and you can articulate why, you've correctly identified a thing that has to keep working. Either answer is fine. The point is to feel the difference.
 
 ### Check your understanding
 
@@ -139,5 +139,5 @@ See the standalone quiz at `/lessons/ai-projects/L02-vibe-coding-vs-real-coding/
 - [Hermes L01 — What Is Hermes Agent?](/lessons/hermes/l01-what-is-hermes-agent/) — agent harness for internal tools.
 
 <Callout type="bottom-line">
-**Ron's bottom line:** vibe for exploration, real for shipping, PRD as the switch. Use a coding harness with tests for anything that has to keep working. Use Hermes for internal tools and long-running automations. Use a Tier 2 model for the prototype, a Tier 1 model for the production version.
+**Ron's bottom line:** vibe for exploration, real for shipping, PRD as the switch. Use a coding harness with tests for anything that has to keep working. Use Hermes for internal tools and long-running automations. Tier 2 model for the prototype, Tier 1 for production.
 </Callout>

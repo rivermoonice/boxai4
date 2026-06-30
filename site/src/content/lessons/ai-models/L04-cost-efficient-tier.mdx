@@ -3,7 +3,7 @@ title: "Qwen, MiniMax, and GLM: The Cost-Efficient AI Model Tier for 2026"
 module: ai-models
 slug: l04-cost-efficient-tier
 order: 4
-updatedDate: 2026-06-29
+updatedDate: 2026-06-30
 updatedRaw: "June 2026"
 summary: "Qwen, MiniMax, and GLM handle 80% of daily work at 5–20x lower cost than Claude Opus 4.8. Pick by workload, not by price."
 description: "Where Qwen 3.7 Max, MiniMax M3, and GLM 5.2 each win, what each costs at 50 msgs/day, and which to reach for when Kimi and DeepSeek (covered in L03) are the wrong fit."
@@ -38,7 +38,7 @@ Cost is a function of where the model sits on the capability axis — not a tax 
 
 Three facts make the chart work:
 
-1. **`$/1M tokens` is the only honest cost unit.** Kimi K2.7 sits at $0.30 input / $1.20 output. Qwen 3.7 Max charges ~$7.50/M output because it runs longer reasoning chains. Opus 4.8 charges $15/M output and burns tokens faster because it thinks out loud.
+1. **`$/1M tokens` is the only honest cost unit.** Kimi K2.7 sits at $0.30 input / $1.20 output. Qwen 3.7 Max charges ~$7.50/M output. Opus 4.8 charges $15/M and burns tokens faster because it thinks out loud.
 2. **Size ≠ capability.** A 70B open-weight model can match a 1T frontier model on summarisation, JSON extraction, or image captioning at 1/10 the cost.
 3. **Cost-efficient tier wins on well-defined tasks with verifiable success criteria.** It loses on ambiguous, novel, or sustained multi-step reasoning.
 
@@ -86,7 +86,7 @@ Reach for GLM for UI components, design-system prototyping, or one-shot self-con
 | Hard reasoning / novel creative | **Claude Opus 4.8** | $80–$150/mo |
 
 <Callout type="gotcha" title="Don't pick by price alone">
-GLM for a long-horizon agent run will burn hours on instability. Opus for a UI one-shot will burn $40 on a task GLM does for $3. Match the model's strength to the workload, then check the price.
+GLM for a long-horizon agent run will burn hours on instability. Opus for a UI one-shot will burn $40 on a task GLM does for $3. Match the model's strength to the workload — then check the price.
 </Callout>
 
 For the full Chinese open-weight landscape, see [L03](/lessons/ai-models/l03-chinese-open-weight/). For tier-routing in a real harness, see [Hermes L01](/lessons/hermes/l01-what-is-hermes-agent/) and [Hermes L06](/lessons/hermes/l06-performance-model-routing-cost/).
@@ -107,7 +107,7 @@ A good run: at least one model hits "edit-and-ship," total cost is below one Opu
 
 ### Routing cheap models in production
 
-Single-task tests don't scale. In production you route by **tier**: cheap model for chat, mid for hard reasoning, Opus only when cheap fails. [Hermes L06](/lessons/hermes/l06-performance-model-routing-cost/) covers tiered routing — a `/research` slash command uses Kimi for discovery and escalates to Opus only when synthesis needs it.
+Single-task tests don't scale. In production you route by **tier**: cheap model for chat, mid for hard reasoning, Opus only when cheap fails. [Hermes L06](/lessons/hermes/l06-performance-model-routing-cost/) covers tiered routing. Its `/research` slash command uses Kimi for discovery and escalates to Opus only when synthesis needs it.
 
 ### Check your understanding
 

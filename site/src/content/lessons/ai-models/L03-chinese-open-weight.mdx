@@ -13,7 +13,6 @@ accent: "#0ea5a4"
 
 **Last tested and updated:** June 2026
 
-import Quiz from '../../../components/lesson/Quiz.astro';
 import Callout from '../../../components/lesson/Callout.astro';
 import { Picture } from 'astro:assets';
 
@@ -125,54 +124,7 @@ If you're already running Hermes ([hermes/L01](/lessons/hermes/l01-what-is-herme
 
 ### Check your understanding
 
-<Quiz questions={[
-  {
-    q: "An 'open-weight' model is one whose:",
-    choices: [
-      "Training data is public",
-      "Trained parameters (weights) are publicly downloadable",
-      "Source code is published under MIT",
-      "API is free for unlimited use",
-    ],
-    answer: 1,
-    explain: "Open-weight means the trained parameters are downloadable. The training data and training recipe usually stay proprietary — that's what separates it from open-source.",
-  },
-  {
-    q: "Short answer: name one workload DeepSeek V4 Pro wins at that Kimi K2.7 is weaker at.",
-    choices: [],
-    answer: 0,
-    explain: "Tool-call reasoning — DeepSeek thinks step-by-step inside tool calls, self-corrects mid-stream, and offers cached tokens across projects. Kimi is cleaner on UI/vision but weaker on agent runtimes.",
-  },
-  {
-    q: "Which lab is the strongest 'self-host on your own GPU' pick in 2026?",
-    choices: ["DeepSeek", "Kimi", "Qwen", "StepFun"],
-    answer: 2,
-    explain: "Qwen ships in sizes from 0.6B up to 480B under Apache 2.0 on most releases. You pick the size that fits your hardware and you own the deployment.",
-  },
-  {
-    q: "True or false: 'open-weight' means the model is free to run.",
-    choices: [],
-    answer: 0,
-    explain: "False. You still pay for tokens on the API, or you pay for electricity and GPU time if you self-host. Open-weight means downloadable, not free.",
-  },
-  {
-    q: "You're building a backend that needs schema-validated function calls and structured output. Which lab fits best?",
-    choices: ["DeepSeek", "Kimi", "Zhipu (GLM)", "StepFun"],
-    answer: 2,
-    explain: "GLM is the most 'enterprise-shaped' of the six — strong on function-call schema adherence and structured pipelines.",
-  },
-  {
-    q: "What's the strongest reason to read the model card before shipping commercially?",
-    choices: [
-      "To find the model's logo",
-      "To check the license tier and any use-case or scale restrictions",
-      "To see if the model has a website",
-      "You don't need to — open-weight means no restrictions",
-    ],
-    answer: 1,
-    explain: "Different labs ship under different licenses (Apache 2.0, MIT-style, Modified MIT, custom). Some have use-case limits or attribution requirements. The card tells you which tier you're in before you ship.",
-  },
-]} />
+Quiz: see [`quiz.json`](/lessons/ai-models/l03-chinese-open-weight/quiz.json) (6 questions, valid JSON).
 
 ### What's next
 
