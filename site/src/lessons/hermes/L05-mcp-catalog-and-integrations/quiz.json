@@ -1,0 +1,63 @@
+[
+  {
+    "q": "What does MCP stand for, and what is it?",
+    "choices": [
+      "Multi-Channel Plugin — a way to broadcast prompts to many apps at once",
+      "Model Context Protocol — a standard that lets an AI agent talk to one outside app via a small server",
+      "Master Control Program — the central scheduler inside Hermes",
+      "Managed Claude Pipeline — a wrapper that batches Claude API calls"
+    ],
+    "answer": 1,
+    "explain": "MCP is the open standard. A single MCP server wraps one app's API and exposes a list of tools (find_issues, create_issue, etc.) the agent can call."
+  },
+  {
+    "q": "As of June 2026, which apps ship in the built-in Hermes MCP catalog?",
+    "choices": [
+      "Linear, n8n, and Unreal Engine",
+      "Linear, GitHub, and Notion",
+      "GitHub, Discord, and Telegram",
+      "Only Linear"
+    ],
+    "answer": 0,
+    "explain": "Linear, n8n, and Unreal Engine. Run `hermes mcp catalog` after every `hermes update` — the list will grow."
+  },
+  {
+    "q": "You want to connect Hermes to GitHub. The catalog doesn't have it. What should you do?",
+    "choices": [
+      "Give up — without the catalog, GitHub integration isn't safe.",
+      "Find a community GitHub MCP, read its source, and configure it yourself.",
+      "Run `hermes mcp install github` anyway and see what happens.",
+      "Wait for the catalog and don't use GitHub in the meantime."
+    ],
+    "answer": 1,
+    "explain": "Custom MCPs are the right path for apps the catalog doesn't cover — but only after you've read the source and understand what the MCP is doing."
+  },
+  {
+    "q": "What's the most important defensive habit after installing any MCP?",
+    "choices": [
+      "Run `hermes update` immediately after install.",
+      "Review the tool whitelist during install, and re-review it with `hermes mcp configure <name>` later.",
+      "Set up a separate API key for every team member.",
+      "Disable the MCP at night so it can't run while you sleep."
+    ],
+    "answer": 1,
+    "explain": "The whitelist is the most important defensive control. Review it at install; re-review with `hermes mcp configure` later. Don't accept defaults blindly."
+  },
+  {
+    "q": "Short answer: name the four commands that make up the catalog workflow.",
+    "choices": [],
+    "answer": 0,
+    "explain": "`hermes update`, `hermes mcp`, `hermes mcp install <name>`, `hermes mcp configure <name>`."
+  },
+  {
+    "q": "After uninstalling an MCP, what should you do with the cached credentials?",
+    "choices": [
+      "Nothing — Hermes cleans up automatically.",
+      "Manually delete the token from `~/.hermes/mcp-tokens/` (or the API key from `~/.hermes/.env`).",
+      "Re-install the MCP to overwrite the old token.",
+      "Run `hermes update` to flush the cache."
+    ],
+    "answer": 1,
+    "explain": "Uninstalling an MCP doesn't delete the cached OAuth token or API key. Clean up `~/.hermes/mcp-tokens/` and `~/.hermes/.env` for any MCP you've removed."
+  }
+]

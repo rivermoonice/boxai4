@@ -1,0 +1,42 @@
+{
+  "lesson": "L02-the-anthropic-family",
+  "module": "ai-models",
+  "questions": [
+    {
+      "q": "Which Claude tier is the best default choice for most daily work in 2026?",
+      "choices": ["Haiku", "Sonnet", "Opus", "Whatever the home screen recommends"],
+      "answer": 1,
+      "explain": "Sonnet lives in the fast-and-capable quadrant. It handles roughly 80% of daily work — drafting, code review, summarisation — at one-fifth the cost of Opus and one-twentieth the cost of the very top tier."
+    },
+    {
+      "q": "You're running a cron job that classifies 5,000 support emails a day. Which tier should you reach for, and why?",
+      "choices": ["Opus, because Opus is the best", "Sonnet, because it's the safe default", "Haiku, because volume work compounds latency and cost", "Either Sonnet or Opus, they're equivalent on classification"],
+      "answer": 2,
+      "explain": "Volume tasks compound the cost and latency difference. Haiku is roughly 12× cheaper than Sonnet per token and responds much faster — exactly what matters when you're doing the same thing 5,000 times a day. Classification is exactly the kind of structured task that doesn't need Opus-level reasoning."
+    },
+    {
+      "q": "What's the single biggest cost mistake beginners make with the Claude family?",
+      "choices": ["Picking Haiku when they should have picked Sonnet", "Reaching for Opus on every task out of habit", "Subscribing to the Max plan before testing on pay-as-you-go", "Both B and C"],
+      "answer": 3,
+      "explain": "Routing everything through Opus burns a 5–60× cost premium per token, and the $200/month Max plan is wasted if you don't actually need Opus-level reasoning that often. The fix is the same for both: start at Sonnet, set a hard spend cap, escalate only when you hit a wall, downgrade when you realise the wall was you being timid."
+    },
+    {
+      "q": "True or false: 'Opus 4.8' and 'Opus' are interchangeable ways to refer to the same thing.",
+      "choices": ["True — the version is just a label", "False — Opus is the tier; 4.8 is the version of that tier"],
+      "answer": 1,
+      "explain": "Tier is the speed/cost slot (Haiku / Sonnet / Opus). Version is which generation of that tier you're calling (4.6, 4.7, 4.8 — these numbers update quarterly). The tier choice swings your bill by 5–60×; the version choice swings it by maybe 1.2×. Tier first, version second."
+    },
+    {
+      "q": "You need an LLM to draft a launch announcement that absolutely has to land in the right tone on the first try. Which tier?",
+      "choices": ["Haiku", "Sonnet", "Opus"],
+      "answer": 2,
+      "explain": "This is a one-shot where 'good enough' fails. Opus's better calibration and willingness to rewrite until the tone reads right makes it the right tool here — assuming you can afford the higher per-token cost. For everything else, start at Sonnet."
+    },
+    {
+      "q": "Why does the cost gap between Opus and Sonnet matter more than the gap between Sonnet versions?",
+      "choices": ["Versions change pricing more often than tiers do", "The cross-tier cost gap is roughly 5×; cross-version is at most ~1.2×", "Anthropic only bills by version, not by tier", "It doesn't — they're roughly the same size"],
+      "answer": 1,
+      "explain": "Rough per-million-token cost: Haiku ≈ $1.25 out, Sonnet ≈ $15 out, Opus ≈ $75 out. The tier-to-tier move is a 5–60× swing in your bill. Version-to-version inside a tier is at most about 1.2×. Optimise tier first, version second."
+    }
+  ]
+}

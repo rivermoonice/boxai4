@@ -1,0 +1,42 @@
+{
+  "lesson": "L03-building-with-hermes",
+  "module": "ai-projects",
+  "questions": [
+    {
+      "q": "In the weekend-build pattern, which tool writes the spec?",
+      "choices": ["Claude Code", "Hermes", "Either works equally well", "Neither — you write it yourself"],
+      "answer": 1,
+      "explain": "Hermes writes the spec. It's structured writing work — features, data model, edge cases, test plan — and Hermes is built for that. Claude Code reads the spec; it doesn't author the spec."
+    },
+    {
+      "q": "What file format is the handoff between Hermes and Claude Code?",
+      "choices": ["A Slack thread", "SPEC.md", "A Figma link", "A shared Google Doc"],
+      "answer": 1,
+      "explain": "SPEC.md — a single markdown file in the project directory. Hermes writes it Friday evening. Claude Code reads it Saturday morning. Hermes diffs the build against it on Sunday."
+    },
+    {
+      "q": "Short answer: why is the verify step (step 4) worth running before you deploy?",
+      "choices": [],
+      "answer": 0,
+      "explain": "It diffs the codebase against the spec and surfaces gaps you missed. Without it, you ship features that don't match the spec and discover it three weeks later. Takes 15 minutes, saves a rewrite."
+    },
+    {
+      "q": "Which tool is the right pick for the close-out step (README, deploy, screenshots)?",
+      "choices": ["Hermes", "Claude Code", "Either works equally well", "A no-code tool"],
+      "answer": 1,
+      "explain": "The close-out is code-adjacent work (repo files, deploy scripts, screenshots committed to the repo) and it ships from the same repo where step 3 ran. Claude Code owns it."
+    },
+    {
+      "q": "A spec is 'good enough' for Claude Code when:",
+      "choices": ["It is at least 10 pages long", "It has specific, testable features and a clear 'done' condition", "It uses lots of bullet points", "It is written in pseudocode"],
+      "answer": 1,
+      "explain": "Specificity beats length. 'User can upload a CSV' is good. 'User can do data stuff' is useless. A clear 'done' condition is what stops the build loop from running forever."
+    },
+    {
+      "q": "Short answer: name one thing you should NOT include in a weekend-build spec.",
+      "choices": [],
+      "answer": 0,
+      "explain": "Pick one: complex auth (signup, OAuth, password reset); real-time collaboration features; more than 5 features; payment processing; admin dashboards. These each take more than a weekend on their own. Cut them from the scope."
+    }
+  ]
+}

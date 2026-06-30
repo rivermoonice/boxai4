@@ -1,0 +1,37 @@
+[
+  {
+    "q": "You want to reach your VPS-hosted Hermes dashboard from your laptop. What's the recommended setup?",
+    "choices": [
+      "Open port 919 on the VPS firewall so any device on the internet can reach it.",
+      "Bind the dashboard to 0.0.0.0:919 and use a username/password login.",
+      "Install Tailscale on both machines, then bind the dashboard to the Tailscale 100.x IP only.",
+      "Set up port forwarding on your home router and hope for the best."
+    ],
+    "answer": 2,
+    "explain": "Tailscale gives the VPS a private IP (100.x.x.x) that is not routed on the public internet. Binding the dashboard to that IP means there is nothing for an attacker to scan."
+  },
+  {
+    "q": "Short answer: why is it better to generate a separate API key for Hermes than to paste your personal root key?",
+    "choices": [],
+    "answer": 0,
+    "explain": "Scope. If the agent's scoped key is leaked, the damage is bounded to the agent's permissions. If your root key is leaked, the attacker has full account access including billing and admin scopes."
+  },
+  {
+    "q": "Per the source video, what's the recommended tool to keep the dashboard running across SSH logouts?",
+    "choices": ["systemd", "screen", "tmux", "nohup"],
+    "answer": 2,
+    "explain": "Ron recommends tmux over systemd for a single dashboard. Faster to set up (one command, one session, detach with Ctrl-B D), no unit file needed."
+  },
+  {
+    "q": "Where should you NEVER paste an API key?",
+    "choices": ["A password manager with secure sharing", "~/.hermes/.env on your VPS", "Discord, GitHub issues, support tickets, screenshots", "A sealed envelope in a safe"],
+    "answer": 2,
+    "explain": "Anywhere plaintext credentials land publicly, a scraper will find them within minutes. Use a password manager with secure sharing for teammate handoffs."
+  },
+  {
+    "q": "True or false: setting a monthly spend cap also protects you from a stolen API key.",
+    "choices": [],
+    "answer": 0,
+    "explain": "True. The same cap that protects you from a runaway session caps the damage from a stolen key. Set the cap before you forget."
+  }
+]

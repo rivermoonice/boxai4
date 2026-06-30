@@ -1,0 +1,43 @@
+[
+  {
+    "q": "Hermes is best described as which pricing model?",
+    "choices": ["Flat $200/mo subscription", "Free with no API costs", "BYOK — bring your own model API key", "Bundled with Google Cloud"],
+    "answer": 2,
+    "explain": "Hermes is open-source and BYOK. You sign up with a model provider and pay per token. The harness itself is free; the model is not."
+  },
+  {
+    "q": "Which tool wins for 'coding all day, shipping production software'?",
+    "choices": ["Hermes", "Claude Code", "Mavis", "Gemini"],
+    "answer": 1,
+    "explain": "Claude Code is the polished coding harness. It runs tests, integrates with your IDE, and verifies by execution — exactly what shipping software needs."
+  },
+  {
+    "q": "Per Ron, what is the right way to think about the four harnesses?",
+    "choices": [
+      "Pick the most popular one.",
+      "Pick by workload — different tools win different jobs.",
+      "Always pick the cheapest one.",
+      "Pick whichever one is newest."
+    ],
+    "answer": 1,
+    "explain": "There is no single winner. Different harnesses win different workloads. The decision is about your job, not the brand."
+  },
+  {
+    "q": "Mavis is best described as:",
+    "choices": ["A Hermes replacement", "A beginner on-ramp", "The most powerful option", "A model"],
+    "answer": 1,
+    "explain": "Mavis is a starter multi-agent platform, not a destination. Most users graduate to Hermes once they've learned the concepts."
+  },
+  {
+    "q": "Short answer: name one workload where Hermes clearly wins over Claude Code.",
+    "choices": [],
+    "answer": 0,
+    "explain": "Long-running automation (cron jobs, 24/7 scheduled tasks, multi-channel workflows like Discord/Telegram bots, Kanban, sub-agents). Claude Code is IDE-bound and was not designed for 24/7 background work."
+  },
+  {
+    "q": "What is the minimum time you should commit to a harness before switching?",
+    "choices": ["3 days", "1 week", "30 days", "Switch immediately if anything goes wrong"],
+    "answer": 2,
+    "explain": "Switching cost is high. Muscle memory, Skills, MCP configs, Bundles — all tool-specific. Pick one and stick for at least 30 days."
+  }
+]

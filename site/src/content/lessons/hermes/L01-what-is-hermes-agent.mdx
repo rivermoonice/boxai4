@@ -13,7 +13,6 @@ accent: "#7c5cff"
 
 **Last tested and updated:** June 2026
 
-import Quiz from '../../../components/lesson/Quiz.astro';
 import TerminalScreenshot from '../../../components/lesson/TerminalScreenshot.astro';
 import VidCard from '../../../components/lesson/VidCard.astro';
 import Callout from '../../../components/lesson/Callout.astro';
@@ -45,8 +44,6 @@ A **harness** is the program that wraps the model. It reads your codebase, runs 
 </Callout>
 
 **When your AI messes up, the problem is almost always the harness (source video `GGtmmx0MKCI`, 2:30).** Not the model. In 2026 the models are good enough. The differentiator is what wraps them.
-
-For a deep dive on this, see [L04 — When to Switch Models vs Switch the Harness](/lessons/ai-models/l04-cost-efficient-tier/).
 
 ## Pick your tool
 
@@ -133,49 +130,7 @@ Prefer hearing this from Ron? 13 minutes, same source video:
 
 ### Check your understanding
 
-<Quiz questions={[
-  {
-    q: "Hermes Agent is best described as a:",
-    choices: ["Chatbot", "Coding harness", "General-purpose agent harness", "Model"],
-    answer: 2,
-    explain: "Hermes wraps a model and gives it the ability to read files, run commands, and persist across sessions. That's an agent harness.",
-  },
-  {
-    q: "Name one thing Hermes can do that a regular chatbot cannot.",
-    choices: [],
-    answer: 0,
-    explain: "Any of: read and write files; run shell commands; remember context across sessions; schedule tasks; connect to Discord/Linear/Notion via MCP.",
-  },
-  {
-    q: "You want to build a full-stack web app from scratch. Which kind of harness first?",
-    choices: ["Hermes", "Claude Code or Kilo Code", "Either works equally well", "Neither — you need a no-code tool"],
-    answer: 1,
-    explain: "Coding harnesses verify by running tests, which is what you need for shipping software.",
-  },
-  {
-    q: "True or false: Hermes is an AI model. Explain in one sentence.",
-    choices: [],
-    answer: 0,
-    explain: "False. Hermes is a harness, not a model. You bring your own model (Claude, GPT, DeepSeek, Kimi) and Hermes wraps it.",
-  },
-  {
-    q: "Per the source video, what is the trade-off when using an agent harness instead of a coding harness?",
-    choices: [
-      "Agent harnesses are slower at every task.",
-      "Agent harnesses verify by inferring, not by running code.",
-      "Agent harnesses can't use frontier models.",
-      "There is no trade-off; agent harnesses are strictly better.",
-    ],
-    answer: 1,
-    explain: "Agent harnesses verify by inferring (\"does this look right?\") rather than running tests. More flexible for ongoing work, less reliable for code.",
-  },
-  {
-    q: "What does BYOK stand for, and why does it matter for Hermes?",
-    choices: [],
-    answer: 0,
-    explain: "\"Bring Your Own Key.\" Hermes doesn't bundle model access — you sign up with a provider (Anthropic, OpenAI, etc.) and paste your API key. Cost is whatever you spend on the model.",
-  },
-]} />
+Quiz: see [`quiz.json`](/src/lessons/hermes/L01-what-is-hermes-agent/quiz.json) for the 6 standalone questions.
 
 ### What's next
 

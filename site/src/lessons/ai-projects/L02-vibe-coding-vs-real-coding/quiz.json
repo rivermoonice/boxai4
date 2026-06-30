@@ -1,0 +1,62 @@
+{
+  "lesson": "L02-vibe-coding-vs-real-coding",
+  "module": "ai-projects",
+  "questions": [
+    {
+      "q": "You spend an hour vibe coding a personal cron that scrapes a weather page every morning. Is that the right tool?",
+      "choices": [
+        "No — vibe coding is always wrong.",
+        "Yes — it's a personal tool, low stakes, you'll throw it away if it breaks.",
+        "No — anything automated should be built with Claude Code.",
+        "It depends on which model you used."
+      ],
+      "answer": 1,
+      "explain": "Vibe coding is exactly right for low-stakes personal automations you'll throw away. The bar is \"looks right, runs once, don't care if it breaks.\" Real coding would be overkill."
+    },
+    {
+      "q": "Short answer: what is the single artifact that lets you switch from vibe coding to real coding mid-project?",
+      "choices": [],
+      "answer": 0,
+      "explain": "A PRD (Product Requirements Document) — even a one-paragraph PRD. It captures intent so the harness can build against something specific instead of filling in gaps with its own assumptions."
+    },
+    {
+      "q": "You vibe coded a feature, it works on your machine, and the team wants to ship it next week. What is the right next step?",
+      "choices": [
+        "Ship the vibe-coded version as-is.",
+        "Open Claude Code or Kilo Code, write a one-paragraph PRD, rebuild the feature with tests, read every diff.",
+        "Just deploy the prototype and see if anyone complains.",
+        "Rewrite the whole project from scratch in a different language."
+      ],
+      "answer": 1,
+      "explain": "The vibe-then-real pattern: keep the prototype as exploration, then rebuild the production version with a coding harness, a PRD, and tests. This is the most common shipping pattern in 2026."
+    },
+    {
+      "q": "Per the source quote, why does vibe coding break on drag-handlers?",
+      "choices": [
+        "Models don't understand drag-and-drop.",
+        "Vibe coding with intent-free prompts fills in gaps with assumptions, and those assumptions are often wrong on edge cases.",
+        "Drag-handlers require a coding harness.",
+        "Models can't generate event handlers at all."
+      ],
+      "answer": 1,
+      "explain": "Vibe coding produces code that \"looks right\" but reasons about the wrong model of the problem. Drag-handlers are full of edge cases the AI fills in with guesses if you don't specify them in a PRD."
+    },
+    {
+      "q": "True or false: real coding means writing the code by hand without AI help.",
+      "choices": [],
+      "answer": 0,
+      "explain": "False. Real coding means using AI as a tool — usually a coding harness — while you drive the verification (PRD, tests, code review). The AI still writes most of the code. You just run the loop."
+    },
+    {
+      "q": "Which is the better production stack for an internal tool that only your team uses: a coding harness with tests, or Hermes with a vibe-coded skill?",
+      "choices": [
+        "Always the coding harness.",
+        "Always Hermes.",
+        "Either is fine, depending on the team — both can be production-grade for internal tools.",
+        "Neither — internal tools should be hand-coded."
+      ],
+      "answer": 2,
+      "explain": "Internal tools have low blast radius. A Hermes-scheduled vibe-coded skill is often the right answer (see Hermes L01). A coding-harness version with tests is also fine. The wrong answer is the one that costs more than the tool is worth."
+    }
+  ]
+}

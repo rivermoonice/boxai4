@@ -1,0 +1,48 @@
+[
+  {
+    "q": "For a beginner doing 100 messages/day with average 500 input + 1,000 output tokens, the realistic monthly cost of DeepSeek V4 Flash is closest to:",
+    "choices": ["$1.20", "$12", "$50", "$200"],
+    "answer": 0,
+    "explain": "V4 Flash at $0.10/$0.30 per 1M tokens × 100 msgs × 30 days × (500 input + 1000 output) tokens ≈ $1.20. Cheap models at beginner volume are $1–$10/month; expensive models at the same volume are $50–$250/month."
+  },
+  {
+    "q": "In the tier-routing pattern, what percentage of total calls should hit the cheap executor tier?",
+    "choices": ["~5%", "~25%", "~95%", "100%"],
+    "answer": 2,
+    "explain": "The executor pool (V4 Flash, Kimi, M3) handles the bulk — 50 to 500 calls per task. The orchestrator (Opus) is called 1–5 times per task for planning. ~95% of call count lives in the cheap tier."
+  },
+  {
+    "q": "Which task is the WRONG fit for a cheap executor model?",
+    "choices": [
+      "Refactoring a 100-line Python file",
+      "Summarising three 100-page academic papers",
+      "A 7am cron job that posts a news digest to Discord",
+      "One-shot creative writing where polish matters"
+    ],
+    "answer": 3,
+    "explain": "Creative one-shots need polish — V4 Flash tends to be verbose and miss the mark. Use Opus or Sonnet for the first draft, then route follow-ups to cheap."
+  },
+  {
+    "q": "Short answer: name the single most important defensive habit from this lesson.",
+    "choices": [],
+    "answer": 0,
+    "explain": "Set a hard monthly budget cap in your model provider's dashboard on day one. $20 for a beginner, with email alerts at 50%, 80%, 100%. Without it, a runaway session can burn $50+ in two hours."
+  },
+  {
+    "q": "What is \"tiered routing\"?",
+    "choices": [
+      "Always use the cheapest model",
+      "Rotate models randomly to spread the load",
+      "Use an expensive orchestrator for planning, a cheap executor pool for bulk work",
+      "Run two models in parallel on every request"
+    ],
+    "answer": 2,
+    "explain": "Tiered routing = smart/expensive for planning + hard one-shots, cheap/fast for bulk execution. It's \"right tool for the right task,\" not \"always cheap\" or \"always expensive.\""
+  },
+  {
+    "q": "True or false: output tokens cost the same as input tokens, so a model's headline input price tells you the whole story.",
+    "choices": [],
+    "answer": 0,
+    "explain": "False. Output tokens usually cost 3–5× more per token than input. A model that produces verbose output costs more than its headline input number suggests — always check the output price, not just the input."
+  }
+]

@@ -1,0 +1,40 @@
+{
+  "questions": [
+    {
+      "q": "What are the five layers of a small online business in 2026?",
+      "choices": ["Idea, code, design, marketing, sales", "Landing, product, email, monetization, analytics", "Website, social media, ads, SEO, content", "Founder, team, investors, customers, product"],
+      "answer": 1,
+      "explain": "Landing, product, email, monetization, analytics — each with its own automation profile."
+    },
+    {
+      "q": "Short answer: which layer has the highest leverage in a small online business, and why?",
+      "choices": [],
+      "answer": 0,
+      "explain": "Email. Every other layer funnels back into the list — sign-ups, customers, monetisation, and the analytics that tell you what to email next. Pick one layer and justify it."
+    },
+    {
+      "q": "Which of these should you automate FIRST?",
+      "choices": ["A custom CRM", "A chatbot for support", "A welcome email sequence", "Daily LinkedIn posts"],
+      "answer": 2,
+      "explain": "The welcome sequence is in DO FIRST: cheap to build, high recurring payoff, foundation for everything else. CRM and chatbot are AVOID; LinkedIn is SKIP."
+    },
+    {
+      "q": "You're building a niche directory. Which layer should Claude Code own, and which should Hermes own?",
+      "choices": ["Claude Code: directory listings scraping. Hermes: landing page copy.", "Claude Code: directory MVP build. Hermes: weekly digest + analytics cron.", "Claude Code: Stripe webhooks. Hermes: payment receipts.", "Both harnesses should do the same work — pick one."],
+      "answer": 1,
+      "explain": "Claude Code ships the directory MVP (Layer 2 — work lives in a repo, needs test verification). Hermes runs the weekly digest cron and the analytics alert (Layers 3 and 5 — long-running, outside a codebase)."
+    },
+    {
+      "q": "Per the source videos, what does the '$3/month business' headline actually refer to?",
+      "choices": ["Total business cost including models and time", "Infrastructure cost only", "Stripe fees", "The cost of running Hermes"],
+      "answer": 1,
+      "explain": "Infrastructure only — Hostinger VPS + domain. Realistic total cash is $15–$35/mo once you add email, analytics, and model API costs. Time is the biggest cost of all."
+    },
+    {
+      "q": "Short answer: name ONE thing from the SKIP or AVOID quadrant and explain why it doesn't belong in a week-one stack.",
+      "choices": [],
+      "answer": 0,
+      "explain": "Free response. Good answers: a custom CRM (buy, don't build), a chatbot for support (high effort, low payoff — a welcome email usually solves it), daily LinkedIn posts (audience isn't yours), or any AI wrapper demo (no defensibility)."
+    }
+  ]
+}

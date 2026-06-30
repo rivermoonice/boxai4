@@ -3,7 +3,7 @@ title: "Hermes Agent Automation: Cron, Kanban, and Sub-Agents (2026)"
 module: hermes
 slug: l08-automation-cron-kanban-sub-agents
 order: 8
-updatedDate: 2026-06-29
+updatedDate: 2026-06-30
 updatedRaw: "June 2026"
 summary: "How to run Hermes on autopilot — daily cron jobs, multi-agent Kanban boards, and sub-agent delegation — and the gotchas that waste hours if you skip this lesson."
 description: "You'll learn the three automation patterns Hermes supports (cron, Kanban, sub-agents), when to use each, and how to ship your first daily 7am summary cron without the silent-failure traps that catch most beginners."
@@ -13,7 +13,6 @@ accent: "#7c5cff"
 
 **Last tested and updated:** June 2026
 
-import Quiz from '../../../components/lesson/Quiz.astro';
 import TerminalScreenshot from '../../../components/lesson/TerminalScreenshot.astro';
 import VidCard from '../../../components/lesson/VidCard.astro';
 import Callout from '../../../components/lesson/Callout.astro';
@@ -21,13 +20,13 @@ import { Picture } from 'astro:assets';
 
 import cronHelp from '../../../assets/lessons/hermes/L08/cron.png';
 
-After a week of running Hermes manually, you'll notice the same thing every new operator notices: **the chat window is the bottleneck, not the model**. Hermes can read files, run commands, call MCP tools, and remember context — but only when you're at the keyboard. The unlock is automation. Once a routine runs without you, the agent stops being a tool you use and becomes a worker you hire.
+Cron is how Hermes runs while you're not at the keyboard. Once a routine runs without you, the agent stops being a tool you use and becomes a worker you hire.
 
-This lesson covers the three patterns Hermes supports — **cron jobs**, **Kanban boards**, and **sub-agents** — when to pick each, and the silent-failure traps that burn hours if you meet them unprepared. It assumes you've installed Hermes ([L02](/lessons/hermes/l02-install-and-first-run/)), set up a Skill ([L04](/lessons/hermes/l04-skills-and-skill-bundles/)), and connected Discord ([L05](/lessons/hermes/l05-mcp-catalog-and-integrations/)). If your automation runs 24/7 on a VPS, finish [L07](/lessons/hermes/l07-security-essentials/) first.
+Prereqs: [L02 install](/lessons/hermes/l02-install-and-first-run/), [L04 Skill Bundles](/lessons/hermes/l04-skills-and-skill-bundles/), [L05 MCP catalog (Model Context Protocol)](/lessons/hermes/l05-mcp-catalog-and-integrations/), [L07 security](/lessons/hermes/l07-security-essentials/) for 24/7 VPS runs.
 
 ## The hook
 
-Pick a task you do every weekday. **"Open five tabs, scan the AI news, write a summary, paste it into the team Discord at 7am."** Could a chatbot do it? Yes, if you sit down and type it. But you wanted a worker, not a coworker. The whole point of running Hermes is that it does this without you.
+Pick a task you do every weekday. **"Open five tabs, scan the AI news, write a summary, paste it into the team Discord at 7am."** The whole point of running Hermes is that it does this without you.
 
 <Picture src="/lessons/hermes/L08/cron-skill-discord-flow.svg" alt="Three-step flow: a cron job at 7am triggers Hermes, Hermes runs a Skill Bundle to produce a summary, and the result is posted to Discord via webhook" width={900} height={360} formats={["avif", "webp"]} />
 
@@ -41,15 +40,15 @@ That's the picture. A **trigger** (cron). A **brain** (a Skill Bundle from L04).
 
 Hermes has three automation patterns. They look similar — "the agent does something without you" — but they answer three different questions.
 
-**Pattern 1 — Cron jobs.** A scheduled trigger. *"Run this command at 7am every day."* Best for: simple, repeatable, single-task automation. A daily research summary. An hourly price check. A weekly newsletter draft. The job is small and well-defined; the value is that it runs even when your laptop is closed.
+**Pattern 1 — Cron jobs.** A scheduled trigger. *"Run this command at 7am every day."* Best for: simple, repeatable, single-task automation. A daily research summary. An hourly price check. A weekly newsletter draft. The job is small and well-defined. Its value is that it runs even when your laptop is closed.
 
-**Pattern 2 — Kanban boards.** A multi-agent project board. Each task has an **assignee profile** — a separate Hermes instance with its own config, API keys, and specialisation. Multiple named workers collaborate; you watch progress on a live dashboard. Best for: multi-step workflows with defined roles. *"Research → draft → review → publish."*
+**Pattern 2 — Kanban boards.** A multi-agent project board. Each task has an **assignee profile** — a separate Hermes instance with its own config, API keys, and specialisation. Multiple named workers collaborate. You watch progress on a live dashboard. Best for: multi-step workflows with defined roles. *"Research → draft → review → publish."*
 
 **Pattern 3 — Sub-agents.** A worker spawned by your main agent *within the same session*. No persistent state, no specialisation, no separate config — just quick parallel work. Best for: "search three sources at once and combine the result" inside one workflow.
 
 <Picture src="/lessons/hermes/L08/kanban-agents.svg" alt="Kanban board with three columns (To do, In progress, Done) and task cards showing named worker profiles @researcher, @drafter, @reviewer" width={900} height={540} formats={["avif", "webp"]} />
 
-The shapes map onto different problems. A cron job is a *time* trigger — it fires on a schedule. A Kanban board is a *role* trigger — work flows between specialised workers. A sub-agent is a *parallelism* trigger — your main agent fans out work and gathers results. Confusing them is the most common beginner mistake.
+The shapes map onto different problems: cron is a *time* trigger, Kanban is a *role* trigger, sub-agents are a *parallelism* trigger. Confusing them is the most common beginner mistake.
 
 <TerminalScreenshot
   image={cronHelp}
@@ -64,7 +63,7 @@ Cron does not know what an "assignee" is. Kanban does not run every minute. Sub-
 
 ## Pick your tool
 
-Decide by asking three questions in order. The first question that answers "yes" wins.
+Decide by asking three questions in order.
 
 1. **Is the work a single recurring task with no human review?** → Cron.
 2. **Is the work a multi-step project with defined roles and visible progress?** → Kanban.
@@ -72,16 +71,12 @@ Decide by asking three questions in order. The first question that answers "yes"
 
 | Task | Pattern | Why |
 |---|---|---|
-| Daily 7am research summary to Discord | Cron | Single task, runs on a schedule, no review needed |
-| Hourly price check for one product | Cron | Recurring, simple, small |
+| Daily 7am summary or hourly price check | Cron | Single recurring task, runs on a schedule, no review needed |
 | Research → draft → review → publish pipeline | Kanban | Multiple roles, visible state, possible retries |
 | "Search three sources in parallel and combine" | Sub-agent | One session, fan out, gather |
-| Weekly newsletter draft with light editing | Cron (Story 1) → graduate to Kanban | Cron is fine while you're solo |
-| Long-running 24/7 personal assistant on a VPS | Cron | Kanban adds overhead you don't need yet |
+| Weekly newsletter draft or 24/7 VPS assistant | Cron now, Kanban later | Cron is fine while you're solo |
 
 **For 90% of beginners, the right answer is cron.** Don't reach for Kanban until you have a multi-step project that benefits from visible progress.
-
-### The cron skill
 
 ### The cron skill
 
@@ -105,7 +100,7 @@ hermes cron list
 hermes cron status
 ```
 
-The first thing to notice: cron is a *first-class* subcommand on the Hermes CLI, not a wrapper around the system `cron` daemon. The scheduler runs inside Hermes, so jobs share its config, API keys, and logs. Good for visibility, bad if Hermes crashes — the daemon is not independent.
+The first thing to notice: cron is a *first-class* subcommand on the Hermes CLI, not a wrapper around the system `cron` daemon. The scheduler runs inside Hermes, so jobs share its config, API keys, and logs. If Hermes restarts, jobs pause until it comes back up.
 
 <Callout type="gotcha" title="Cron's three silent killers">
 1. **Cron isn't running.** `hermes cron status` is your smoke test. If it says "scheduler not running," nothing else matters.
@@ -140,7 +135,7 @@ Sub-agents are the fastest pattern but the most fragile. Per the L06 source vide
 Sub-agents are a tool for *inside a workflow*, not for replacing it. If you want sub-agents for long-running automation, you probably want cron or Kanban instead.
 
 <Callout type="bottom-line" title="Ron's bottom line: pick one, ship it">
-Most beginners should start with one cron job for one daily task. Watch it run for a week. Then decide whether you need a Kanban board or a sub-agent pattern. Three automations at 95% reliability beats one automation at 99% reliability every time, because the latter rots while you tune it.
+Most beginners should start with one cron job for one daily task. Watch it run for a week. Three reliable daily jobs beat one fragile multi-role pipeline. Then decide whether you need a Kanban board or a sub-agent pattern.
 </Callout>
 
 ## Try it
@@ -210,13 +205,12 @@ You have shipped your first cron when **all five of these are true**:
 - `hermes cron run <name>` produces the expected output in the log.
 - The next 7am fires on its own without you touching the keyboard.
 
-If the first run is silent, the most common cause is the Skill failing in a fresh session. Add `--debug` to your cron command to see the full trace.
+If the first run is silent, the most common cause is the Skill failing in a fresh session. Run `hermes cron run --debug morning-summary` to see the full trace.
 
 ### What's next
 
-- **Cron works, now what?** → Add a second Skill. Don't add a Kanban board until two crons have each run cleanly for a week.
-- **Cron broke after a VPS reboot?** → [L07](/lessons/hermes/l07-security-essentials/) covers daemon recovery.
-- **Want a multi-agent pipeline?** → That is Kanban Story 3+. Read [L09 — Hermes vs Claude Code vs Mavis](/lessons/hermes/l09-hermes-vs-alternatives/) first to confirm Hermes is still right.
+- [L07 — security essentials](/lessons/hermes/l07-security-essentials/) if cron breaks after a VPS reboot
+- [L09 — Hermes vs Claude Code vs Mavis](/lessons/hermes/l09-hermes-vs-alternatives/) before you add a Kanban Story 3+ pipeline
 
 ### Watch the full walkthrough
 
@@ -224,56 +218,4 @@ If the first run is silent, the most common cause is the Skill failing in a fres
 
 ### Check your understanding
 
-<Quiz questions={[
-  {
-    q: "You want a daily 7am summary posted to Discord. Which pattern fits best?",
-    choices: ["Sub-agent", "Cron", "Kanban", "Manual TUI session"],
-    answer: 1,
-    explain: "Cron is the right tool for a single recurring task with no human review. Sub-agents die with the session; Kanban is overkill for one job.",
-  },
-  {
-    q: "What is the difference between a Kanban assignee profile and a sub-agent?",
-    choices: [
-      "They are the same thing with different names",
-      "Profiles are separate Hermes instances with their own config and specialisation; sub-agents are ephemeral and live inside one session",
-      "Profiles are slower than sub-agents",
-      "Sub-agents have their own API keys",
-    ],
-    answer: 1,
-    explain: "Profiles persist across sessions with their own API keys, working directory, and specialisation. Sub-agents are spawned on demand by the orchestrator and have no persistent state.",
-  },
-  {
-    q: "Short answer: name one habit that prevents cron jobs from silently failing.",
-    choices: [],
-    answer: 0,
-    explain: "Any of: log to a file and check it; test the Skill manually before scheduling; verify the scheduler is running (`hermes cron status`); use absolute paths; schedule a canary heartbeat job.",
-  },
-  {
-    q: "Per the source video, why should you NOT pair Kanban with cron right now?",
-    choices: [
-      "Kanban and cron use the same database",
-      "Kanban does not have reliable delete and dedup logic yet",
-      "Cron jobs always overwrite Kanban state",
-      "They conflict on port 8080",
-    ],
-    answer: 1,
-    explain: "Per `R_aLVXYzDac`, pairing the two caused duplicate tasks and race conditions until Hermes ships reliable delete and dedup. Run them separately for now.",
-  },
-  {
-    q: "Which model class is appropriate for sub-agent delegation?",
-    choices: ["The cheapest available model", "Sonnet-class or better", "Only local models", "Any model — sub-agents are cheap"],
-    answer: 1,
-    explain: "Per the L06 source video, parallel research with the cheapest model took 14 minutes — longer than doing it directly. Reserve sub-agents for Sonnet-class or better.",
-  },
-  {
-    q: "True or false: a cron job scheduled inside Hermes survives an `hermes` process restart.",
-    choices: [
-      "True — cron entries are stored on disk and re-loaded",
-      "False — cron is tied to the running Hermes process",
-      "Only on Linux",
-      "Only if you set HERMES_CRON_PERSIST=1",
-    ],
-    answer: 0,
-    explain: "Cron entries are persisted by `hermes cron create` and re-loaded on startup. The scheduler daemon is independent of any single chat session, but it is part of the Hermes process — keep Hermes running (L07 covers systemd / launchd setups).",
-  },
-]} />
+Quiz: see [`quiz.json`](/lessons/hermes/l08-automation-cron-kanban-sub-agents/quiz.json) (6 questions, valid JSON).

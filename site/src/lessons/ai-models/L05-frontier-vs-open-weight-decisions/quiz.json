@@ -1,0 +1,42 @@
+{
+  "lesson": "L05-frontier-vs-open-weight-decisions",
+  "module": "ai-models",
+  "questions": [
+    {
+      "q": "Per the channel, you should pick a model by:",
+      "choices": ["Price", "Marketing", "The loop your workload runs in", "The most popular model"],
+      "answer": 2,
+      "explain": "Pick by loop, not by model. A great model inside the wrong loop is still the wrong tool."
+    },
+    {
+      "q": "For coding all day in production, the recommended tier pattern is:",
+      "choices": ["Tier 1 only", "Tier 2 only", "Tiered routing — Tier 2 default, Tier 1 on hard sub-tasks", "Tier 3 only"],
+      "answer": 2,
+      "explain": "Tiered routing: Sonnet default for routine work, Opus escalated for the hardest 10–20% of sub-tasks."
+    },
+    {
+      "q": "Short answer: name one trigger that should make you escalate from Tier 2 to Tier 1.",
+      "choices": [],
+      "answer": 0,
+      "explain": "Any of: three or more retries with the same prompt; the task escalates from routine to novel; production-critical work where reliability outweighs cost."
+    },
+    {
+      "q": "Which benchmark does the channel flag as unreliable?",
+      "choices": ["FrontierCoding Diamond", "Artificial Analysis", "SWE-bench Pro", "HumanEval"],
+      "answer": 2,
+      "explain": "SWE-bench Pro is cherry-picked. Trust FrontierCoding Diamond, Artificial Analysis, and hands-on real-task tests."
+    },
+    {
+      "q": "The biggest mistake beginners make when choosing tiers is:",
+      "choices": ["Picking the cheapest tier", "Picking by marketing or popularity instead of workload fit", "Avoiding frontier models entirely", "Reading too many leaderboards"],
+      "answer": 1,
+      "explain": "Pick by loop, not by hype. Marketing and popularity correlate with capability, not with workload fit."
+    },
+    {
+      "q": "How often does the channel recommend re-evaluating your tier choice?",
+      "choices": ["Weekly", "Monthly", "Quarterly, or when a major model release ships", "Never — pick once and stick with it forever"],
+      "answer": 2,
+      "explain": "Quarterly, or sooner if a major release lands. Tier lists go stale fast — your workload doesn't."
+    }
+  ]
+}

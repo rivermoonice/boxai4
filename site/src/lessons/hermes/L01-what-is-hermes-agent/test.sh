@@ -59,12 +59,36 @@ else
   fail=1
 fi
 
-# Quiz component present
-if grep -Eq "<Quiz[[:space:]/>]" "$LESSON"; then
-  echo "  ok    : <Quiz> component"
+# Standalone quiz.json (writer contract: quiz.json is the source of truth, not inlined MDX)
+QUIZ="/home/ubuntu/boxai4/site/src/lessons/hermes/L01-what-is-hermes-agent/quiz.json"
+if [[ -f "$QUIZ" ]]; then
+  echo "  ok    : standalone quiz.json exists"
+  if python3 -c "import json,sys; q=json.load(open('$QUIZ')); qs=q.get('questions') if isinstance(q,dict) else q; sys.exit(0 if isinstance(qs,list) and len(qs)>=1 else 1)"; then
+    n=$(python3 -c "import json; q=json.load(open('$QUIZ')); qs=q.get('questions') if isinstance(q,dict) else q; print(len(qs))")
+    echo "  ok    : quiz.json has $n question(s)"
+  else
+    echo "  MISS  : quiz.json is not valid JSON or has no questions list"
+    fail=1
+  fi
 else
-  echo "  MISS  : <Quiz> component"
+  echo "  MISS  : standalone quiz.json at $QUIZ"
   fail=1
+fi
+
+# Lesson must reference the standalone quiz.json (de-inlined from MDX <Quiz>)
+if grep -F -q "quiz.json" "$LESSON"; then
+  echo "  ok    : lesson references quiz.json"
+else
+  echo "  MISS  : lesson does not reference quiz.json"
+  fail=1
+fi
+
+# Unused <Quiz> import must be gone
+if grep -Eq "import[[:space:]]+Quiz[[:space:]]+from" "$LESSON"; then
+  echo "  MISS  : unused 'import Quiz ...' still present"
+  fail=1
+else
+  echo "  ok    : no inlined <Quiz> import (de-inlined)"
 fi
 
 if [[ $fail -eq 0 ]]; then

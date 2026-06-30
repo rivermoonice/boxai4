@@ -1,0 +1,52 @@
+{
+  "lesson": "L03-daily-driver-tui-vs-desktop",
+  "module": "hermes",
+  "questions": [
+    {
+      "q": "The TUI and the Desktop App are best described as:",
+      "options": [
+        "Two competing Hermes products",
+        "Two windows into the same Hermes agent",
+        "A TUI-only build and a separate cloud product",
+        "Two different AI models"
+      ],
+      "answer": 1,
+      "explanation": "Both surfaces run the same Hermes back-end — same config, profiles, skills, memory, and session state. You can switch between them mid-task without losing anything."
+    },
+    {
+      "q": "Per the source video, which interface should you open first for actual coding work?",
+      "options": ["The TUI", "The Desktop App", "Either — they're identical", "Neither — use Claude Code"],
+      "answer": 0,
+      "explanation": "The TUI is built for coding work: non-blocking input, live Git branch, thin-client mode for VPS, and lower token overhead. The Desktop App is for orchestration and human-in-the-loop workflows."
+    },
+    {
+      "q": "Why does the Desktop App cost roughly 2× more tokens per message than the TUI?",
+      "options": [
+        "It uses a more expensive model",
+        "It sends UI schemas, layout state, and background file-scanning data with every message",
+        "It runs on a slower network",
+        "It charges a flat subscription on top of token costs"
+      ],
+      "answer": 1,
+      "explanation": "The TUI sends raw text to the model. The Desktop App sends your text plus the UI schemas the app maintains. Same model, same answer, more context billed."
+    },
+    {
+      "q": "True or false: Closing the TUI kills the Hermes back-end, so the Desktop App can't see your session.",
+      "options": [],
+      "answer": 0,
+      "explanation": "False. The TUI is a surface over the back-end. Closing it does not kill the back-end. The Desktop App connects to the same back-end and will see the session (and may render its own view of it)."
+    },
+    {
+      "q": "For MCP-heavy sessions as of Hermes v0.16, which interface is the source video's recommendation?",
+      "options": ["The Desktop App", "The TUI", "Either works equally well", "Skip MCPs until v0.17"],
+      "answer": 1,
+      "explanation": "The source video flags MCP discoverability in the Desktop App as a known v0.16 weakness. The TUI is the safer choice for MCP-heavy work today."
+    },
+    {
+      "q": "Short answer: In one sentence, what is the \"morning meeting\" mental model?",
+      "options": [],
+      "answer": 0,
+      "explanation": "Open the Desktop App first to check what your agents did overnight and review project state (the morning meeting). Then switch to the TUI to do the actual coding (the desk work). Most users run both at once."
+    }
+  ]
+}

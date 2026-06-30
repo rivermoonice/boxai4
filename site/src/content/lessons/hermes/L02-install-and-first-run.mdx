@@ -3,7 +3,7 @@ title: "How to Install Hermes Agent for Beginners (2026): Mac and VPS, Step-by-S
 module: hermes
 slug: l02-install-and-first-run
 order: 2
-updatedDate: 2026-06-29
+updatedDate: 2026-06-30
 updatedRaw: "June 2026"
 summary: "Install Hermes on Mac or VPS in under twenty minutes. Pick a model, paste an API key, verify with `hermes doctor`."
 description: "Mac install is ten minutes. VPS install is twenty minutes. Pick a cheap model first, set a $20/month budget cap, run `hermes doctor` to verify."
@@ -13,7 +13,6 @@ accent: "#7c5cff"
 
 **Last tested and updated:** June 2026
 
-import Quiz from '../../../components/lesson/Quiz.astro';
 import TerminalScreenshot from '../../../components/lesson/TerminalScreenshot.astro';
 import VidCard from '../../../components/lesson/VidCard.astro';
 import Callout from '../../../components/lesson/Callout.astro';
@@ -41,7 +40,7 @@ Click **Install**. The first run downloads 500 MB and takes five to ten minutes.
 The installer gives a misleading "command not found" error. The cause is always the missing CLT, never the installer itself.
 </Callout>
 
-You also need a model provider account. Hermes is the harness — it does not bundle model access. You bring your own key (BYOK = Bring Your Own Key, your provider's API key). Supported providers: Anthropic, OpenAI, DeepSeek, Kimi (Moonshot), MiniMax, Qwen. Mac path needs macOS 13 or newer.
+You also need a model provider account. Hermes is the harness — it does not bundle model access. Bring your own key (BYOK = your provider's API key). Supported providers: Anthropic, OpenAI, DeepSeek, Kimi, MiniMax, Qwen. Mac path needs macOS 13+.
 
 ## Two paths: Mac vs VPS
 
@@ -107,7 +106,7 @@ Picking the right model decides whether you spend $5/month or $50/month. The wiz
 
 At 50–100 messages per day on the cheap tier, expect **$5–$10/month**. Claude Opus runs 4–5× that.
 
-**Set a $20/month hard cap** in the provider's billing dashboard on day one. Without it, a 3am runaway session burns real money in minutes. API keys are passwords — paste them only into the wizard.
+**Set a $20/month hard cap** in the provider's billing dashboard on day one. API keys are passwords. Paste them only into the wizard.
 
 <Callout type="bottom-line" title="Ron's bottom line: pick cheap, upgrade later">
 Start with Kimi K2.6 or DeepSeek V4 Pro. Upgrade to Claude Sonnet only for queries that need it. Pay-for-quality is fine. Pay-for-everything is how you overspend.
@@ -166,18 +165,6 @@ hermes doctor >/dev/null 2>&1 && echo "hermes install verified" || echo "hermes 
 
 If you see an error, the cause is usually a wrong API key, or a missing `curl`/`git` on VPS. Re-run `hermes setup` or install the missing dep.
 
-### The exercise
-
-Confirm these three commands all return without error in the terminal where Hermes is installed:
-
-```bash
-hermes doctor
-hermes status
-hermes skills list | head
-```
-
-If everything is green and your provider shows in `status`, the install is verified.
-
 ### Watch the full install
 
 <VidCard id="lHVk1Agz3_I" title="Hermes Agent Setup on Mac — full Mac walkthrough, Ron, April 2026" />
@@ -185,44 +172,7 @@ If everything is green and your provider shows in `status`, the install is verif
 
 ### Check your understanding
 
-<Quiz questions={[
-  {
-    q: "The first thing a Mac user should run before the Hermes installer is:",
-    choices: ["Homebrew", "Docker Desktop", "Xcode Command Line Tools", "Node.js"],
-    answer: 2,
-    explain: "`xcode-select --install` provides the build tools the installer needs. Skip it and the installer fails with a misleading error.",
-  },
-  {
-    q: "When the VPS installer asks 'Import from OpenClaw?', a first-time VPS user should answer:",
-    choices: ["Yes — saves time", "Only if they've used OpenClaw", "No — fresh install is more reliable", "It doesn't matter"],
-    answer: 2,
-    explain: "Per the source video, OpenClaw import is buggy. Cron jobs do not migrate cleanly. Fresh install is safer.",
-  },
-  {
-    q: "Short answer: What is the single most important day-one habit in your model provider's dashboard?",
-    choices: [],
-    answer: 0,
-    explain: "Set a hard monthly budget cap. Without it, a 3am runaway session burns real money in minutes.",
-  },
-  {
-    q: "Which model should a beginner pick if cost matters most?",
-    choices: ["Claude Opus 4.8", "MiniMax M3 / Kimi K2.6 / DeepSeek V4 Pro", "Claude Sonnet 4.8", "Whichever is free that day"],
-    answer: 1,
-    explain: "Cheap-tier models (Kimi, DeepSeek, MiniMax) cost $5–$10/month at beginner volume. Opus runs 4–5× that.",
-  },
-  {
-    q: "You're on a Windows PC. Which install path should you pick?",
-    choices: ["The Mac path with WSL", "The VPS path", "Either — Windows install is smooth", "Skip Hermes, Windows is unsupported"],
-    answer: 1,
-    explain: "Local Windows install is rougher than Mac. VPS gives every user the same Linux install via SSH.",
-  },
-  {
-    q: "Which three commands prove Hermes is installed and healthy?",
-    choices: [],
-    answer: 0,
-    explain: "`hermes doctor` (env checks), `hermes status` (config + keys), `hermes skills list` (invocables). All three return cleanly when verified.",
-  },
-]} />
+Quiz lives at `site/src/lessons/hermes/L02-install-and-first-run/quiz.json` — 6 questions, runnable by the lesson harness.
 
 ### What's next
 

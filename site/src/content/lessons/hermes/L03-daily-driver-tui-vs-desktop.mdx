@@ -3,7 +3,7 @@ title: "Hermes Agent TUI vs Desktop App: Which One Should You Use in 2026?"
 module: hermes
 slug: l03-daily-driver-tui-vs-desktop
 order: 3
-updatedDate: 2026-06-29
+updatedDate: 2026-06-30
 updatedRaw: "June 2026"
 summary: "Hermes Agent has two interfaces — a Terminal User Interface (TUI) and a Desktop App. Both run the same agent underneath. Here's how to pick the right surface for the work, and when to run both at once."
 description: "You'll learn when to open the Hermes TUI versus the Desktop App, why the Desktop App costs roughly 2× more in tokens than the TUI for the same work, and how to run both side-by-side as a daily-driver setup."
@@ -13,24 +13,13 @@ accent: "#7c5cff"
 
 **Last tested and updated:** June 2026
 
-import Quiz from '../../../components/lesson/Quiz.astro';
 import VidCard from '../../../components/lesson/VidCard.astro';
 import Callout from '../../../components/lesson/Callout.astro';
 import { Picture } from 'astro:assets';
 
-If you've been following the academy in order, you finished [L02 — How to Install Hermes Agent for Beginners](/lessons/hermes/l02-install-and-first-run/) and ran your first sessions through the Terminal User Interface (TUI). Hermes shipped a second surface in June 2026: a native Desktop App. Jensen Huang demoed it on stage. The natural beginner question is *do I switch?*
+**Use both at once.** The TUI and the Desktop App are not competitors. They are two windows into the same Hermes back-end, and most power users run both side-by-side. Switching costs you nothing.
 
-The short answer is **no — you add**. The TUI and the Desktop App are not competitors. They are two windows into the same Hermes instance, and most power users run both at once.
-
-## The hook
-
-Picture your morning. You open your laptop. Three agents you left running overnight have done things. You want to know *what* before you start your day.
-
-Open the TUI and you have to type a command — `hermes status`, scan a wall of text. It works, but it feels like reading a spreadsheet. Open the Desktop App and you get a visual dashboard: a sidebar with project folders, a status indicator showing the back-end is ready, a timeline of what each agent did while you slept. You click, you review, you decide. That's a **morning meeting**.
-
-Now picture the afternoon. You need to ship a refactor on a 200-line function before EOD. You don't want a dashboard. You want a fast, keyboard-driven terminal where your Git branch is in the status line and you can fire commands without waiting for the previous one to finish. That's **desk work**. You open the TUI.
-
-Different surfaces for different kinds of work. The trap beginners fall into is treating one as "the better interface" and ignoring the other.
+After [L02 — How to Install Hermes Agent for Beginners](/lessons/hermes/l02-install-and-first-run/), you ran your first sessions in the TUI. Hermes shipped a second surface in June 2026: a native Desktop App. You do not switch — you add it.
 
 <Callout type="tip" title="Ron's morning-meeting framing">
 "It's like a way for you to be up to date with what's going on with your projects. And then, you know, when the meeting is over, you head back to your seat, and then you start working, and that's when you switch to the TUI." — Ron, source video `QSANg6VHkXI`
@@ -38,25 +27,25 @@ Different surfaces for different kinds of work. The trap beginners fall into is 
 
 ## The mental model
 
-The single most important fact in this lesson: **the TUI and the Desktop App are two surfaces over the same Hermes back-end**. Same config, same profiles, same skill bundles, same model, same memory, same session state. You can switch mid-task without losing anything.
+**The TUI and the Desktop App are two surfaces over the same Hermes back-end.** Same config. Same profiles. Same skill bundles. Same model. Same memory. Same session state. You can switch mid-task without losing anything.
 
-The differences are entirely in the *surface* — what each interface is good at showing you and asking you to do.
+The differences are entirely in the *surface* — what each interface is good at showing and asking you to do.
 
 <Picture src="/lessons/hermes/L03/tui-vs-desktop.svg" alt="Diagram: TUI vs Desktop App side-by-side, both connected to the same Hermes agent" width={900} height={480} formats={["avif", "webp"]} />
 
-Think of the agent as the kitchen. The TUI is the line cook's workstation — fast, knife-ready, every tool within reach. The Desktop App is the head chef's pass — slower to look at, but you see the whole board, all the dishes in progress, what's plated and what's not. Same kitchen. Different vantage points.
+Think of the agent as the kitchen. The TUI is the line cook's station — fast, knife-ready, every tool within reach. The Desktop App is the head chef's pass. Same kitchen. Different vantage points.
 
-**The TUI is the original Hermes interface.** Keyboard-driven. Runs in any terminal. Sends raw text to the model — nothing else. Built for terminal-native developers: live Git branch in the status line, non-blocking input (you can fire the next command before the previous response finishes), thin-client mode for connecting to a remote VPS, and clean exit with zero scrollback clutter.
+**The TUI is the original Hermes interface.** Keyboard-driven. Runs in any terminal. Sends raw text to the model — nothing else. Built for terminal-native developers: live Git branch in the status line, non-blocking input, and thin-client mode for VPS.
 
-**The Desktop App is a native Electron + React app** that ships with v0.16 "Surface" (June 2026). It adds visual features the TUI literally cannot render: a file-browser sidebar, side-by-side previews of generated files, drag-and-drop upload, a one-click model switcher, visual toggles for skills and MCP tools, a gateway status indicator, and a settings panel for connecting to a remote back-end.
+**The Desktop App is a native Electron + React app** that ships with v0.16 "Surface" (June 2026). It adds features the TUI cannot render: a file-browser sidebar, side-by-side previews, drag-and-drop upload, and a one-click model switcher.
 
 <Callout type="tip" title="Ron's orchestration call">
 "The desktop app, based on my experience, is great for orchestration tasks. You know, a human in the loop, this is where you want to use the desktop app." — Ron, source video `QSANg6VHkXI`
 </Callout>
 
-**One thing you should know up front.** The Desktop App costs roughly **2× more tokens per message** than the TUI for the same work. Every message the Desktop App sends to the model includes the UI schemas, layout state, and any background file-scanning data the app maintains. The TUI sends just your text. Same model, same answer, but the Desktop App is paying for the extra context.
+**One thing you should know up front.** The Desktop App costs roughly **2× more tokens per message** than the TUI. Every Desktop message includes UI schemas, layout state, and background file-scanning data. The TUI sends just your text. Same model, same answer, more context billed.
 
-If you pay your own API bill — and you do, Hermes is BYOK from [L01](/lessons/hermes/l01-what-is-hermes-agent/) — this isn't a footnote. It's a real cost. The official documentation doesn't advertise it. The source video does.
+You pay your own API bill. Hermes is BYOK (Bring Your Own Key) from [L01](/lessons/hermes/l01-what-is-hermes-agent/). A 3am runaway Desktop session can burn real money overnight. The official docs don't advertise it. The source video does.
 
 <Callout type="gotcha" title="The token-cost trap">
 Beginners see the Desktop App, switch to it for everything, and watch their monthly bill roughly double. That's not a bug — that's the cost of the UI schemas the Desktop App sends with every message. Pick the surface for the work, not for the prettiness.
@@ -64,7 +53,7 @@ Beginners see the Desktop App, switch to it for everything, and watch their mont
 
 ## Pick your tool
 
-The decision rule for which interface to open has three questions:
+**Match the surface to the work.** Open the TUI for coding. Open the Desktop App for orchestration and review. The decision rule has three questions:
 
 1. **Am I writing code, or managing projects?** Writing code → TUI. Managing projects → Desktop App.
 2. **Do I need to *see* state (files, models, status) without typing?** Yes → Desktop App.
@@ -74,17 +63,12 @@ Here's the same rule in table form:
 
 | Workload | TUI | Desktop App | Why |
 |---|---|---|---|
-| Coding / shipping features | Best choice | Token-heavy | TUI's lower overhead saves real money on long sessions |
-| Refactoring an existing file | Best choice | Token-heavy | Same reason |
+| Coding / shipping features and refactors | Best choice | Token-heavy | TUI's lower overhead saves real money on long sessions |
 | Quick question or chat | Fine | Fine | Either works for low volume |
 | Reviewing overnight agent activity | Requires CLI commands | Best choice | Desktop App's project overview is built for this |
 | Switching models | Requires `hermes model` | One click | Visual model picker |
 | Drag-and-drop a file | Type the path | Best choice | Desktop UX |
-| VPS-hosted back-end | Thin-client mode | Settings panel | Both work; thin client is more reliable |
-| MCP-heavy sessions (v0.16) | Best choice | Discoverability still rough | Source video flags this as a known Desktop weakness |
 | Human-in-the-loop workflows | Cumbersome | Best choice | Visual feedback is built for this |
-
-**Rule of thumb:** if your work is mostly *inside a terminal* — shipping code, scripting Hermes, working over SSH — open the TUI. If your work is mostly *about the terminal* — checking what ran overnight, moving tasks between agents, reviewing files — open the Desktop App. If you do both, run both. The switch is free, and the cost of running two interfaces is much less than the cost of fighting the wrong one.
 
 <Callout type="tip" title="Ron's pro tip">
 "Open the Desktop App *and* the TUI side by side. They share state. Switching between them doesn't lose your session. Most power users in 2026 run both at once." — Ron, source video `QSANg6VHkXI`
@@ -92,7 +76,6 @@ Here's the same rule in table form:
 
 A few things to keep in mind:
 
-- **You can switch mid-session freely.** Closing the TUI doesn't kill the Hermes back-end. Don't close the TUI window expecting to "come back to it" via the Desktop App — the Desktop App opens its own session view.
 - **MCPs are still rough in the Desktop App as of v0.16.** Discoverability and toggling for MCP integrations work better in the TUI today.
 - **Bugs are usually back-end bugs.** If a bug shows up in the Desktop App, check the TUI first to confirm — they share a back-end.
 
@@ -115,70 +98,21 @@ A good outcome is one sentence in your own words answering all three of these wi
 
 > *For (a) refactoring a 200-line function, (b) reviewing what three different agents did overnight, and (c) running an MCP-heavy workflow — which interface do I open first, and why?*
 
-If you can answer that, the lesson landed. If you can't, re-read **The mental model**.
-
 ### Watch the full breakdown
 
-If you'd rather hear the morning-meeting framing and the token-cost detail from Ron directly — 9 minutes, the same source video this lesson is built on — here's the full clip:
+If you'd rather hear the morning-meeting framing from Ron directly, here's the 9-minute source clip:
 
 <VidCard id="QSANg6VHkXI" title="Hermes Agent Desktop App vs TUI (Which One to Use?) — Ron, June 2026" />
 
 ### Check your understanding
 
-<Quiz questions={[
-  {
-    q: "The TUI and the Desktop App are best described as:",
-    choices: [
-      "Two competing Hermes products",
-      "Two windows into the same Hermes agent",
-      "A TUI-only build and a separate cloud product",
-      "Two different AI models",
-    ],
-    answer: 1,
-    explain: "Both surfaces run the same Hermes back-end — same config, profiles, skills, memory, and session state. You can switch between them mid-task without losing anything.",
-  },
-  {
-    q: "Per the source video, which interface should you open first for actual coding work?",
-    choices: ["The TUI", "The Desktop App", "Either — they're identical", "Neither — use Claude Code"],
-    answer: 0,
-    explain: "The TUI is built for coding work: non-blocking input, live Git branch, thin-client mode for VPS, and lower token overhead. The Desktop App is for orchestration and human-in-the-loop workflows.",
-  },
-  {
-    q: "Why does the Desktop App cost roughly 2× more tokens per message than the TUI?",
-    choices: [
-      "It uses a more expensive model",
-      "It sends UI schemas, layout state, and background file-scanning data with every message",
-      "It runs on a slower network",
-      "It charges a flat subscription on top of token costs",
-    ],
-    answer: 1,
-    explain: "The TUI sends raw text to the model. The Desktop App sends your text plus the UI schemas the app maintains. Same model, same answer, more context billed.",
-  },
-  {
-    q: "True or false: Closing the TUI kills the Hermes back-end, so the Desktop App can't see your session.",
-    choices: [],
-    answer: 0,
-    explain: "False. The TUI is a surface over the back-end. Closing it does not kill the back-end. The Desktop App connects to the same back-end and will see the session (and may render its own view of it).",
-  },
-  {
-    q: "For MCP-heavy sessions as of Hermes v0.16, which interface is the source video's recommendation?",
-    choices: ["The Desktop App", "The TUI", "Either works equally well", "Skip MCPs until v0.17"],
-    answer: 1,
-    explain: "The source video flags MCP discoverability in the Desktop App as a known v0.16 weakness. The TUI is the safer choice for MCP-heavy work today.",
-  },
-  {
-    q: "Short answer: In one sentence, what is the \"morning meeting\" mental model?",
-    choices: [],
-    answer: 0,
-    explain: "Open the Desktop App first to check what your agents did overnight and review project state (the morning meeting). Then switch to the TUI to do the actual coding (the desk work). Most users run both at once.",
-  },
-]} />
+The questions live in [`quiz.json`](/lessons/hermes/L03-daily-driver-tui-vs-desktop/quiz.json) — six standalone questions that `Quiz.tsx` renders on the live site.
 
 ### What's next
 
-- **Want to teach Hermes to do specific things?** → [L04 — Hermes Agent Skills and Skill Bundles Explained](/lessons/hermes/l04-skills-and-skill-bundles/). Once you have a daily-driver interface habit, skills are where the real leverage is.
+- **Want to teach Hermes to do specific things?** → [L04 — Hermes Agent Skills and Skill Bundles Explained](/lessons/hermes/l04-skills-and-skill-bundles/).
 - **Still wondering whether to use Hermes at all?** → [L09 — Hermes Agent vs Claude Code vs Mavis](/lessons/hermes/l09-hermes-vs-alternatives/) is the deeper comparison once you've tried the basics.
 
 <Callout type="bottom-line">
-**Ron's bottom line:** Use the Desktop App for the morning meeting and for managing multiple agents and projects. Use the TUI for the actual coding — it costs you less in tokens, gives you the live Git branch, and doesn't get in your way. Pick the surface for the work. When the work itself crosses both — code *and* orchestration — put both on screen and switch as the task changes.
+**Ron's bottom line:** Open the Desktop App for the morning meeting and for managing multiple agents. Open the TUI for the actual coding. In v0.16 the Desktop App sends roughly 2× the context of the TUI per message. The surface you pick is a real line item on your API bill.
 </Callout>

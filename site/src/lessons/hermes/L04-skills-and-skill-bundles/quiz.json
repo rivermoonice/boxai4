@@ -1,0 +1,58 @@
+[
+  {
+    "q": "A Hermes Skill is best described as:",
+    "choices": [
+      "A model",
+      "A markdown file that does one job, triggered by a slash command",
+      "A group of Skills loaded together",
+      "A feature only in the desktop app"
+    ],
+    "answer": 1,
+    "explain": "A Skill is a markdown file in ~/.hermes/skills/. The filename (minus .md) becomes the slash command."
+  },
+  {
+    "q": "A Skill Bundle is best described as:",
+    "choices": [
+      "A single powerful Skill",
+      "A model with extra training",
+      "A named group of Skills loaded together by a single slash command",
+      "A backup of your Skills folder"
+    ],
+    "answer": 2,
+    "explain": "A Bundle is YAML that lists multiple Skills and an instruction field. One slash command loads them all in the order you specify."
+  },
+  {
+    "q": "Short answer: Per the source video, are Skill Bundles adaptive? Explain in one sentence.",
+    "choices": [],
+    "answer": 0,
+    "explain": "No — as of June 2026, Bundles run Skills in a fixed order. They do not dynamically re-order based on intermediate results."
+  },
+  {
+    "q": "Where do Hermes Skills live on your computer?",
+    "choices": [],
+    "answer": 0,
+    "explain": "~/.hermes/skills/<name>.md. Hermes is strict about the location and the filename matching the command."
+  },
+  {
+    "q": "The instruction field in a Bundle YAML is best described as:",
+    "choices": [
+      "Optional metadata that the agent ignores",
+      "A 'mini agents.md' that captures your house rules for this workflow",
+      "The model name to use for this Bundle",
+      "A list of installed Skills"
+    ],
+    "answer": 1,
+    "explain": "The instruction field is where you bake in your house rules — conventions, citation style, output format. It is what makes Bundle output consistent across runs."
+  },
+  {
+    "q": "Per the source video, the best way to design a Bundle is:",
+    "choices": [
+      "Pick the Skills yourself based on what you think is right",
+      "Ask Hermes to suggest the Skills, then review and commit",
+      "Use every available Skill in one Bundle",
+      "Copy a Bundle from someone else's dotfiles"
+    ],
+    "answer": 1,
+    "explain": "Ron explicitly recommends co-designing Bundles with Hermes. The agent reads its own Skill catalog and proposes a grouping; you review and refine."
+  }
+]

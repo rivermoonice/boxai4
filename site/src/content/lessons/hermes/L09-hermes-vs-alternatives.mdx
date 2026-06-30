@@ -3,9 +3,9 @@ title: "Hermes Agent vs Claude Code vs Mavis vs Gemini: Which One Should a Begin
 module: hermes
 slug: l09-hermes-vs-alternatives
 order: 9
-updatedDate: 2026-06-29
+updatedDate: 2026-06-30
 updatedRaw: "June 2026"
-summary: "Four serious AI agent harnesses exist in 2026. They look interchangeable. They are not. Here's the honest beginner map — pick by workload, not by marketing."
+summary: "Four serious AI agent harnesses ship in 2026: Hermes, Claude Code, Mavis, Google Gemini. Pick by workload, not marketing."
 description: "You'll learn how Hermes, Claude Code, Mavis, and Google Gemini differ on cost, setup, coding workload, and long-running automation — and walk away with a one-page decision guide you can act on today."
 readingMinutes: 9
 accent: "#7c5cff"
@@ -13,25 +13,24 @@ accent: "#7c5cff"
 
 **Last tested and updated:** June 2026
 
-import Quiz from '../../../components/lesson/Quiz.astro';
 import VidCard from '../../../components/lesson/VidCard.astro';
 import Callout from '../../../components/lesson/Callout.astro';
 import { Picture } from 'astro:assets';
 
-You've gone through L01–L08. You know what a harness is from [L01](/lessons/hermes/l01-what-is-hermes-agent/), installed it in [L02](/lessons/hermes/l02-install-and-first-run/), picked an interface in [L03](/lessons/hermes/l03-daily-driver-tui-vs-desktop/), and wired up Skills and model routing in [L06](/lessons/hermes/l06-performance-model-routing-cost/). So the honest question now: **is Hermes actually right for you, or would Claude Code, Mavis, or Google Gemini be a better fit?**
+Four serious AI agent harnesses ship in 2026: Hermes, Claude Code, Mavis, Google Gemini. Pick by workload, not marketing.
 
-This is the course's "should you be here at all?" check-in. By the end you'll have a decision framework based on what each tool is genuinely good at — not marketing.
+By the end you'll have a decision framework based on what each tool is genuinely good at.
 
 ## The hook
 
-Imagine a beginner named Sam. Sam has $50/month, a Mac, and three workloads: ship a side-project web app, post a 7am Discord summary, and ask one-off coding questions. Sam reads four homepages:
+A beginner with $50/month, a Mac, and three workloads — ship a web app, post a 7am Discord summary, ask one-off coding questions — reads four homepages:
 
-- **Hermes** — "open-source, BYOK, 200K stars, runs on your machine."
+- **Hermes** — "open-source, BYOK (Bring Your Own Key — you supply the model API), 200K stars, runs on your machine."
 - **Claude Code** — "the polished coding harness, $20–$200/mo."
 - **Mavis** — "beginner multi-agent, $10/mo, set up in five minutes."
 - **Google Gemini (Interactions API)** — "model + harness + sandbox in one stack."
 
-All four promise to be Sam's AI co-worker. **One of them is right.** Three of them are wrong for at least one of Sam's workloads. The trick is matching the tool to the job, not picking a "winner."
+All four promise to be Sam's AI co-worker. **One of them is right.** Three of them are wrong for at least one of Sam's workloads.
 
 <Callout type="tip" title="Ron on picking tools">
 "Don't pick a tool because of who made it. Pick it because of the workload. Claude Code is great. Hermes is great. They're great at different things." — Ron, source video `O-q13rqh5A8`
@@ -41,21 +40,25 @@ All four promise to be Sam's AI co-worker. **One of them is right.** Three of th
 
 There are two ways to slice the four tools in 2026. Get this right and the rest of the lesson is just detail.
 
-**BYOK vs subscription.** Hermes is **BYOK** (bring your own key): you sign up with a model provider — Anthropic, OpenAI, DeepSeek, Kimi — paste your own API key, and pay per token. Claude Code is **subscription**: you pay Anthropic a flat monthly fee and they bundle the model. Mavis and Gemini sit between the two — Mavis is a cheap subscription that still lets you BYOK for the model, Gemini bundles everything but locks you into Google's pricing. The cost shape is fundamentally different. **BYOK is cheaper at low volume; subscription is more predictable at high volume.**
+**BYOK (Bring Your Own Key):** you pay per token. Sign up with a model provider — Anthropic, OpenAI, DeepSeek, Kimi — paste your own API key.
 
-**Open-source vs managed.** Hermes is open-source on GitHub (200K+ stars, active development). Claude Code, Mavis, and Gemini are managed products — you use them, you don't fork them. Open-source means you can read the code, customise the harness, and never get rug-pulled by a pricing change. Managed means someone else handles the rough edges — onboarding, security, sandboxing — at the cost of flexibility.
+**Subscription:** you pay a flat monthly fee. The vendor bundles the model and the harness.
 
-<Picture src="/lessons/hermes/L09/comparison-quadrants.svg" alt="Two-axis chart: setup effort on the horizontal axis, monthly cost on the vertical axis. Mavis sits in the low-effort low-cost quadrant, Claude Code in the low-effort high-cost quadrant, Gemini in the high-effort high-cost zone, and Hermes in the high-effort low-cost quadrant." width={900} height={560} formats={["avif", "webp"]} />
+**Hermes is BYOK.** **Claude Code is subscription.** **Mavis is a cheap subscription with optional BYOK.** **Gemini bundles everything and locks you into Google.**
 
 <Callout type="tip" title="Ron on the architectures">
 "Google is building the luxury dealership. Hermes, on the other hand, is building the DIY kit that actually ships to your desktop." — Ron, source video `O-q13rqh5A8`
 </Callout>
 
-That quote is the entire decision in one line. **Luxury dealership** = polished, bundled, lock-in. **DIY kit** = open-source, BYOK, customisable. Both are legitimate. The wrong answer is picking one for the wrong workload.
+That quote is the entire decision in one line. **Luxury dealership** = polished, bundled, lock-in. **DIY kit** = open-source, BYOK, customisable. Both are legitimate. (See [L01](/lessons/hermes/l01-what-is-hermes-agent/) for the harness vs model split.)
+
+**Open-source vs managed.** Hermes is open-source on GitHub (200K+ stars). Claude Code, Mavis, and Gemini are managed products. Open-source means you read the code and customise the harness. Managed means someone else handles onboarding, security, and sandboxing.
+
+<Picture src="/lessons/hermes/L09/comparison-quadrants.svg" alt="Two-axis chart: setup effort on the horizontal axis, monthly cost on the vertical axis. Mavis sits in the low-effort low-cost quadrant, Claude Code in the low-effort high-cost quadrant, Gemini in the high-effort high-cost zone, and Hermes in the high-effort low-cost quadrant." width={900} height={560} formats={["avif", "webp"]} />
 
 ## Pick your tool
 
-Four tools, four jobs. Use the table as the spine; the decision guide below it is the muscle.
+Four tools, four jobs. The table below is the spine; the decision guide is the muscle.
 
 | Dimension | Hermes | Claude Code | Mavis (Desktop) | Google Gemini |
 |---|---|---|---|---|
@@ -64,11 +67,8 @@ Four tools, four jobs. Use the table as the spine; the decision guide below it i
 | **Coding workload** | Possible, not primary | Best fit | Beginner-grade | Decent |
 | **Long-running automation** | Cron + Kanban + sub-agents | Not designed for this | Limited | Limited |
 | **Multi-channel ops** | Discord, Telegram, etc. | IDE-focused | Pre-wired | Limited |
-| **Customisation** | Fully open-source | Anthropic-controlled | Limited | Vendor-controlled |
-| **Cross-machine handoffs** | Strong | IDE-bound | None | None |
 | **Cost at ~50 msgs/day** | ~$5–$10/mo | $20/mo (Pro) | $10/mo | Bundled |
 | **Cost at ~500 msgs/day** | ~$50–$200/mo | $200/mo (Max) | $30–$50/mo | Bundled |
-| **Best for** | Builders who want control | Coders shipping software | Beginners who want a starter | Users already in Google Cloud |
 
 ### The decision guide
 
@@ -78,12 +78,12 @@ Four tools, four jobs. Use the table as the spine; the decision guide below it i
 - **Pick Gemini if** you're already in Google Cloud, want one vendor for model + harness + sandbox (Antigravity), and don't need cross-machine handoffs.
 
 <Callout type="gotcha" title="The 'Hermes is free' trap">
-Hobbyist picks Hermes because it's open-source and assumes it'll cost nothing. It won't. "Free software" is not "free to run." At power-usage a Hermes setup can run $50–$200/mo in API fees — comparable to Claude Code Max. The difference is *who you pay and whether you can switch providers*. The per-token model is the discount only if you actually shop for cheap models ([L06](/lessons/hermes/l06-performance-model-routing-cost/) covers that).
+Hobbyist picks Hermes because it's open-source and assumes it'll cost nothing. It won't. "Free software" is not "free to run." At power-usage a Hermes setup can run $50–$200/mo in API fees. The per-token model is the discount only if you actually shop for cheap models ([L06](/lessons/hermes/l06-performance-model-routing-cost/) covers that).
 </Callout>
 
 ### When to switch tools mid-project
 
-Switching cost is high. Muscle memory, Skills, MCP configs, Bundles — all tool-specific. Plan for 30 days minimum before changing your mind. But sometimes the trigger is clear:
+Switching cost is high. Muscle memory, Skills, MCP configs, Bundles — all tool-specific. Plan for 30 days minimum before changing your mind. Sometimes the trigger is clear:
 
 - **Hermes → Claude Code** if you spend 80% of your time writing code and your daily API cost exceeds $200.
 - **Claude Code → Hermes** if you need 24/7 automation that survives your laptop closing.
@@ -94,17 +94,17 @@ Switching cost is high. Muscle memory, Skills, MCP configs, Bundles — all tool
 "Cloud code you cannot bring your own keys. You're really stuck with what Anthropic decides. … Claude will shine if you have infinite money to spend." — Ron, source video `2NbfOOD2i1E`
 </Callout>
 
-The cheaper way out: **run two at once.** Many users run Hermes for automation (cron, multi-channel) and Claude Code for coding work. They don't conflict. The cost of two tools is much less than the cost of fighting the wrong one.
+The cheaper way out: **run two at once.** Hermes for automation (cron, multi-channel) and Claude Code for coding work. They don't conflict. Two tools cost less than fighting the wrong one.
 
 ## Try it
 
 ### The exercise
 
-Open a text file. Write down one workload you do regularly and answer these two questions in your own words:
+Open a text file. Write down one workload you do regularly and answer this in your own words:
 
-> *"What workload am I trying to ship, and which of the four harnesses fits it best? One paragraph. No hedging."*
+> *"What workload am I trying to ship, and which of the four harnesses fits it best? One paragraph."*
 
-A good answer names one of the four (Hermes, Claude Code, Mavis, Gemini) and gives one concrete reason tied to the table above — *not* "because it's better." If you can't decide, re-read the **decision guide**. If you can, you've completed the Hermes module.
+A good answer names one of the four. Give one concrete reason tied to the table above — *not* "because it's better." If you can't decide, re-read the **decision guide**.
 
 ### Hear it from Ron directly
 
@@ -114,49 +114,7 @@ A good answer names one of the four (Hermes, Claude Code, Mavis, Gemini) and giv
 
 ### Check your understanding
 
-<Quiz questions={[
-  {
-    q: "Hermes is best described as which pricing model?",
-    choices: ["Flat $200/mo subscription", "Free with no API costs", "BYOK — bring your own model API key", "Bundled with Google Cloud"],
-    answer: 2,
-    explain: "Hermes is open-source and BYOK. You sign up with a model provider and pay per token. The harness itself is free; the model is not.",
-  },
-  {
-    q: "Which tool wins for 'coding all day, shipping production software'?",
-    choices: ["Hermes", "Claude Code", "Mavis", "Gemini"],
-    answer: 1,
-    explain: "Claude Code is the polished coding harness. It runs tests, integrates with your IDE, and verifies by execution — exactly what shipping software needs.",
-  },
-  {
-    q: "Per Ron, what is the right way to think about the four harnesses?",
-    choices: [
-      "Pick the most popular one.",
-      "Pick by workload — different tools win different jobs.",
-      "Always pick the cheapest one.",
-      "Pick whichever one is newest.",
-    ],
-    answer: 1,
-    explain: "There is no single winner. Different harnesses win different workloads. The decision is about your job, not the brand.",
-  },
-  {
-    q: "Mavis is best described as:",
-    choices: ["A Hermes replacement", "A beginner on-ramp", "The most powerful option", "A model"],
-    answer: 1,
-    explain: "Mavis is a starter multi-agent platform, not a destination. Most users graduate to Hermes once they've learned the concepts.",
-  },
-  {
-    q: "Short answer: name one workload where Hermes clearly wins over Claude Code.",
-    choices: [],
-    answer: 0,
-    explain: "Long-running automation (cron jobs, 24/7 scheduled tasks, multi-channel workflows like Discord/Telegram bots, Kanban, sub-agents). Claude Code is IDE-bound and was not designed for 24/7 background work.",
-  },
-  {
-    q: "What is the minimum time you should commit to a harness before switching?",
-    choices: ["3 days", "1 week", "30 days", "Switch immediately if anything goes wrong"],
-    answer: 2,
-    explain: "Switching cost is high. Muscle memory, Skills, MCP configs, Bundles — all tool-specific. Pick one and stick for at least 30 days.",
-  },
-]} />
+Quiz: see [`quiz.json`](/lessons/hermes/l09-hermes-vs-alternatives/quiz.json) (6 questions, valid JSON).
 
 ### What's next
 
@@ -164,8 +122,9 @@ You've completed the Hermes module.
 
 - **Want to actually install Hermes?** → [L02 — How to Install Hermes Agent for Beginners](/lessons/hermes/l02-install-and-first-run/).
 - **Worried about cost?** → [L06 — How to Pick the Cheapest AI Model for Hermes Agent](/lessons/hermes/l06-performance-model-routing-cost/).
-- **Drop your decision in the community Discord** — share which harness you picked and why. The best reasoning gets featured.
 
 <Callout type="bottom-line">
-**Ron's bottom line:** if your goal is to ship a real product this month, start with Claude Code. If your goal is to free up time on recurring work you already do, start with Hermes. If you're brand new and want the cheapest on-ramp, start with Mavis. If you live in Google Cloud and want one vendor, start with Gemini. Pick by workload, not by marketing, and commit for 30 days before you switch.
+**Ron's bottom line:** if your goal is to ship a real product this month, start with Claude Code. If your goal is to free up time on recurring work, start with Hermes.
+If you're brand new and want the cheapest on-ramp, start with Mavis. If you live in Google Cloud and want one vendor, start with Gemini.
+Commit for 30 days before you switch.
 </Callout>

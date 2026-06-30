@@ -57,11 +57,11 @@ else
   fail=1
 fi
 
-# Quiz component present
-if grep -Eq "<Quiz[[:space:]/>]" "$LESSON"; then
-  echo "  ok    : <Quiz> component"
+# Quiz pointer present (round-2 cleanup: quiz de-inlined into standalone quiz.json)
+if grep -F -q "site/src/lessons/hermes/L02-install-and-first-run/quiz.json" "$LESSON"; then
+  echo "  ok    : quiz.json pointer"
 else
-  echo "  MISS  : <Quiz> component"
+  echo "  MISS  : quiz.json pointer"
   fail=1
 fi
 

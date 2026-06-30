@@ -1,0 +1,53 @@
+[
+  {
+    "q": "You want a daily 7am summary posted to Discord. Which pattern fits best?",
+    "choices": ["Sub-agent", "Cron", "Kanban", "Manual TUI session"],
+    "answer": 1,
+    "explain": "Cron is the right tool for a single recurring task with no human review. Sub-agents die with the session; Kanban is overkill for one job."
+  },
+  {
+    "q": "What is the difference between a Kanban assignee profile and a sub-agent?",
+    "choices": [
+      "They are the same thing with different names",
+      "Profiles are separate Hermes instances with their own config and specialisation; sub-agents are ephemeral and live inside one session",
+      "Profiles are slower than sub-agents",
+      "Sub-agents have their own API keys"
+    ],
+    "answer": 1,
+    "explain": "Profiles persist across sessions with their own API keys, working directory, and specialisation. Sub-agents are spawned on demand by the orchestrator and have no persistent state."
+  },
+  {
+    "q": "Short answer: name one habit that prevents cron jobs from silently failing.",
+    "choices": [],
+    "answer": 0,
+    "explain": "Any of: log to a file and check it; test the Skill manually before scheduling; verify the scheduler is running (`hermes cron status`); use absolute paths; schedule a canary heartbeat job."
+  },
+  {
+    "q": "Per the source video, why should you NOT pair Kanban with cron right now?",
+    "choices": [
+      "Kanban and cron use the same database",
+      "Kanban does not have reliable delete and dedup logic yet",
+      "Cron jobs always overwrite Kanban state",
+      "They conflict on port 8080"
+    ],
+    "answer": 1,
+    "explain": "Per `R_aLVXYzDac`, pairing the two caused duplicate tasks and race conditions until Hermes ships reliable delete and dedup. Run them separately for now."
+  },
+  {
+    "q": "Which model class is appropriate for sub-agent delegation?",
+    "choices": ["The cheapest available model", "Sonnet-class or better", "Only local models", "Any model — sub-agents are cheap"],
+    "answer": 1,
+    "explain": "Per the L06 source video, parallel research with the cheapest model took 14 minutes — longer than doing it directly. Reserve sub-agents for Sonnet-class or better."
+  },
+  {
+    "q": "True or false: a cron job scheduled inside Hermes survives an `hermes` process restart.",
+    "choices": [
+      "True — cron entries are stored on disk and re-loaded",
+      "False — cron is tied to the running Hermes process",
+      "Only on Linux",
+      "Only if you set HERMES_CRON_PERSIST=1"
+    ],
+    "answer": 0,
+    "explain": "Cron entries are persisted by `hermes cron create` and re-loaded on startup. The scheduler daemon is independent of any single chat session, but it is part of the Hermes process — keep Hermes running (L07 covers systemd / launchd setups)."
+  }
+]

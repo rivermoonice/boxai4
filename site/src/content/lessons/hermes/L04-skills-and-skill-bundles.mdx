@@ -3,7 +3,7 @@ title: "Hermes Agent Skills and Skill Bundles Explained for Beginners (2026)"
 module: hermes
 slug: l04-skills-and-skill-bundles
 order: 4
-updatedDate: 2026-06-29
+updatedDate: 2026-06-30
 updatedRaw: "June 2026"
 summary: "How to turn the prompts you keep re-typing into reusable Skills, and how to group them into Skill Bundles so one slash command replaces five."
 description: "You'll learn what a Hermes Skill is, what a Skill Bundle is, when to make one, and how to build your first Bundle without writing a YAML file from scratch. No CLI captures needed."
@@ -13,25 +13,24 @@ accent: "#7c5cff"
 
 **Last tested and updated:** June 2026
 
-import Quiz from '../../../components/lesson/Quiz.astro';
 import VidCard from '../../../components/lesson/VidCard.astro';
 import Callout from '../../../components/lesson/Callout.astro';
 import { Picture } from 'astro:assets';
 
-After a few sessions of asking Hermes one-off questions, you'll notice a pattern: you keep asking the same kind of thing. *"Summarise this article."* *"Format this as a table."* The point of a Skill is to stop re-asking. The point of a Skill Bundle is to stop re-asking *five things in a row*.
+**A Skill stops you from re-asking one prompt. A Skill Bundle stops you from re-asking five prompts in a row.** A Skill is a markdown file. A Bundle is a small YAML file that loads several Skills at once.
 
-This is lesson four. It assumes you have Hermes installed ([L02 — Install & first run](/lessons/hermes/l02-install-and-first-run/)) and you're comfortable with slash commands ([L03 — TUI vs Desktop](/lessons/hermes/l03-daily-driver-tui-vs-desktop/)).
+Prereqs: [L02 — Install & first run](/lessons/hermes/l02-install-and-first-run/) and [L03 — TUI vs Desktop](/lessons/hermes/l03-daily-driver-tui-vs-desktop/).
 
 ## The hook
 
-Pick a workflow you do every week. **"Morning research: discover sources, pull articles, extract key points, organise them, write a brief."** Five steps. If you ask Hermes to do the whole thing in one prompt, you'll get an inconsistent answer — maybe it skips extraction, maybe it skips organisation. AI agents are *probabilistic*: the same prompt produces different results on different runs. Ron puts it like this: *"AI agents are probabilistic in nature. You cannot assume that they know all of the skills you want them to use to finish those tasks."*
+**One workflow with five steps breaks when you ask for it in a single prompt.** Take morning research: discover sources, pull articles, extract key points, organise them, write a brief. Five steps. Hermes may skip extraction. It may skip organisation. Same prompt, different results.
+
+*"AI agents are probabilistic in nature. You cannot assume that they know all of the skills you want them to use to finish those tasks."* — Ron, source video `_A02brv2Csg`.
 
 Two ideas solve this:
 
 1. **A Skill** — a markdown file that tells Hermes how to do *one specific job*. The file becomes a slash command. Type `/standup` and Hermes reads the file.
 2. **A Skill Bundle** — a *group* of Skills loaded together. Type `/research` and Hermes loads all five Skills at once, in the order you specified, with an `instruction` field that sets the workflow.
-
-That's the whole lesson. The rest is mechanics and one exercise.
 
 ## The mental model
 
@@ -39,9 +38,9 @@ A Skill is a command. A Bundle is a workflow.
 
 <Picture src="/lessons/hermes/L04/skills-vs-bundles.svg" alt="Diagram: left, a single skill is one markdown file triggered by one slash command; right, a skill bundle is many skills loaded together by a single slash command, with coordination arrows from the bundle to each skill" width={900} height={480} formats={["avif", "webp"]} />
 
-**A Skill is a markdown file in `~/.hermes/skills/`.** The filename minus `.md` is the slash command. `standup.md` becomes `/standup`. When you type it, Hermes reads the file and follows its instructions. You can write Skills by hand, or ask Hermes to write one after a workflow worked well. The second path is the magic moment: the agent notices it did something useful and saves the recipe.
+**A Skill is a markdown file in `~/.hermes/skills/`.** The filename minus `.md` is the slash command. `standup.md` becomes `/standup`. Type it and Hermes reads the file. Write Skills by hand. `hermes skills new --from-last-session` saves the recipe after a useful run.
 
-**A Skill Bundle is a small YAML file in `~/.hermes/skill-bundles/`.** It names a group of Skills and an `instruction` field. The YAML's `name` becomes the slash command. Type `/research` and Hermes loads every Skill in the list and applies the `instruction` to chain them. As Ron describes it: *"skill bundles is a way to fix that by giving you a named set of skills behind the slash bundles command."*
+**A Skill Bundle is a small YAML file in `~/.hermes/skill-bundles/`.** It names a group of Skills and an `instruction` field. The YAML's `name` becomes the slash command. Type `/research` and Hermes loads every Skill in the list. Then it applies the `instruction` to chain them. Ron: *"a named set of skills behind the slash bundles command."*
 
 The shape of a Bundle:
 
@@ -60,49 +59,44 @@ instruction: |
   analysis, then output. Include citations.
 ```
 
-The `instruction` field is the part most people miss. It's a *"mini agents.md"* — house rules baked in once so you don't retype them. *"Always cite sources." "Use the last 7 days only." "Output as markdown with a TOC."* Specific instructions are what make Bundle output consistent across runs.
+The `instruction` field is the part most people miss. It's a *"mini agents.md"* — house rules baked in once so you don't retype them. Common rules: *"Always cite sources."* *"Use the last 7 days only."* *"Output as markdown with a TOC."* That's what makes Bundle output consistent across runs.
 
 <Callout type="tip" title="Ron's co-design tip">
 *"Consult with Hermes first. Ask the agent which Skills it would group for your workflow, then review the plan, then commit."* — Ron, source video `_A02brv2Csg`. Bundles you design alone are usually worse than Bundles you co-design with the agent.
 </Callout>
 
-**One honest limit to know up front.** As of June 2026, Skill Bundles are *not adaptive*. They run Skills in the order you specify. If your workflow needs different Skills based on intermediate results, split it into multiple Bundles, or write a single Skill with branching logic.
+**One honest limit to know up front.** As of June 2026, Skill Bundles are *not adaptive*. They run Skills in the order you specify. If your workflow needs different Skills based on intermediate results, split it into multiple Bundles. Or write a single Skill with branching logic.
 
 ## Pick your tool
 
-The decision tree is small. Three questions:
+**Three questions decide Skill vs. Bundle vs. prompt.** Answer them in order.
 
 1. **Will I ever do this again?** If no, just type the prompt.
 2. **Is this one job?** If yes, make a Skill. The third time you do a task, save it.
 3. **Does it need three or more Skills together?** If yes, make a Bundle.
-
-The point is to avoid both extremes: fifty orphan Skills you never use, and one mega-Skill that does five things badly.
 
 | Situation | Right answer |
 |---|---|
 | One-off question you'll never repeat | Just type the prompt |
 | Task you've done three times | Make a Skill |
 | Three or more Skills that always go together | Make a Bundle |
-| Multi-step workflow with branching | Multiple Bundles or one Skill with branching |
-| Workflow the whole team should use | Commit the Bundle YAML to a shared repo |
-| Agent just did something useful and unexpected | Let it auto-save a Skill |
+| Multi-step workflow with branching, or team-shared, or agent-saved via `--from-last-session` | Multiple Bundles, or one Skill with branching, or commit YAML to a shared repo |
 
 <Callout type="gotcha" title="Beginner trap">
 Don't over-Bundle. Three to five Bundles covers most daily-driver work. A Bundle for a one-off task is just a Skill wearing a trench coat.
 </Callout>
 
-For the bigger picture — what Hermes is and why it's a harness not a model — see [L01 — What Is Hermes Agent?](/lessons/hermes/l01-what-is-hermes-agent/). For wiring Bundles into cron jobs, [L08 — Automation: cron, kanban, sub-agents](/lessons/hermes/l08-automation-cron-kanban-sub-agents/).
+See [L01 — What Is Hermes Agent?](/lessons/hermes/l01-what-is-hermes-agent/) for the harness-vs-model picture. For cron wiring, see [L08 — Automation: cron, kanban, sub-agents](/lessons/hermes/l08-automation-cron-kanban-sub-agents/).
 
 ### The day-to-day pattern
 
-Once you have a few Bundles built, the rhythm looks like this:
+Common slash commands once you build a few Bundles:
+- `/research <topic>` — news scan.
+- `/standup` — overnight summary.
+- `/pr-review` — pull-request critique.
+- `/wrap-up` — commit and draft tomorrow's TODO.
 
-- **Morning:** `/research <topic>` — research Bundle does the news scan.
-- **Before standup:** `/standup` — summarises overnight activity.
-- **Before code review:** `/pr-review` — pulls the diff and critiques it.
-- **End of day:** `/wrap-up` — commits work and drafts tomorrow's TODO.
-
-One Bundle per recurring workflow. Three to five Bundles covers most daily-driver use. On a team, commit the YAMLs to a shared repo — Ron's recommendation: *"commit the bundle files into your dot files or a shared repo."*
+On a team, commit the YAMLs to a shared repo. Ron's recommendation: *"commit the bundle files into your dot files or a shared repo."*
 
 ## Try it
 
@@ -122,7 +116,7 @@ Hermes reads its own Skill catalog and proposes a grouping. Read the plan, edit 
 hermes bundles create <your-workflow-name>
 ```
 
-**Step 3 — Edit the YAML.** Open `~/.hermes/skill-bundles/<your-bundle>.yaml` and tighten the `instruction` field. Be specific: *"Use only the last 7 days. Always include three citations. Output as markdown with a TOC."* Vague instructions produce inconsistent output.
+**Step 3 — Edit the YAML.** Open `~/.hermes/skill-bundles/<your-bundle>.yaml` and tighten the `instruction` field. Be specific: *"Use only the last 7 days. Always include three citations. Output as markdown with a TOC."*
 
 **Step 4 — Reload and test.**
 
@@ -148,69 +142,12 @@ If you'd rather watch Ron build a Bundle end-to-end, here's the full clip:
 
 ### Check your understanding
 
-<Quiz questions={[
-  {
-    q: "A Hermes Skill is best described as:",
-    choices: [
-      "A model",
-      "A markdown file that does one job, triggered by a slash command",
-      "A group of Skills loaded together",
-      "A feature only in the desktop app",
-    ],
-    answer: 1,
-    explain: "A Skill is a markdown file in ~/.hermes/skills/. The filename (minus .md) becomes the slash command.",
-  },
-  {
-    q: "A Skill Bundle is best described as:",
-    choices: [
-      "A single powerful Skill",
-      "A model with extra training",
-      "A named group of Skills loaded together by a single slash command",
-      "A backup of your Skills folder",
-    ],
-    answer: 2,
-    explain: "A Bundle is YAML that lists multiple Skills and an instruction field. One slash command loads them all in the order you specify.",
-  },
-  {
-    q: "Short answer: Per the source video, are Skill Bundles adaptive? Explain in one sentence.",
-    choices: [],
-    answer: 0,
-    explain: "No — as of June 2026, Bundles run Skills in a fixed order. They do not dynamically re-order based on intermediate results.",
-  },
-  {
-    q: "Where do Hermes Skills live on your computer?",
-    choices: [],
-    answer: 0,
-    explain: "~/.hermes/skills/<name>.md. Hermes is strict about the location and the filename matching the command.",
-  },
-  {
-    q: "The instruction field in a Bundle YAML is best described as:",
-    choices: [
-      "Optional metadata that the agent ignores",
-      "A 'mini agents.md' that captures your house rules for this workflow",
-      "The model name to use for this Bundle",
-      "A list of installed Skills",
-    ],
-    answer: 1,
-    explain: "The instruction field is where you bake in your house rules — conventions, citation style, output format. It is what makes Bundle output consistent across runs.",
-  },
-  {
-    q: "Per the source video, the best way to design a Bundle is:",
-    choices: [
-      "Pick the Skills yourself based on what you think is right",
-      "Ask Hermes to suggest the Skills, then review and commit",
-      "Use every available Skill in one Bundle",
-      "Copy a Bundle from someone else's dotfiles",
-    ],
-    answer: 1,
-    explain: "Ron explicitly recommends co-designing Bundles with Hermes. The agent reads its own Skill catalog and proposes a grouping; you review and refine.",
-  },
-]} />
+Quiz: see [`quiz.json`](/lessons/hermes/l04-skills-and-skill-bundles/quiz.json) (6 questions, valid JSON).
 
 ### What's next
 
-- **Want your Bundle to talk to GitHub, Linear, or Notion?** → [L05 — How to Connect Hermes Agent to Other Apps with the MCP Catalog](/lessons/hermes/l05-mcp-catalog-and-integrations/).
-- **Want a Bundle to fire automatically at 7am every morning?** → [L08 — Automation: cron, kanban, sub-agents](/lessons/hermes/l08-automation-cron-kanban-sub-agents/).
+- [L05 — How to Connect Hermes Agent to Other Apps with the MCP Catalog](/lessons/hermes/l05-mcp-catalog-and-integrations/).
+- [L08 — Automation: cron, kanban, sub-agents](/lessons/hermes/l08-automation-cron-kanban-sub-agents/).
 
 <Callout type="bottom-line">
 **Ron's bottom line:** make a Skill the third time you do a task. Bundle it when you have three or more Skills that always go together. The `instruction` field is where you save yourself the most typing — bake your house rules in once.

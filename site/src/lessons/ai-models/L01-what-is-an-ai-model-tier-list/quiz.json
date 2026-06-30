@@ -1,0 +1,62 @@
+{
+  "lesson": "L01-what-is-an-ai-model-tier-list",
+  "module": "ai-models",
+  "questions": [
+    {
+      "q": "The question 'which AI model is best?' is best reframed as:",
+      "choices": [
+        "Which model is cheapest?",
+        "Which tier fits the workload I'm doing?",
+        "Which model has the highest benchmark score?",
+        "Which model did a YouTuber rank highest?"
+      ],
+      "answer": 1,
+      "explain": "Capability is workload-relative. The 'best' model for a hard multi-step refactor is different from the 'best' model for summarising 10,000 customer reviews. Tier mapping beats leaderboard chasing."
+    },
+    {
+      "q": "Which tier is the right default for 'daily Q&A, drafting, code review, meeting notes'?",
+      "choices": [
+        "Tier 1 (Frontier)",
+        "Tier 2 (Frontier-Strong)",
+        "Tier 3 (Daily-Driver)",
+        "Tier 4 (Cost-Efficient)"
+      ],
+      "answer": 2,
+      "explain": "Tier 3 — Daily-Driver. Models like Kimi K2.7, Qwen 3.5, and MiniMax M3 handle 80% of routine work for a fraction of frontier cost."
+    },
+    {
+      "q": "You need to refactor a multi-file migration in production, with tests. Which tier should you reach for first?",
+      "choices": [
+        "Tier 1 (Frontier)",
+        "Tier 2 (Frontier-Strong)",
+        "Tier 3 (Daily-Driver)",
+        "Tier 4 (Cost-Efficient)"
+      ],
+      "answer": 1,
+      "explain": "Hard agentic coding lives in Tier 2 — Sonnet 4.7, GPT 5.4, Gemini 3 Pro. Near-frontier at 1/3 to 1/5 the cost of Opus. Only escalate to Tier 1 if Tier 2 fails the task."
+    },
+    {
+      "q": "Short answer: name one workload that belongs in Tier 4, and why you'd pick Tier 4 over Tier 3 for it.",
+      "choices": [],
+      "answer": 0,
+      "explain": "Any of: bulk translation across thousands of strings; batch extraction from 50,000 customer reviews; classifying a million support tickets; processing sensitive data you don't want leaving your laptop (local 7B-20B). The reason: Tier 4 is designed for volume, not peak quality. At scale, 'good enough' compounds into a real saving — or in the privacy case, it's the only option."
+    },
+    {
+      "q": "Per the source video, what does 'S-tier' actually mean on a model leaderboard?",
+      "choices": [
+        "The most expensive model available.",
+        "The best model for the workload the tier-list creator tested.",
+        "The model with the highest context window.",
+        "The model that runs fastest."
+      ],
+      "answer": 1,
+      "explain": "S-tier means 'best for what the creator tested.' It does not mean 'best for everything' or 'best for your workload' unless your workload matches the creator's. This is the S-tier trap."
+    },
+    {
+      "q": "True or false: 'Frontier models are smarter than daily-driver models in an absolute sense.' Explain in one sentence.",
+      "choices": [],
+      "answer": 0,
+      "explain": "False. Frontier models are tuned for a different shape of problem — long-horizon reasoning, novel architecture, complex multi-step work. On routine summarisation or extraction, a daily-driver model often matches them. The difference is workload-shape, not absolute IQ."
+    }
+  ]
+}

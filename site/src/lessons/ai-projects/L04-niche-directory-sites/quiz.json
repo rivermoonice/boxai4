@@ -1,0 +1,55 @@
+{
+  "questions": [
+    {
+      "q": "The single most important prerequisite for a niche directory site is:",
+      "choices": [
+        "A $5K design budget",
+        "Frontier-model API access",
+        "The founder's prior knowledge of the niche",
+        "An existing email list of 10,000 subscribers"
+      ],
+      "answer": 2,
+      "explain": "Per Specs/ChannelIdentity.md: 'the founder's prior niche advantage is the real moat.' AI amplifies that moat; it doesn't create it. The cheap stack and Kimi K2.7 help, but they don't substitute for knowing the vertical."
+    },
+    {
+      "q": "Why does the order of monetisation matter — paid listings before AdSense?",
+      "choices": [],
+      "answer": 0,
+      "explain": "AdSense requires organic traffic, which takes 6–12 months to build. Paid listings only need a listing owner who wants visibility in front of your audience — which can happen in weeks 4–8. The first dollar should not wait on Google ranking your pages."
+    },
+    {
+      "q": "Roughly how long does the SEO loop take to start producing meaningful traffic?",
+      "choices": ["1 week", "1 month", "6–18 months", "5+ years"],
+      "answer": 2,
+      "explain": "Per the channel: the build is fast (48 hours with AI); the SEO loop is slow (6–18 months). Most founders who quit do so in months 2–5, just before the loop would have compounded."
+    },
+    {
+      "q": "Per the 50-listings test, what does it mean if you can list 50 businesses from memory?",
+      "choices": [
+        "You are ready to start building the directory today.",
+        "You have niche advantage — you've encountered the niche, not researched it.",
+        "You should pick a more obscure niche where fewer competitors exist.",
+        "You should immediately hire a copywriter to draft descriptions."
+      ],
+      "answer": 1,
+      "explain": "Memory implies encounter — you've talked to people in the niche, watched businesses grow, read about them. That's domain expertise, the actual moat. A founder who has to research the niche is a curator, not a domain expert."
+    },
+    {
+      "q": "What does the channel's documented stack for niche directories look like, and roughly what does it cost to start?",
+      "choices": [
+        "WordPress + ChatGPT — about $200/mo",
+        "Custom Next.js + Claude Opus — about $500/mo",
+        "Hostinger Horizons + Kimi K2.7 — about $20–$40/mo",
+        "Shopify + Midjourney — about $100/mo"
+      ],
+      "answer": 2,
+      "explain": "Hostinger Horizons ($3–$10/mo) + Kimi K2.7 ($10–$20/mo) + optional Hermes for automation ($5–$10/mo) + a domain ($10–$15/yr) = ~$20–$40/mo total. Cheap stack first, upgrade only when revenue justifies."
+    },
+    {
+      "q": "List the three failure modes for niche directories, in order of frequency.",
+      "choices": [],
+      "answer": 0,
+      "explain": "(1) No niche advantage — the founder picked a niche they didn't know. (2) Premature monetisation flip — AdSense before traffic, waiting for revenue that won't come. (3) Premature abandonment — quitting in months 2–5, just before SEO would have compounded."
+    }
+  ]
+}
