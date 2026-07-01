@@ -44,11 +44,13 @@ If you try to remember nothing else, remember the four-step flow above.
 
 **Step 1 — Sketch (Hermes).** Before you write a line of code, you need an angle. Hermes reads your niche knowledge, your saved links, your notes from the last six months. It gives you three product angles ranked by weekend-fit. You pick one. This step takes 20 minutes. It saves you from building the wrong thing.
 
-**Step 2 — Spec (Hermes).** Once you have an angle, Hermes writes the spec. Features as bullets. Data model as a table. Edge cases as a list. Test plan as a checklist. You save it as `SPEC.md` in a new folder. This file is the contract between you and Claude Code on Saturday morning. If it's vague, Saturday breaks. If it's specific, Saturday flies.
+**Step 2 — Spec (Hermes).** Once you have an angle, Hermes writes the spec. Features as bullets. Data model as a table. Edge cases as a list. Test plan as a checklist. Save it as `SPEC.md` in a new folder. This file is the contract between you and Claude Code on Saturday morning.
 
-**Step 3 — Code (Claude Code).** On Saturday, you open Claude Code in a fresh repo, paste the spec, and let the loop run. Spec → test → fix → spec → test → fix. Claude Code verifies by **running tests**, which is exactly what you want for code that has to work. This is the step that actually ships the thing.
+Vague spec breaks Saturday. Specific spec flies.
 
-**Step 4 — Review (Hermes).** On Sunday, you open Hermes again. You point it at the spec and at the codebase. It produces a gap analysis: what's built, what's partial, what's missing. You take that list back to Claude Code for the close-out pass.
+**Step 3 — Code (Claude Code).** On Saturday, open Claude Code in a fresh repo. Paste the spec. Let the loop run: spec, test, fix, repeat. Claude Code verifies by **running tests**. That's exactly what you want for code that has to work. This is the step that actually ships the thing.
+
+**Step 4 — Review (Hermes).** On Sunday, open Hermes again. Point it at the spec and at the codebase. It produces a gap analysis: what's built, what's partial, what's missing. Take that list back to Claude Code for the close-out pass.
 
 <Callout type="tip" title="The handoff file">
 The `SPEC.md` file is the contract. Hermes writes it. Claude Code reads it. Hermes reviews the build against it. **One markdown file, three uses, one weekend.** Skip the spec and you'll redo the same context-setting five times. The file is cheaper than your time.
@@ -76,7 +78,7 @@ Sunday afternoon, one more Hermes command:
 That's the whole flow. The tools carry the typing; you carry the taste.
 
 <Callout type="gotcha" title="Don't skip step 4">
-The review step is the one beginners skip. They ship on Sunday evening, push to main, walk away. Three weeks later they discover the auth flow doesn't match the spec. `/verify-spec` takes 15 minutes. Always run it before you deploy.
+The review step is the one beginners skip. They ship on Sunday evening, push to main, walk away. Three weeks later the auth flow doesn't match the spec. `/verify-spec` takes 15 minutes. Always run it before you deploy.
 </Callout>
 
 ## Pick your tool
@@ -91,7 +93,7 @@ The hard part isn't the tools — it's the boundary between them. Here's where e
 | Verify the build | Hermes | Gap analysis vs spec | Decide ship-or-fix |
 | Close-out (README, deploy) | Claude Code | Production-ready repo | Hit merge |
 
-**Rule of thumb:** if the output is a **markdown file**, Hermes is the right tool. Specs, READMEs, gap analyses, blog posts. If the output is **working code** with a green test suite, Claude Code is the right tool. Cross the boundary as few times as possible — every cross costs you context.
+**Rule of thumb:** markdown output goes to Hermes. Working code with green tests goes to Claude Code. Cross the boundary as few times as possible. Every cross costs you context.
 
 <Callout type="tip" title="The mental shortcut">
 Ask: *will this work be verified by running it?* If yes, coding harness. If no, agent harness. Code that has to run → Claude Code. Writing that has to make sense → Hermes.
@@ -109,7 +111,7 @@ The weekend-build pattern is the third case. It's not the default — it's the e
 
 ### Where Hermes' `agents.md` fits
 
-If you're running the weekend-build pattern, write an `agents.md` at the root of your project directory before you start. It tells Hermes the project context, file conventions, the spec tone, the model preferences. Without it, you'll repeat the same context-setting on every Hermes call. With it, Hermes loads it once and stays consistent.
+If you're running the weekend-build pattern, write an `agents.md` at the root of your project directory before you start. It tells Hermes the project context, file conventions, spec tone, model preferences. Without it, you repeat the context-setting on every Hermes call. With it, Hermes loads it once and stays consistent.
 
 The `agents.md` file is **not** read by Claude Code — that's `CLAUDE.md` or `.cursorrules` territory. Keep them separate. The reason: Hermes wants a long-form project brief; Claude Code wants a short list of repo-specific rules. Different shapes, different files.
 
@@ -160,7 +162,7 @@ If your spec has more than that, the weekend will slip. Cut features, not time.
 - [L04 — Niche Directory Sites](/lessons/ai-projects/l04-niche-directory-sites/)
 
 <Callout type="bottom-line">
-**The bottom line:** pick the smallest angle that matters to you, write the spec with Hermes, build it with Claude Code, verify it with Hermes on Sunday. Two harnesses, one handoff file, one weekend. Most "side projects that never ship" die in the gap between thinking and building. The spec closes the gap.
+**The bottom line:** pick the smallest angle that matters to you. Write the spec with Hermes. Build it with Claude Code. Verify it with Hermes on Sunday. Two harnesses, one handoff file, one weekend. Most "side projects that never ship" die in the gap between thinking and building. The spec closes the gap.
 </Callout>
 
 ### Check your understanding

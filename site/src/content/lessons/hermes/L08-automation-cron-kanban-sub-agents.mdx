@@ -44,7 +44,7 @@ Hermes has three automation patterns. They look similar — "the agent does some
 
 **Pattern 2 — Kanban boards.** A multi-agent project board. Each task has an **assignee profile** — a separate Hermes instance with its own config, API keys, and specialisation. Multiple named workers collaborate. You watch progress on a live dashboard. Best for: multi-step workflows with defined roles. *"Research → draft → review → publish."*
 
-**Pattern 3 — Sub-agents.** A worker spawned by your main agent *within the same session*. No persistent state, no specialisation, no separate config — just quick parallel work. Best for: "search three sources at once and combine the result" inside one workflow.
+**Pattern 3 — Sub-agents.** A worker spawned by your main agent *within the same session*. It has no persistent state, no specialisation, and no separate config — just quick parallel work. Best for: "search three sources at once and combine the result" inside one workflow.
 
 <Picture src="/lessons/hermes/L08/kanban-agents.svg" alt="Kanban board with three columns (To do, In progress, Done) and task cards showing named worker profiles @researcher, @drafter, @reviewer" width={900} height={540} formats={["avif", "webp"]} />
 

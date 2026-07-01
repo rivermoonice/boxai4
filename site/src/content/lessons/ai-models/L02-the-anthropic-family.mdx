@@ -33,7 +33,7 @@ Start at [L01 — What Is an AI Model Tier List?](/lessons/ai-models/l01-what-is
 That metaphor maps to Anthropic's actual 2026 lineup. The three Claude models share one family and one API. They dial the trade-off between speed, cost, and capability.
 
 <Callout type="tip" title="Same brain, different gears">
-Haiku, Sonnet, and Opus are trained by the same lab, on the same roadmap, called by the same `client.messages.create()` API call. You're not picking between "Claude" and "not-Claude" — you're picking between three gears inside one engine.
+Haiku, Sonnet, and Opus are trained by the same lab, on the same roadmap, called by the same `client.messages.create()` call. You're not picking between "Claude" and "not-Claude." You're picking between three gears inside one engine.
 </Callout>
 
 ## The mental model
@@ -51,7 +51,9 @@ Three rules to internalize from the diagram:
 **Y-axis:** how often does it have to think twice? **X-axis:** how many answers can you wait for? Built-in-answer tasks (classify, extract, summarise) live low. Construct-an-answer tasks live high.
 
 <Callout type="gotcha" title="Don't confuse version numbers with tiers">
-Anthropic ships new *versions* of each tier on a roughly quarterly cadence — Sonnet 4.0, 4.5, 5.0; Opus 4.6, 4.7, 4.8. The *tier* (Haiku / Sonnet / Opus) is the speed/cost slot. The *version* is which generation of that tier you're using. Newer is generally better within a tier, but the tier choice matters more than the version choice.
+Anthropic ships new *versions* of each tier on a roughly quarterly cadence — Sonnet 4.0, 4.5, 5.0; Opus 4.6, 4.7, 4.8. The *tier* (Haiku / Sonnet / Opus) is the speed/cost slot. The *version* is which generation of that tier you're using.
+
+Newer is generally better within a tier. But the tier choice matters more than the version choice.
 </Callout>
 
 Cross-tier moves swing your bill 5–60×. Version bumps inside a tier swing it ~1.2×. Optimise tier first, version second. Check Anthropic's pricing page before trusting any number you read, including this one.
@@ -87,8 +89,12 @@ The same ten million tokens. A 60× spread between cheapest and most expensive. 
 Open-weight side (Kimi, DeepSeek, GLM, Qwen): [L03](/lessons/ai-models/l03-chinese-open-weight/) and [L04](/lessons/ai-models/l04-cost-efficient-tier/). Full decision framework across all providers: [L05](/lessons/ai-models/l05-frontier-vs-open-weight-decisions/).
 
 <Callout type="gotcha" title="The billing-trust caveat">
-Anthropic has been flagged in 2026 for quietly adjusting usage limits on consumer accounts. Set a hard monthly spend cap on day one — $20 is a reasonable floor. Check usage every Friday. The cap exists; the warning emails don't always arrive in time.
+Anthropic has been flagged in 2026 for quietly adjusting usage limits on consumer accounts.
+
+Set a hard monthly spend cap on day one — $20 is a reasonable floor. Check usage every Friday. The cap exists; the warning emails don't always arrive in time.
 </Callout>
+
+
 
 ## Try it
 
@@ -140,5 +146,5 @@ Quiz: see [`quiz.json`](/lessons/ai-models/l02-the-anthropic-family/quiz.json) (
 - [Hermes L01 — What Is Hermes Agent?](/lessons/hermes/l01-what-is-hermes-agent/)
 
 <Callout type="bottom-line">
-**Ron's bottom line:** same family, three gears. Start at Sonnet, escalate to Opus at a wall, downgrade to Haiku when the wall was you. Set a $20 spend cap on day one. Tier matters more than version. Tier matters more than brand.
+**Ron's bottom line:** same family, three gears. Start at Sonnet; escalate to Opus at a wall; downgrade to Haiku when the wall was you. Set a $20 spend cap on day one. Tier matters more than version. Tier matters more than brand.
 </Callout>

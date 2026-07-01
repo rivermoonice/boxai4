@@ -38,7 +38,7 @@ Cost is a function of where the model sits on the capability axis — not a tax 
 
 Three facts make the chart work:
 
-1. **`$/1M tokens` is the only honest cost unit.** Kimi K2.7 sits at $0.30 input / $1.20 output. Qwen 3.7 Max charges ~$7.50/M output. Opus 4.8 charges $15/M and burns tokens faster because it thinks out loud.
+1. **`$/1M tokens` is the only honest cost unit.** Kimi K2.7 sits at $0.30 input / $1.20 output. Qwen 3.7 Max charges ~$7.50/M output. Opus 4.8 charges $15/M — and burns tokens faster because it thinks out loud.
 2. **Size ≠ capability.** A 70B open-weight model can match a 1T frontier model on summarisation, JSON extraction, or image captioning at 1/10 the cost.
 3. **Cost-efficient tier wins on well-defined tasks with verifiable success criteria.** It loses on ambiguous, novel, or sustained multi-step reasoning.
 
@@ -114,5 +114,8 @@ Single-task tests don't scale. In production you route by **tier**: cheap model 
 See the standalone quiz at [`/lessons/ai-models/L04-cost-efficient-tier/quiz.json`](/lessons/ai-models/L04-cost-efficient-tier/quiz.json) (5 questions).
 
 <Callout type="bottom-line">
-**Ron's bottom line:** Qwen for long-horizon agents. MiniMax for multimodal and long-context speed. GLM for UI one-shots. Kimi for the daily-driver sweet spot. Don't pick by price alone — pick by workload, then check the price.
+**Ron's bottom line:** Qwen for long-horizon agents. MiniMax for multimodal and long-context speed.
+GLM for UI one-shots. Kimi for the daily-driver sweet spot.
+Don't pick by price alone — pick by workload, then check the price.
+Revisit the default every quarter.
 </Callout>

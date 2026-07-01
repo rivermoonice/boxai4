@@ -96,7 +96,7 @@ to expose Hermes conversations over MCP.
 
 ### What an MCP actually is (the short version)
 
-**An MCP** is a small server program that speaks one app's **API** (Application Programming Interface — the contract an app exposes to outside code). Each MCP exposes a list of **tools** — discrete functions like `find_issues` or `create_issue`. One MCP per app. The agent routes tool calls to the right MCP by name.
+**An MCP** is a small server program that speaks one app's **API** (Application Programming Interface — the contract an app exposes to outside code). Each MCP exposes a list of **tools** — discrete functions like `find_issues` or `create_issue`. One MCP per app. The agent routes calls by name.
 
 ## Try it
 
@@ -125,7 +125,7 @@ The agent routes the call to the Linear MCP and returns real results from your w
 
 ### Where the credentials live
 
-Your Linear OAuth token is cached at `~/.hermes/mcp-tokens/linear.json`. API-key MCPs (like n8n) write to `~/.hermes/.env`. Both are plaintext. Don't commit them. Don't paste them into chats. Clean up the files for any MCP you've uninstalled. L07 covers the full threat model.
+Your Linear OAuth token is cached at `~/.hermes/mcp-tokens/linear.json`. API-key MCPs (like n8n) write to `~/.hermes/.env`. Both are plaintext. Don't commit them. Don't paste them into chats. L07 covers the full threat model.
 
 ### Watch Ron walk through it
 
@@ -142,5 +142,5 @@ Quiz: see [`quiz.json`](/lessons/hermes/l05-mcp-catalog-and-integrations/quiz.js
 - [L08 — Automation: Cron, Kanban, Sub-Agents](/lessons/hermes/l08-automation-cron-kanban-sub-agents/) walks through a 7am Linear digest.
 
 <Callout type="bottom-line">
-**Ron's bottom line:** start with the catalog and only the catalog. The four commands are all you need for your first week. Graduate to custom MCPs only when the catalog doesn't cover the app you need, and never accept a default tool whitelist without reading it.
+**Ron's bottom line:** start with the catalog and only the catalog. The four commands are all you need for your first week. Graduate to custom MCPs only when the catalog doesn't cover the app you need. Never accept a default tool whitelist without reading it.
 </Callout>

@@ -53,7 +53,7 @@ A real online business in 2026 has five layers. Each depends on the one below it
 
 **Layer 4 — Monetization.** Stripe links, Substack, paid placements. **Automation potential: medium** — webhooks fire scripts ("send receipt," "add to premium list"). You never manually invoice.
 
-**Layer 5 — Analytics.** Plausible, Umami, or a cron-driven report. **Automation potential: very high** — the dashboard updates itself; the only automation worth building is the *alert*. A Hermes cron that scans the dashboard daily and pings Discord if traffic drops 30% week-over-week has saved this business twice.
+**Layer 5 — Analytics.** Plausible, Umami, or a cron-driven report. Automation potential: very high. The dashboard updates itself. The only automation worth building is the *alert*. A Hermes cron that scans the dashboard daily and pings Discord if traffic drops 30% week-over-week has saved this business twice.
 
 <Callout type="gotcha" title="The wrong order">
 The most common beginner mistake is automating the wrong layer first. A "smart" landing page (Layer 1) before you have anyone to email (Layer 3). A custom analytics dashboard (Layer 5) before you have any analytics worth showing.
@@ -81,7 +81,7 @@ Here's the stack I'd actually build this week, in order.
 
 **Week 2: Add a coding harness.** Use [Claude Code](/lessons/ai-projects/l01-coding-with-claude-code/) to build Layer 2 — the directory MVP from [L04](/lessons/ai-projects/l04-niche-directory-sites/), newsletter archive, or SaaS dashboard. Hermes is the wrong tool here. The work lives in a repo and needs test verification.
 
-**Week 3: Add an agent harness.** Install [Hermes](/lessons/hermes/l02-install-and-first-run/) and automate Layers 3 and 5: tag new sign-ups by source; a Monday-morning cron (see [Hermes L08](/lessons/hermes/l08-automation-cron-kanban-sub-agents/)) that posts a digest to Discord; a daily analytics scan that pings only on anomalies.
+**Week 3: Add an agent harness.** Install [Hermes](/lessons/hermes/l02-install-and-first-run/) and automate Layers 3 and 5: tag new sign-ups by source. Add a Monday-morning cron (see [Hermes L08](/lessons/hermes/l08-automation-cron-kanban-sub-agents/)) that posts a digest to Discord. Add a daily analytics scan that pings only on anomalies.
 
 **Week 4: Wire it together.** Stripe webhooks fire Skills. New customers get personalised welcome emails. The directory auto-updates with listings scraped from a niche subreddit. You stop opening the dashboard unless the agent pings you.
 
@@ -91,7 +91,7 @@ The whole stack runs under $30/mo. Cost: $5 Hostinger, free email, free Stripe, 
 
 ### What you should NOT build first
 
-Most beginners jump to *AVOID* or *SKIP* quadrants. Examples: a chatbot for support (high effort, low payoff — a better welcome email usually solves it). Daily LinkedIn posts (audience isn't yours). A custom CRM (buy one — the directory *is* your CRM). The bottom-right quadrant is where your week-one budget goes: welcome sequence, payment receipt, weekly digest. Cheap to build, runs forever.
+Most beginners jump to *AVOID* or *SKIP* quadrants. Examples: a chatbot for support (high effort, low payoff), daily LinkedIn posts (audience isn't yours), a custom CRM (buy one — the directory *is* your CRM). The bottom-right quadrant is where your week-one budget goes: welcome sequence, payment receipt, weekly digest. Cheap to build, runs forever.
 
 | Layer | Tool | Cost | Time to automate |
 |---|---|---|---|
@@ -135,5 +135,7 @@ You've completed the AI Projects module. To go deeper:
 - [Hermes L01 — What Is Hermes Agent?](/lessons/hermes/l01-what-is-hermes-agent/)
 
 <Callout type="bottom-line">
-**Ron's bottom line:** the "$3/month business" is real, but it's *infrastructure*. The real cost is your time and your model tokens. Automate the boring stuff first — welcome sequence, payment receipts, weekly digest. Ship the welcome email by Sunday. Everything else comes after.
+**Ron's bottom line:** the "$3/month business" is real, but it's *infrastructure*. The real cost is your time and your model tokens.
+
+Automate the boring stuff first: welcome sequence, payment receipts, weekly digest. Ship the welcome email by Sunday. Everything else comes after.
 </Callout>

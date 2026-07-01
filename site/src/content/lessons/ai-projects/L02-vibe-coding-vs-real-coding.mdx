@@ -16,7 +16,7 @@ accent: "#ea7a3b"
 import Callout from '../../../components/lesson/Callout.astro';
 import { Picture } from 'astro:assets';
 
-Vibe coding: you describe what you want, the AI writes it, you click run, it works. You feel like a wizard — until you try to ship. The thing breaks in three places at once. You can't reproduce the bug. The AI keeps "fixing" it with hallucinated APIs. $40 gone, no test runner ever opened.
+Vibe coding: you describe what you want, the AI writes it, you click run, it works. You feel like a wizard — until you try to ship. The thing breaks in three places at once. You can't reproduce the bug. The AI keeps "fixing" it with hallucinated APIs. $40 gone. No test runner ever opened.
 
 Welcome to **vibe coding**, the practice Andrej Karpathy named in early 2025 that has now swallowed half the internet. Vibe coding is the fastest way to build software that's never supposed to ship, and the slowest way to build software that is. This lesson is the boundary.
 
@@ -26,7 +26,7 @@ This lesson is the matching "when" — when vibe coding is the right tool, when 
 
 **Name the failure mode of each and the difference is obvious.**
 
-**Vibe coding** fails when you ask the AI for a drag-handler. It produces a drag-handler that looks right. The drop event never fires because nobody specified the drop target. You spend four rounds of "no, the other way" before realising the AI is reasoning about the wrong model of the problem.
+**Vibe coding** fails when you ask the AI for a drag-handler. It produces a drag-handler that looks right. The drop event never fires because nobody specified the drop target. You spend four rounds of "no, the other way." The AI is reasoning about the wrong model of the problem.
 
 **Real coding** fails when you spend 8 hours reviewing a 200-line diff for a UI button. The prototype was thrown out the next morning. You were right that the code would have bugs. You were wrong that the bugs mattered.
 
@@ -42,7 +42,7 @@ This lesson is the matching "when" — when vibe coding is the right tool, when 
 
 <Picture src="/lessons/ai-projects/L02/vibe-vs-real-quadrant.svg" alt="2x2 matrix: shipping intent on the x-axis (throwaway to long-lived), quality bar on the y-axis (looks right to reviewed and tested). Vibe coding wins the bottom-left half. Real coding wins the top-right half. The diagonal between them is the 'ship the real thing' axis." width={920} height={580} formats={["avif", "webp"]} />
 
-The two diagonals on the diagram are the two spectrums most projects actually move along. The **"ship the real thing" axis**: throwaway script → production codebase with CI. The **"kill it on Friday" axis** runs the other way.
+The two diagonals on the diagram are the two spectrums most projects actually move along. The **"ship the real thing" axis**: throwaway script to production codebase with CI. The **"kill it on Friday" axis** runs the other way.
 
 A few concrete examples to anchor the quadrants:
 
@@ -52,7 +52,7 @@ A few concrete examples to anchor the quadrants:
 - **Top-right, "production + reviewed":** a long-lived web app, a mobile app, a data pipeline, a public library. Real coding, full stop.
 
 <Callout type="gotcha" title="The thing that breaks vibe coding">
-"Vibe coding with intent-free prompts burns tokens and breaks on drag-handlers." The reason isn't that the model is bad. It's that the model is filling in the gaps in your intent with **its own assumptions**, and those assumptions are statistically likely to be wrong. The fix isn't a better model. The fix is a PRD — even a one-paragraph PRD — and a verification loop. Real coding gives you both.
+"Vibe coding with intent-free prompts burns tokens and breaks on drag-handlers." The reason isn't that the model is bad. The model is filling in the gaps in your intent with **its own assumptions**. Those assumptions are statistically likely to be wrong. The fix isn't a better model. The fix is a PRD — even a one-paragraph PRD — and a verification loop. Real coding gives you both.
 </Callout>
 
 ## Pick your tool
@@ -72,7 +72,7 @@ Vibe coding is right when the cost of a bug is low and the cost of being slow is
 - **One-off scripts.** Rename 200 files, scrape a page, generate a CSV. Run once, delete.
 - **Throwaway demos.** "Show the team what a Slack-integrated todo app could look like." Will never see production.
 
-**For all of these, the cheapest path is vibe coding with a Tier 2 model.** Use DeepSeek V4, Kimi K2.7, or a local Qwen. The speed wins. The quality is "good enough for code you'll throw out." Keep the expensive models in reserve.
+**For all of these, the cheapest path is vibe coding with a Tier 2 model.** Use DeepSeek V4, Kimi K2.7, or a local Qwen. The speed wins. The quality is "good enough for code you'll throw out." Keep the expensive models in reserve for production.
 
 ### When to real code
 

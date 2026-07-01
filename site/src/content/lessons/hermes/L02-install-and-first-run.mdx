@@ -40,7 +40,7 @@ Click **Install**. The first run downloads 500 MB and takes five to ten minutes.
 The installer gives a misleading "command not found" error. The cause is always the missing CLT, never the installer itself.
 </Callout>
 
-You also need a model provider account. Hermes is the harness — it does not bundle model access. Bring your own key (BYOK = your provider's API key). Supported providers: Anthropic, OpenAI, DeepSeek, Kimi, MiniMax, Qwen. Mac path needs macOS 13+.
+You also need a model provider account. Hermes is the harness — it does not bundle model access. Bring your own key (BYOK = your provider's API key). Supported providers are Anthropic, OpenAI, DeepSeek, Kimi, MiniMax, and Qwen. The Mac path needs macOS 13 or newer.
 
 ## Two paths: Mac vs VPS
 
@@ -163,7 +163,7 @@ A one-liner that proves the same thing without interactive chat:
 hermes doctor >/dev/null 2>&1 && echo "hermes install verified" || echo "hermes install FAILED"
 ```
 
-If you see an error, the cause is usually a wrong API key, or a missing `curl`/`git` on VPS. Re-run `hermes setup` or install the missing dep.
+If you see an error, the cause is usually a wrong API key. Re-run `hermes setup` to fix a bad key. On VPS, install missing deps with `sudo apt install -y curl git`.
 
 ### Watch the full install
 
