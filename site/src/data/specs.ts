@@ -2,6 +2,11 @@
 // from the static-paths chunk at build time.
 
 export const SPEC_PAGES: Record<string, { file: string; title: string; description: string }> = {
+  'brand-spec': {
+    file: 'brand-specification.md',
+    title: 'Brand specification',
+    description: 'The visual identity, UX principles, color system, and redesign acceptance criteria for the academy.',
+  },
   'lesson-spec': {
     file: 'ai-academy-lesson-specification.md',
     title: 'Lesson specification',
